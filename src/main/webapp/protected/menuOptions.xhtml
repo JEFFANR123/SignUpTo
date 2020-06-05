@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template/plantillaUser.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    
+                    <p:tabView scrollable="true">
+                        <p:tab title="Menu Options">
+                            <p:fieldset legend="Datos del nuevo Suscriptor">
+                                <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
+                                <h:panelGrid columns="3" id="panelMenu" style="border: 0px;">
+
+
+                                    <p:outputLabel for="Entrada" value="Entrada del almuerzo"/>
+                                    <p:inputText id="Entrada" value="#{menuControladorImpl.menu.entrada}" required="true" requiredMessage="Campo Requerido"/>
+                                    <p:message for ="Entrada"/>
+                                    
+                                    <p:outputLabel  value="Entrada del almuerzo"/>
+                                    <p:inputText id="Sopa" value="#{menuControladorImpl.menu.sopa}" required="true"/>
+                                    <p:message for ="Sopa"/>
+                                    
+                                    <p:outputLabel  value="Entrada del almuerzo"/>
+                                    <p:inputText id="Segundo" value="#{menuControladorImpl.menu.segundo}" required="true"/>
+                                    <p:message for ="Segundo"/>
+                                    
+                                    <p:outputLabel  value="Entrada del almuerzo"/>
+                                    <p:inputText id="Jugo" value="#{menuControladorImpl.menu.jugo}" required="true"/>
+                                    <p:message for ="Jugo"/>
+                                    
+                                    <p:outputLabel  value="Entrada del almuerzo"/>
+                                    <p:inputText id="Postre" value="#{menuControladorImpl.menu.postre}" required="true"/>
+                                    <p:message for ="Postre"/>
+                                    
+                                    <p:outputLabel  value="Entrada del almuerzo"/>
+                                    <p:inputText id="Stock" value="#{menuControladorImpl.menu.stock}" required="true"/>
+                                    <p:message for ="Stock"/>
+
+                                </h:panelGrid>
+                                <p:commandButton actionListener="#{menuControladorImpl.insertarMenu()}" value="Registrar Menu" update="panelMenu, mensaje" />
+                            </p:fieldset>
+                        </p:tab>
+                        <p:tab title="Ofertas">
+
+                            <h:panelGrid id="panelOfertas" style="border: 0px;">
+
+                                <p:dataTable id="listOfertas" var="menulist" >
+
+
+                                </p:dataTable>
+
+                            </h:panelGrid>
+
+                        </p:tab>
+                        <p:tab title="Tab 3">Tab 3 Content</p:tab>
+                        <p:tab title="Tab 4">Tab 4 Content</p:tab>
+                    </p:tabView>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

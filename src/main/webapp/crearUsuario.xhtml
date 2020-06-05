@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+               <h:form>
+                    <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
+
+                    <p:fieldset legend="Datos del nuevo Suscriptor">
+                        <h:panelGrid columns="3" cellpadding="5" id="datosUser">
+
+                            <p:outputLabel for="nombre" value="Nombre " />
+                            <p:inputText id="nombre" value="#{usuarioCredencialesControlador.usuario.nombres}" 
+                                         requiredMessage="Campo Requerido" required="true"/>
+                            <p:message for="nombre"/>
+
+                            <p:outputLabel for="apellido" value="Apellido " />
+                            <p:inputText id="apellido" value="#{usuarioCredencialesControlador.usuario.apellidos}" 
+                                         requiredMessage="Campo Requerido" required="true"/>
+                            <p:message for="apellido"/>
+
+                            <p:outputLabel for="cedula" value="Cedula " />
+                            <p:inputText id="cedula" value="#{usuarioCredencialesControlador.usuario.cedula}" 
+                                         requiredMessage="Campo Requerido" required="true" />
+                            <p:message for="cedula"/>
+
+                            <p:outputLabel for="email" value="Email " />
+                            <p:inputText id="email" value="#{usuarioCredencialesControlador.usuario.email}" 
+                                         requiredMessage="Campo Requerido" required="true" />
+                            <p:message for="email"/>
+
+                            <p:outputLabel for="telefono" value="Telefono " />
+                            <p:inputText id="telefono" value="#{usuarioCredencialesControlador.usuario.telefono}" 
+                                         requiredMessage="Campo Requerido" required="true" />
+                            <p:message for="telefono"/>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                    <p:spacer height="10" />
+
+
+
+
+                    <p:fieldset legend="Credenciales">
+
+                        <h:panelGrid columns="3" id="matchGrid" cellpadding="5">  
+
+                            <p:outputLabel for="username" value="Username"/>
+                            <p:inputText id="username" value="#{usuarioCredencialesControlador.credenciales.userName}" required="true"
+                                         requiredMessage="Campo Requerido"/>
+                            <p:message for="username"/>
+
+
+
+                            <h:outputLabel for="pwd1" value="Password 1: *" />
+                            <p:password id="pwd1" value="#{usuarioCredencialesControlador.credenciales.userPass}" 
+                                        validatorMessage="¡Las contraseñas no coinciden!"
+                                        weakLabel="Baja" goodLabel="Media" strongLabel="Alta"
+                                        match="pwd2" feedback="true" promptLabel="Ingrese un Password" required="true" 
+                                        requiredMessage="Campo Requerido"/>
+                            <p:message for="pwd1"/>
+
+
+                            <h:outputLabel for="pwd2" value="Password 2: *" />
+                            <p:password id="pwd2" required="true" 
+                                        requiredMessage="Campo Requerido"/>
+                            <p:message for="pwd2"/>
+
+
+                        </h:panelGrid>
+
+                        <p:commandButton update="matchGrid, datosUser, mensaje" value="Registrar" actionListener="#{usuarioCredencialesControlador.guardarUsuarioCredenciales()}" />    
+
+                    </p:fieldset>
+
+
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
