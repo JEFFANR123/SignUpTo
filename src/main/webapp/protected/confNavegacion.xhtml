@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -73,14 +74,30 @@
                             <p:outputLabel for="titulo" value="Titulo"/>
                             <p:inputText id="titulo" value="#{menuAccessControladorImpl.menu.nombre}" required="true"/>
 
-                            <p:outputLabel for="tipo" value="Tipo"/>
-                            <p:inputText id="tipo" value="#{menuAccessControladorImpl.menu.tipoMenu}" required="true"/>
+                            <p:outputLabel for="tmnav" value="Tipo"/>
+                            <p:selectOneMenu id="tmnav" value="#{menuAccessControladorImpl.menu.tipoMenu}" required="true" 
+                                             requiredMessage="Tipo de Navegacion es Obligatoria">
+                                <f:selectItem itemValue="S" itemLabel="Principal"/>
+                                <f:selectItem itemValue="I" itemLabel="Secundario"/>
+                            </p:selectOneMenu>
 
                             <p:outputLabel for="activo" value="Activo"/>
-                            <p:inputText id="activo" value="#{menuAccessControladorImpl.menu.estado}" required="true"/>
+                            <p:selectOneMenu id="activo" value="#{menuAccessControladorImpl.menu.estado}" required="true" requiredMessage="Se de be establecer si el menu estara activo">
+                                <f:selectItem itemValue="true" itemLabel="Si"/>
+                                <f:selectItem itemValue="false" itemLabel="No"/>
+                            </p:selectOneMenu>
+                            
 
-                            <p:outputLabel for="propiedad" value="Propietario"/>
-                            <p:inputText id="propiedad" value="#{menuAccessControladorImpl.menu.tipoUsuario}" required="true"/>
+                            <p:outputLabel for="pmnav" value="Propietario"/>
+                            <p:selectOneMenu id="pmnav" value="#{menuAccessControladorImpl.menu.tipoUsuario}" required="true" 
+                                             requiredMessage="Seleccione el tipo de Usuario a quien corresponde">
+                                <f:selectItem itemValue="A" itemLabel="Administrador"/>
+                                <f:selectItem itemValue="E" itemLabel="Empleado"/>
+                                <f:selectItem itemValue="C" itemLabel="Cliente"/>
+                            
+                            </p:selectOneMenu>
+                            
+                            
 
                             <p:outputLabel for="url" value="URL"/>
                             <p:inputText id="url" value="#{menuAccessControladorImpl.menu.urlMenu}" required="true"/>

@@ -7,6 +7,7 @@ package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -49,7 +51,8 @@ public class Menu implements Serializable{
     private int stock;
     
     @Column(name = "FECHA")
-    private String fecha;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha;
     
     //Mapeado con Usuario, un mismo menu puede ser seleccionado por varios Usuarios    
     @OneToMany(mappedBy = "menuSeleccionado", cascade = CascadeType.ALL)
@@ -58,15 +61,18 @@ public class Menu implements Serializable{
     public Menu() {
     }
 
-    public Menu(int idMenu, String entrada, String sopa, String segundo, String jugo, String postre, String fecha) {
+    public Menu(int idMenu, String entrada, String sopa, String segundo, String jugo, String postre, int stock, Date fecha) {
         this.idMenu = idMenu;
         this.entrada = entrada;
         this.sopa = sopa;
         this.segundo = segundo;
         this.jugo = jugo;
         this.postre = postre;
+        this.stock = stock;
         this.fecha = fecha;
     }
+
+
 
     public int getIdMenu() {
         return idMenu;
@@ -125,13 +131,15 @@ public class Menu implements Serializable{
         this.postre = postre;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+
 
     public List<Usuario> getUsuarios() {
         return usuarios;

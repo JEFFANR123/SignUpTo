@@ -10,60 +10,102 @@
         <ui:composition template="./../WEB-INF/template/plantillaUser.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    
-                    <p:tabView scrollable="true">
-                        <p:tab title="Menu Options">
-                            <p:fieldset legend="Datos del nuevo Suscriptor">
-                                <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
-                                <h:panelGrid columns="3" id="panelMenu" style="border: 0px;">
+                <h:form id="frmMenu">
+
+                    <h:panelGrid id="panelMenu" style="border: 0px;">
+
+                        <p:commandButton onclick="PF('wDialogoMenu').show();" icon="ui-icon ui-icon-plus" value="Agregar Menu" />
+
+                        <p:dataTable value="#{menuControladorImpl.listaMenu}" var="listaMenu" >
+                            <p:growl id="mensaje" showDetail="true" />
+                            <p:column headerText="Fecha" >
+                                <p:outputLabel value="#{listaMenu.fecha}" />
+                            </p:column>
+
+                            <p:column headerText="Entrada" >
+                                <p:outputLabel value="#{listaMenu.entrada}" />
+                            </p:column>
+
+                            <p:column headerText="Sopa" >
+                                <p:outputLabel value="#{listaMenu.sopa}" />
+                            </p:column>
+
+                            <p:column headerText="Segundo" >
+                                <p:outputLabel value="#{listaMenu.segundo}" />
+                            </p:column>
+
+                            <p:column headerText="Jugo" >
+                                <p:outputLabel value="#{listaMenu.jugo}" />
+                            </p:column>
+
+                            <p:column headerText="Postre" >
+                                <p:outputLabel value="#{listaMenu.postre}" />
+                            </p:column>
+
+                            <p:column headerText="Editar" >
+                                <p:commandLink value="Editar" />
+                            </p:column>
+
+                            <p:column headerText="Eliminar" >
+                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminarMenu(listaMenu)}" update="frmMenu:panelMenu, mensaje">
+                                    <p:confirm header="Confirmacion" message="Estas seguro de esta accion?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                </p:confirmDialog> 
+                            </p:column>
+
+                        </p:dataTable>
 
 
-                                    <p:outputLabel for="Entrada" value="Entrada del almuerzo"/>
-                                    <p:inputText id="Entrada" value="#{menuControladorImpl.menu.entrada}" required="true" requiredMessage="Campo Requerido"/>
-                                    <p:message for ="Entrada"/>
-                                    
-                                    <p:outputLabel  value="Entrada del almuerzo"/>
-                                    <p:inputText id="Sopa" value="#{menuControladorImpl.menu.sopa}" required="true"/>
-                                    <p:message for ="Sopa"/>
-                                    
-                                    <p:outputLabel  value="Entrada del almuerzo"/>
-                                    <p:inputText id="Segundo" value="#{menuControladorImpl.menu.segundo}" required="true"/>
-                                    <p:message for ="Segundo"/>
-                                    
-                                    <p:outputLabel  value="Entrada del almuerzo"/>
-                                    <p:inputText id="Jugo" value="#{menuControladorImpl.menu.jugo}" required="true"/>
-                                    <p:message for ="Jugo"/>
-                                    
-                                    <p:outputLabel  value="Entrada del almuerzo"/>
-                                    <p:inputText id="Postre" value="#{menuControladorImpl.menu.postre}" required="true"/>
-                                    <p:message for ="Postre"/>
-                                    
-                                    <p:outputLabel  value="Entrada del almuerzo"/>
-                                    <p:inputText id="Stock" value="#{menuControladorImpl.menu.stock}" required="true"/>
-                                    <p:message for ="Stock"/>
-
-                                </h:panelGrid>
-                                <p:commandButton actionListener="#{menuControladorImpl.insertarMenu()}" value="Registrar Menu" update="panelMenu, mensaje" />
-                            </p:fieldset>
-                        </p:tab>
-                        <p:tab title="Ofertas">
-
-                            <h:panelGrid id="panelOfertas" style="border: 0px;">
-
-                                <p:dataTable id="listOfertas" var="menulist" >
-
-
-                                </p:dataTable>
-
-                            </h:panelGrid>
-
-                        </p:tab>
-                        <p:tab title="Tab 3">Tab 3 Content</p:tab>
-                        <p:tab title="Tab 4">Tab 4 Content</p:tab>
-                    </p:tabView>
+                    </h:panelGrid>
 
                 </h:form>
+
+                <p:dialog header="Agregar un menu" id="dialogoMenu" widgetVar="wDialogoMenu" footer="sfas" modal="true">
+                    <h:form id="frmlmenu">
+                        <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
+                        <p:panelGrid columns="3" id="panelDM">
+
+                            <p:outputLabel value="Fecha"/>
+                            <p:calendar  value="#{menuControladorImpl.menu.fecha}" locale="es" pattern="dd/MM/yyyy">
+                                <p:ajax event="dateSelect" listener="#{menuControladorImpl.actualizar_fecha}" update=":frmlmenu:fecha_seleccioanda"/> 
+                            </p:calendar>
+
+                            <p:outputLabel id="fecha_seleccioanda" value="#{menuControladorImpl.f_seleccionada}"/>
+
+                            <p:outputLabel value="Entrada" for="entrada"/>
+                            <p:inputText id="entrada" value="#{menuControladorImpl.menu.entrada}" required="true"/>
+                            <p:column/>
+
+                            <p:outputLabel value="Sopa" for="sopa"/>
+                            <p:inputText id="sopa" value="#{menuControladorImpl.menu.sopa}" required="true"/>
+                            <p:column/>
+
+                            <p:outputLabel value="Segundo" for="segundo"/>
+                            <p:inputText id="segundo" value="#{menuControladorImpl.menu.segundo}" required="true"/>
+                            <p:column/>
+
+                            <p:outputLabel value="Jugo" for="jugo"/>
+                            <p:inputText id="jugo" value="#{menuControladorImpl.menu.jugo}" required="true"/>
+                            <p:column/>
+
+                            <p:outputLabel value="Postre" for="postre"/>
+                            <p:inputText id="postre" value="#{menuControladorImpl.menu.postre}" required="true"/>
+                            <p:column/>
+
+                            <p:commandButton value="Registrar" actionListener="#{menuControladorImpl.insertarMenu()}" 
+                                             oncomplete="PF('wDialogoMenu').hide();" update=":frmMenu:panelMenu, mensaje"/>
+
+                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
+
+                        </p:panelGrid> 
+
+                    </h:form>
+
+
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

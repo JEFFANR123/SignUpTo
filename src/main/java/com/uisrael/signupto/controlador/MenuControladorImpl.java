@@ -8,6 +8,7 @@ package com.uisrael.signupto.controlador;
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Menu;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 
 /**
@@ -32,25 +34,65 @@ public class MenuControladorImpl implements Serializable {
     private Menu menu;
 
     private List<Menu> listaMenu;
+    
+    private String f_seleccionada = "";
 
     @PostConstruct
     public void init() {
         menu = new Menu();
-        listaMenu = new ArrayList<>();
+        listaMenu = menuFacadeLocal.findAll();
 
     }
     
+     public void actualizar_fecha(SelectEvent event) {
+        SimpleDateFormat fecha1 = new SimpleDateFormat("EEEEE dd MMMMM yyyy");
+        StringBuilder cadena_fecha1_11 = new StringBuilder(fecha1.format(event.getObject()));
+        f_seleccionada = cadena_fecha1_11.toString();
+        
+        
+    }
+     
+    public void eliminarMenu(Menu delMenu){
+        try {
+            menuFacadeLocal.remove(delMenu);
+            listaMenu = menuFacadeLocal.findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Opcion de Menu eliminado correctamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Aviso","Ocurrio un error al eliminar"));
+        }
+        
+    }
+    
+    public void listarMenu(){
+        try {
+            listaMenu = menuFacadeLocal.findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Listado de menu cargado"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Error","Ocrrio un error al cargar los menus"));
+        }
+    }
 
     public void insertarMenu() {
 
         try {
             menuFacadeLocal.create(menu);
+            listaMenu = menuFacadeLocal.findAll();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Agregado correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Ocurrio un error"));
         }
 
     }
+
+    public String getF_seleccionada() {
+        return f_seleccionada;
+    }
+
+    public void setF_seleccionada(String f_seleccionada) {
+        this.f_seleccionada = f_seleccionada;
+    }
+    
+    
 
     public MenuFacadeLocal getMenuFacadeLocal() {
         return menuFacadeLocal;
@@ -66,6 +108,14 @@ public class MenuControladorImpl implements Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public List<Menu> getListaMenu() {
+        return listaMenu;
+    }
+
+    public void setListaMenu(List<Menu> listaMenu) {
+        this.listaMenu = listaMenu;
     }
 
     
