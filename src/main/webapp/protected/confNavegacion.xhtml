@@ -14,7 +14,8 @@
 
                 <h:form id="frmPrincipal">
 
-                    <p:commandButton onclick="PF('wdialogo').show();" icon="ui-icon ui-icon-plus" value="Agregar menu"/>
+                    <p:commandButton onclick="PF('wdialogo').show();" icon="ui-icon ui-icon-plus" 
+                                     value="Agregar menu" actionListener="#{menuAccessControladorImpl.setAccion('R')}" update=":frmDialogo"/>
 
                     <h:panelGrid id="panelMenu" style="border: 0px;">
 
@@ -45,8 +46,9 @@
                             </p:column>
 
                             <p:column headerText="Editar" >
-                                <p:commandLink value="Editar" />
+                                <p:commandLink value="Editar" actionListener="#{menuAccessControladorImpl.leerMenu(menulist)}" oncomplete="PF('wdialogo').show();" update="dialogo" />
                             </p:column>
+                           
 
                             <p:column headerText="Eliminar" >
                                 <p:commandButton icon="ui-icon-trash" actionListener="#{menuAccessControladorImpl.eliminarMenu(menulist)}" update="frmPrincipal, mensajes">
@@ -64,12 +66,12 @@
 
                     </h:panelGrid>
                 </h:form>
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Acceso de menus" modal="true" resizable="false" draggable="false" closeOnEscape="true">
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Acceso de menus" modal="true" resizable="false" draggable="false" closeOnEscape="true" >
 
-                    <h:form>
+                    <h:form id="frmDialogo">
 
                         <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
-                        <p:panelGrid columns="2" >
+                        <p:panelGrid id="panelDialogo" columns="2" >
 
                             <p:outputLabel for="titulo" value="Titulo"/>
                             <p:inputText id="titulo" value="#{menuAccessControladorImpl.menu.nombre}" required="true"/>
@@ -103,7 +105,11 @@
                             <p:inputText id="url" value="#{menuAccessControladorImpl.menu.urlMenu}" required="true"/>
 
                             <p:commandButton icon="ui-icon-check" value="Registrar" oncomplete="PF('wdialogo').hide();" 
-                                             actionListener="#{menuAccessControladorImpl.guardarMenu()}" update="frmPrincipal:panelMenu, mensaje"/>
+                                             actionListener="#{menuAccessControladorImpl.guardarMenu()}" 
+                                             update="frmPrincipal:panelMenu, mensaje" rendered="#{menuAccessControladorImpl.accion == 'R'}"/>
+                            <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wdialogo').hide();" 
+                                             actionListener="#{menuAccessControladorImpl.modificarMenu()}" 
+                                             update="frmPrincipal:panelMenu, mensaje" rendered="#{menuAccessControladorImpl.accion == 'M'}"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
                         </p:panelGrid>
 

@@ -36,6 +36,8 @@ public class MenuControladorImpl implements Serializable {
     private List<Menu> listaMenu;
     
     private String f_seleccionada = "";
+    
+    private String accionMenu;
 
     @PostConstruct
     public void init() {
@@ -63,6 +65,22 @@ public class MenuControladorImpl implements Serializable {
         
     }
     
+    public void leerMenu(Menu lMenu){
+        menu = lMenu;
+        this.setAccionMenu("M");
+    }
+    
+    public void modificarMenu() {
+        try {
+            menuFacadeLocal.edit(menu);
+            listaMenu = menuFacadeLocal.findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Modificado exitosamente."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al modificar"));
+        }
+
+    }
+    
     public void listarMenu(){
         try {
             listaMenu = menuFacadeLocal.findAll();
@@ -83,6 +101,15 @@ public class MenuControladorImpl implements Serializable {
         }
 
     }
+
+    public String getAccionMenu() {
+        return accionMenu;
+    }
+
+    public void setAccionMenu(String accionMenu) {
+        this.accionMenu = accionMenu;
+    }
+
 
     public String getF_seleccionada() {
         return f_seleccionada;

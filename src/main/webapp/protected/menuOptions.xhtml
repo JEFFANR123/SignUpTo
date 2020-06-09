@@ -14,7 +14,8 @@
 
                     <h:panelGrid id="panelMenu" style="border: 0px;">
 
-                        <p:commandButton onclick="PF('wDialogoMenu').show();" icon="ui-icon ui-icon-plus" value="Agregar Menu" />
+                        <p:commandButton onclick="PF('wDialogoMenu').show();" icon="ui-icon ui-icon-plus" value="Agregar Menu"
+                                         actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
 
                         <p:dataTable value="#{menuControladorImpl.listaMenu}" var="listaMenu" >
                             <p:growl id="mensaje" showDetail="true" />
@@ -43,7 +44,7 @@
                             </p:column>
 
                             <p:column headerText="Editar" >
-                                <p:commandLink value="Editar" />
+                                <p:commandLink value="Editar" actionListener="#{menuControladorImpl.leerMenu(listaMenu)}" oncomplete="PF('wDialogoMenu').show();" update="dialogoMenu" />
                             </p:column>
 
                             <p:column headerText="Eliminar" >
@@ -95,8 +96,12 @@
                             <p:inputText id="postre" value="#{menuControladorImpl.menu.postre}" required="true"/>
                             <p:column/>
 
-                            <p:commandButton value="Registrar" actionListener="#{menuControladorImpl.insertarMenu()}" 
-                                             oncomplete="PF('wDialogoMenu').hide();" update=":frmMenu:panelMenu, mensaje"/>
+                            <p:commandButton value="Registrar" oncomplete="PF('wDialogoMenu').hide();" 
+                                             actionListener="#{menuControladorImpl.insertarMenu()}" 
+                                             update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'R'}"/>
+                            <p:commandButton value="Modificar" oncomplete="PF('wDialogoMenu').hide();" 
+                                             actionListener="#{menuControladorImpl.modificarMenu()}" 
+                                             update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'M'}"/>
 
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 

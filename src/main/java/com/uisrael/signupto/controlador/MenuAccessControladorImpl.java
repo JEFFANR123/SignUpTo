@@ -39,6 +39,8 @@ public class MenuAccessControladorImpl implements Serializable {
     private MenuAccess menu;
 
     private MenuModel model;
+    
+    private String accion;
 
     @PostConstruct
     public void init() {
@@ -51,17 +53,25 @@ public class MenuAccessControladorImpl implements Serializable {
         
     }
 
-    public void listarMenu() {
-        try {
-            menuOpts = menuAccessFacadeLocal.findAll();
-        } catch (Exception e) {
-        }
-
-    }
-
     public void guardarMenu() {
         try {
             menuAccessFacadeLocal.create(menu);
+            menuOpts = menuAccessFacadeLocal.findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Navegacion modificada exitosamente."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al guardar la navegacion."));
+        }
+
+    }
+    
+    public void leerMenu(MenuAccess menuAccess){
+        menu = menuAccess;
+        this.setAccion("M");
+    }
+    
+    public void modificarMenu() {
+        try {
+            menuAccessFacadeLocal.edit(menu);
             menuOpts = menuAccessFacadeLocal.findAll();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Navegacion modificada exitosamente."));
         } catch (Exception e) {
@@ -145,5 +155,15 @@ public class MenuAccessControladorImpl implements Serializable {
     public void setMenuOpts(List<MenuAccess> menuOpts) {
         this.menuOpts = menuOpts;
     }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
+    
+    
 
 }
