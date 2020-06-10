@@ -17,7 +17,7 @@
                     <p:commandButton onclick="PF('wdialogo').show();" icon="ui-icon ui-icon-plus" 
                                      value="Agregar menu" actionListener="#{menuAccessControladorImpl.setAccion('R')}" update=":frmDialogo"/>
 
-                    <h:panelGrid id="panelMenu" style="border: 0px;">
+                    <h:panelGrid id="panelMenu">
 
                         <p:dataTable id="listMenu" value="#{menuAccessControladorImpl.menuOpts}" var="menulist" >
                             <p:growl id="mensajes" showDetail="true" />

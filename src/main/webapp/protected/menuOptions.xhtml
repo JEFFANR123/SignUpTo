@@ -75,6 +75,11 @@
                             </p:calendar>
 
                             <p:outputLabel id="fecha_seleccioanda" value="#{menuControladorImpl.f_seleccionada}"/>
+                            
+                            <p:selectOneMenu id="listadoEntrada" value="#{menuControladorImpl.menu.entrada}">
+                                
+                                
+                            </p:selectOneMenu>
 
                             <p:outputLabel value="Entrada" for="entrada"/>
                             <p:inputText id="entrada" value="#{menuControladorImpl.menu.entrada}" required="true"/>

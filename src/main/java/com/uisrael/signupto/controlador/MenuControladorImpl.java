@@ -5,11 +5,12 @@
  */
 package com.uisrael.signupto.controlador;
 
+import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Carta;
 import com.uisrael.signupto.modelo.entidades.Menu;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -30,6 +31,11 @@ public class MenuControladorImpl implements Serializable {
 
     @EJB
     private MenuFacadeLocal menuFacadeLocal;
+    
+    @EJB
+    private CartaFacadeLocal cartaFacadeLocal;
+    
+    private List<Carta> listaCarta;
 
     private Menu menu;
 
@@ -43,6 +49,7 @@ public class MenuControladorImpl implements Serializable {
     public void init() {
         menu = new Menu();
         listaMenu = menuFacadeLocal.findAll();
+        listaCarta = cartaFacadeLocal.findAll();
 
     }
     
