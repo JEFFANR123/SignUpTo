@@ -7,6 +7,8 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Menu;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,5 +31,14 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
     public MenuFacade() {
         super(Menu.class);
     }
+
+    @Override
+    public List<Menu> listadoFiltrado(Date inicio, Date fin) {
+     return em.createQuery("SELECT p FROM Menu p WHERE p.fecha >= :inicio AND p.fecha < :fin",Menu.class)
+             .setParameter("inicio", inicio).setParameter("fin", fin).getResultList();
+    
+    }
+
+
     
 }

@@ -6,6 +6,7 @@
 package com.uisrael.signupto.modelo.dao;
 
 import com.uisrael.signupto.modelo.entidades.Menu;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -27,7 +28,9 @@ public interface MenuFacadeLocal {
     List<Menu> findAll();
 
     List<Menu> findRange(int[] range);
-
+    
     int count();
+    
+    List<Menu> listadoFiltrado(Date inicio, Date fin);
     
 }
