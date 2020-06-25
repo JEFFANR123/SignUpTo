@@ -5,7 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
-import com.uisrael.signupto.modelo.entidades.Carta;
+import com.uisrael.signupto.modelo.entidades.RecuperarPass;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,22 +14,20 @@ import javax.ejb.Local;
  * @author janrango
  */
 @Local
-public interface CartaFacadeLocal {
+public interface RecuperarPassFacadeLocal {
 
-    void create(Carta carta);
+    void create(RecuperarPass recuperarPass);
 
-    void edit(Carta carta);
+    void edit(RecuperarPass recuperarPass);
 
-    void remove(Carta carta);
+    void remove(RecuperarPass recuperarPass);
 
-    Carta find(Object id);
+    RecuperarPass find(Object id);
 
-    List<Carta> findAll();
+    List<RecuperarPass> findAll();
 
-    List<Carta> findRange(int[] range);
+    List<RecuperarPass> findRange(int[] range);
 
     int count();
-    
-    List<Carta> listaCarta(String opc);
     
 }

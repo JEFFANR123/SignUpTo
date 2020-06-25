@@ -41,7 +41,7 @@ public class Menu implements Serializable{
     @Column(name = "SEGUNDO")
     private String segundo;
     
-    @Column(name = "JUGO")
+    @Column(name = "BEBIDA")
     private String jugo;
     
     @Column(name = "POSTRE")
@@ -54,10 +54,6 @@ public class Menu implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     
-    //Mapeado con Usuario, un mismo menu puede ser seleccionado por varios Usuarios    
-    @OneToMany(mappedBy = "menuSeleccionado", cascade = CascadeType.ALL)
-    private List<Usuario> usuarios = new ArrayList<>();
-
     public Menu() {
     }
 
@@ -139,15 +135,6 @@ public class Menu implements Serializable{
         this.fecha = fecha;
     }
 
-
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 
     @Override
     public int hashCode() {

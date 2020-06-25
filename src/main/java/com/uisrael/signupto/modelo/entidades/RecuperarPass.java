@@ -6,11 +6,15 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,35 +24,36 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_PasswordUser")
-public class RecoverPass implements Serializable{
+public class RecuperarPass implements Serializable{
     
     @Id
-    private int idPassword;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "IDUSUARIO")
+    private Usuario idUsuario;
     
-    //Llega desde DatosUsuario FK
     @Column (name = "CI_USUARIO")
     private String ciUsuario;
     
-    //Llega desde DatosUsuario FK
     @Column (name = "USUARIOPASS")
     private String usuarioPass;
 
-    public RecoverPass() {
+    public RecuperarPass() {
     }
 
-    public RecoverPass(int idPassword, String ciUsuario, String usuarioPass) {
-        this.idPassword = idPassword;
+    public RecuperarPass(Usuario idUsuario, String ciUsuario, String usuarioPass) {
+        this.idUsuario = idUsuario;
         this.ciUsuario = ciUsuario;
         this.usuarioPass = usuarioPass;
     }
 
-    public int getIdPassword() {
-        return idPassword;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdPassword(int idPassword) {
-        this.idPassword = idPassword;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
+
 
     public String getUsuarioPass() {
         return usuarioPass;
@@ -70,7 +75,7 @@ public class RecoverPass implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + this.idPassword;
+        hash = 53 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -85,8 +90,8 @@ public class RecoverPass implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RecoverPass other = (RecoverPass) obj;
-        if (this.idPassword != other.idPassword) {
+        final RecuperarPass other = (RecuperarPass) obj;
+        if (!Objects.equals(this.idUsuario, other.idUsuario)) {
             return false;
         }
         return true;
@@ -94,9 +99,8 @@ public class RecoverPass implements Serializable{
 
     @Override
     public String toString() {
-        return "RecoverPass{" + "idPassword=" + idPassword + '}';
+        return "RecuperarPass{" + "idUsuario=" + idUsuario + '}';
     }
-
 
     
 }

@@ -35,6 +35,8 @@ public class MenuAccessControladorImpl implements Serializable {
     private List<MenuAccess> listaMenu;
 
     private List<MenuAccess> menuOpts;
+    
+    private List<MenuAccess> listadoTipoMenu;
 
     private MenuAccess menu;
 
@@ -50,7 +52,16 @@ public class MenuAccessControladorImpl implements Serializable {
         this.permisosMenu();
         menuOpts = menuAccessFacadeLocal.findAll();
         menu = new MenuAccess();
+        listarTipoM();
         
+    }
+    
+    public void listarTipoM(){
+    
+        try {
+            listadoTipoMenu = menuAccessFacadeLocal.listaMenuAccesses();
+        } catch (Exception e) {
+        }
     }
 
     public void guardarMenu() {
@@ -162,6 +173,14 @@ public class MenuAccessControladorImpl implements Serializable {
 
     public void setAccion(String accion) {
         this.accion = accion;
+    }
+
+    public List<MenuAccess> getListadoTipoMenu() {
+        return listadoTipoMenu;
+    }
+
+    public void setListadoTipoMenu(List<MenuAccess> listadoTipoMenu) {
+        this.listadoTipoMenu = listadoTipoMenu;
     }
     
     

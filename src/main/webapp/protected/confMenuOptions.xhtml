@@ -17,7 +17,7 @@
                         <p:commandButton onclick="PF('wDialogoMenu').show();" icon="ui-icon ui-icon-plus" value="Agregar Menu"
                                          actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
 
-                        <p:dataTable value="#{menuControladorImpl.listaMenu}" var="listaMenu" >
+                        <p:dataTable value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
                             <p:growl id="mensaje" showDetail="true" />
                             <p:column headerText="Fecha" >
                                 <h:outputText value="#{listaMenu.fecha}" >
@@ -81,6 +81,7 @@
                 </h:form>
 
                 <p:dialog header="Agregar un menu" id="dialogoMenu" widgetVar="wDialogoMenu" footer="sfas" modal="true">
+
                     <h:form id="frmlmenu">
                         <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
                         <p:panelGrid columns="3" id="panelDM">
@@ -94,39 +95,43 @@
                             <p:outputLabel value="Entrada" />
 
                             <p:selectOneMenu value="#{menuControladorImpl.menu.entrada}">
-                                <f:selectItems value="#{menuControladorImpl.listaCarta}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.tipoCarta.nombreTipo}, #{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
+                                <f:selectItems value="#{menuControladorImpl.listaEntradas}" 
+                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
                             </p:selectOneMenu>
                             <p:column/>
 
 
                             <p:outputLabel value="Sopa" />
                             <p:selectOneMenu value="#{menuControladorImpl.menu.sopa}">
-                                <f:selectItems value="#{menuControladorImpl.listaCarta}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.tipoCarta.nombreTipo}, #{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
+                                <f:selectItems value="#{menuControladorImpl.listaSopas}" 
+                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
                             </p:selectOneMenu>
                             <p:column/>
 
                             <p:outputLabel value="Segundo" />
                             <p:selectOneMenu value="#{menuControladorImpl.menu.segundo}">
-                                <f:selectItems value="#{menuControladorImpl.listaCarta}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.tipoCarta.nombreTipo}, #{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
+                                <f:selectItems value="#{menuControladorImpl.listaSegundos}" 
+                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
                             </p:selectOneMenu>
                             <p:column/>
 
                             <p:outputLabel value="Jugo" />
                             <p:selectOneMenu value="#{menuControladorImpl.menu.jugo}">
-                                <f:selectItems value="#{menuControladorImpl.listaCarta}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.tipoCarta.nombreTipo}, #{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
+                                <f:selectItems value="#{menuControladorImpl.listaBebidas}" 
+                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
                             </p:selectOneMenu>
                             <p:column/>
 
                             <p:outputLabel value="Postre" />
 
                             <p:selectOneMenu value="#{menuControladorImpl.menu.postre}">
-                                <f:selectItems value="#{menuControladorImpl.listaCarta}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.tipoCarta.nombreTipo}, #{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
+                                <f:selectItems value="#{menuControladorImpl.listaPostres}" 
+                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
                             </p:selectOneMenu>
+                            <p:column/>
+
+                            <p:outputLabel value="Probando" />
+
                             <p:column/>
 
                             <p:outputLabel value="Stock" />
@@ -145,8 +150,8 @@
 
                     </h:form>
 
-
                 </p:dialog>
+
             </ui:define>
 
         </ui:composition>

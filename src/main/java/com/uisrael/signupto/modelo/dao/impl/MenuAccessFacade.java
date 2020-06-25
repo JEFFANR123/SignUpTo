@@ -7,6 +7,7 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.MenuAccessFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.MenuAccess;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,5 +30,10 @@ public class MenuAccessFacade extends AbstractFacade<MenuAccess> implements Menu
     public MenuAccessFacade() {
         super(MenuAccess.class);
     }
-    
+
+    @Override
+    public List<MenuAccess> listaMenuAccesses() {
+        return em.createQuery("SELECT p FROM MenuAccess p WHERE p.tipoMenu = 'S' ", MenuAccess.class).getResultList();
+    }
+
 }

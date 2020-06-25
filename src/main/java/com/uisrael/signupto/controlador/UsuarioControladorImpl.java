@@ -62,6 +62,11 @@ public class UsuarioControladorImpl implements Serializable {
             System.err.println("\n Ocurrio un error desde el controlador \n");
         }
     }
+    
+    public void seleccionarMenu(){
+    
+        
+    }
 
     public Usuario getUsuario() {
         return usuario;

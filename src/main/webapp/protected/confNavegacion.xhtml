@@ -98,11 +98,10 @@
                                 <f:selectItem itemValue="C" itemLabel="Cliente"/>
                             
                             </p:selectOneMenu>
-                            
-                            
 
                             <p:outputLabel for="url" value="URL"/>
                             <p:inputText id="url" value="#{menuAccessControladorImpl.menu.urlMenu}" required="true"/>
+                            
 
                             <p:commandButton icon="ui-icon-check" value="Registrar" oncomplete="PF('wdialogo').hide();" 
                                              actionListener="#{menuAccessControladorImpl.guardarMenu()}" 

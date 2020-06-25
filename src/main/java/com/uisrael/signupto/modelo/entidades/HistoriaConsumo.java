@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_HISTORYCONSUMO")
-public class HistoryConsumo implements Serializable {
+public class HistoriaConsumo implements Serializable {
 
     @Id
     private int idHistory;
@@ -30,10 +30,10 @@ public class HistoryConsumo implements Serializable {
     @Column(name = "DATOSCONSUMO")
     private String datosConsumo;
 
-    public HistoryConsumo() {
+    public HistoriaConsumo() {
     }
 
-    public HistoryConsumo(int idHistory, String menuSeleccionado, String datosConsumo) {
+    public HistoriaConsumo(int idHistory, String menuSeleccionado, String datosConsumo) {
         this.idHistory = idHistory;
         this.menuSeleccionado = menuSeleccionado;
         this.datosConsumo = datosConsumo;
@@ -81,7 +81,7 @@ public class HistoryConsumo implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final HistoryConsumo other = (HistoryConsumo) obj;
+        final HistoriaConsumo other = (HistoriaConsumo) obj;
         if (this.idHistory != other.idHistory) {
             return false;
         }

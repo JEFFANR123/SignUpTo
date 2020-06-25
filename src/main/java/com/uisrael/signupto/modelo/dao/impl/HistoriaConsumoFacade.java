@@ -5,10 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
-import com.uisrael.signupto.modelo.entidades.Menu;
-import java.util.Date;
-import java.util.List;
+import com.uisrael.signupto.modelo.dao.HistoriaConsumoFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.HistoriaConsumo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal {
+public class HistoriaConsumoFacade extends AbstractFacade<HistoriaConsumo> implements HistoriaConsumoFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -28,16 +26,8 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
         return em;
     }
 
-    public MenuFacade() {
-        super(Menu.class);
+    public HistoriaConsumoFacade() {
+        super(HistoriaConsumo.class);
     }
-
-    @Override
-    public List<Menu> listadoFiltrado(Date inicio, Date fin) {
-     return em.createQuery("SELECT p FROM Menu p WHERE p.fecha >= :inicio AND p.fecha < :fin",Menu.class)
-             .setParameter("inicio", inicio).setParameter("fin", fin).getResultList();
-    
-    }
-
     
 }

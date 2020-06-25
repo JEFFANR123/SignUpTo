@@ -7,9 +7,11 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Carta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,5 +31,14 @@ public class CartaFacade extends AbstractFacade<Carta> implements CartaFacadeLoc
     public CartaFacade() {
         super(Carta.class);
     }
-    
+
+    @Override
+    public List<Carta> listaCarta(String opc) {
+        //Select nombretipo, nombre from t_carta inner join t_tipocarta 
+        //on t_carta.idtipocarta=t_tipocarta.idtipocarta WHERE t_tipocarta.nombretipo='Segundo'
+        
+       return em.createQuery("SELECT p FROM Carta p JOIN p.tipoCarta t WHERE t.nombreTipo = :opc",Carta.class)
+               .setParameter("opc", opc).getResultList();
+    }
+
 }

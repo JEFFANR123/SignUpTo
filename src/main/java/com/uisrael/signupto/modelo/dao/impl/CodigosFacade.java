@@ -5,8 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.dao.HistoryConsumoFacadeLocal;
-import com.uisrael.signupto.modelo.entidades.HistoryConsumo;
+import com.uisrael.signupto.modelo.dao.CodigosFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Codigos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class HistoryConsumoFacade extends AbstractFacade<HistoryConsumo> implements HistoryConsumoFacadeLocal {
+public class CodigosFacade extends AbstractFacade<Codigos> implements CodigosFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -26,8 +26,8 @@ public class HistoryConsumoFacade extends AbstractFacade<HistoryConsumo> impleme
         return em;
     }
 
-    public HistoryConsumoFacade() {
-        super(HistoryConsumo.class);
+    public CodigosFacade() {
+        super(Codigos.class);
     }
     
 }

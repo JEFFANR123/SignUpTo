@@ -7,12 +7,13 @@ package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,11 +23,13 @@ import javax.persistence.TemporalType;
  * @author janrango
  */
 @Entity
-@Table(name = "T_GENERACODIGO")
-public class GeneraCodigo implements Serializable {
+@Table(name = "T_CODIGOS")
+public class Codigos implements Serializable {
 
     @Id
-    private int idCodigoGenerado;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "IDUSUARIO")
+    private Usuario idUsuario;
 
     @Column(name = "CODIGOGENERADO", nullable = false, length = 20)
     private String codigoGenerado;
@@ -38,15 +41,16 @@ public class GeneraCodigo implements Serializable {
     @Column(name = "FHVALIDADO", nullable = false, length = 25)
     private String fhValidado;
 
-    public GeneraCodigo() {
+    public Codigos() {
     }
 
-    public GeneraCodigo(int idCodigoGenerado, String codigoGenerado, Date fechaGenerado, String fhValidado) {
-        this.idCodigoGenerado = idCodigoGenerado;
+    public Codigos(Usuario idUsuario, String codigoGenerado, Date fechaGenerado, String fhValidado) {
+        this.idUsuario = idUsuario;
         this.codigoGenerado = codigoGenerado;
         this.fechaGenerado = fechaGenerado;
         this.fhValidado = fhValidado;
     }
+
 
     public Date getFechaGenerado() {
         return fechaGenerado;
@@ -56,15 +60,14 @@ public class GeneraCodigo implements Serializable {
         this.fechaGenerado = fechaGenerado;
     }
 
-
-
-    public int getIdCodigoGenerado() {
-        return idCodigoGenerado;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdCodigoGenerado(int idCodigoGenerado) {
-        this.idCodigoGenerado = idCodigoGenerado;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
+
 
     public String getCodigoGenerado() {
         return codigoGenerado;
@@ -85,8 +88,8 @@ public class GeneraCodigo implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + this.idCodigoGenerado;
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -101,8 +104,8 @@ public class GeneraCodigo implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final GeneraCodigo other = (GeneraCodigo) obj;
-        if (this.idCodigoGenerado != other.idCodigoGenerado) {
+        final Codigos other = (Codigos) obj;
+        if (!Objects.equals(this.idUsuario, other.idUsuario)) {
             return false;
         }
         return true;
@@ -110,8 +113,9 @@ public class GeneraCodigo implements Serializable {
 
     @Override
     public String toString() {
-        return "GeneraCodigo{" + "idCodigoGenerado=" + idCodigoGenerado + '}';
+        return "Codigos{" + "idUsuario=" + idUsuario + '}';
     }
+
 
 
 }

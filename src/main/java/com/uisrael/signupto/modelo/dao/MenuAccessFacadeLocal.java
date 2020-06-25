@@ -30,4 +30,5 @@ public interface MenuAccessFacadeLocal {
 
     int count();
     
+    List<MenuAccess> listaMenuAccesses();
 }

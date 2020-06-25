@@ -5,7 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.entidades.GeneraCodigo;
+import com.uisrael.signupto.modelo.dao.ConsumosFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Consumos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class GeneraCodigoFacade extends AbstractFacade<GeneraCodigo> implements GeneraCodigoFacadeLocal {
+public class ConsumosFacade extends AbstractFacade<Consumos> implements ConsumosFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -25,8 +26,8 @@ public class GeneraCodigoFacade extends AbstractFacade<GeneraCodigo> implements 
         return em;
     }
 
-    public GeneraCodigoFacade() {
-        super(GeneraCodigo.class);
+    public ConsumosFacade() {
+        super(Consumos.class);
     }
     
 }

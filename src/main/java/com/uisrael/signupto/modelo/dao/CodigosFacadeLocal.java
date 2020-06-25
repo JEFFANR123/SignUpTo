@@ -5,7 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
-import com.uisrael.signupto.modelo.entidades.Carta;
+import com.uisrael.signupto.modelo.entidades.Codigos;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,22 +14,20 @@ import javax.ejb.Local;
  * @author janrango
  */
 @Local
-public interface CartaFacadeLocal {
+public interface CodigosFacadeLocal {
 
-    void create(Carta carta);
+    void create(Codigos codigos);
 
-    void edit(Carta carta);
+    void edit(Codigos codigos);
 
-    void remove(Carta carta);
+    void remove(Codigos codigos);
 
-    Carta find(Object id);
+    Codigos find(Object id);
 
-    List<Carta> findAll();
+    List<Codigos> findAll();
 
-    List<Carta> findRange(int[] range);
+    List<Codigos> findRange(int[] range);
 
     int count();
-    
-    List<Carta> listaCarta(String opc);
     
 }

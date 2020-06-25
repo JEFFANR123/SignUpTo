@@ -5,7 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.entidades.RecoverPass;
+import com.uisrael.signupto.modelo.dao.SaldosFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Saldos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class RecoverPassFacade extends AbstractFacade<RecoverPass> implements RecoverPassFacadeLocal {
+public class SaldosFacade extends AbstractFacade<Saldos> implements SaldosFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -25,8 +26,8 @@ public class RecoverPassFacade extends AbstractFacade<RecoverPass> implements Re
         return em;
     }
 
-    public RecoverPassFacade() {
-        super(RecoverPass.class);
+    public SaldosFacade() {
+        super(Saldos.class);
     }
     
 }

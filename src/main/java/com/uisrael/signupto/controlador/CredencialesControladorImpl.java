@@ -55,10 +55,10 @@ public class CredencialesControladorImpl implements Serializable {
             if (creusr != null) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", creusr);
                 if(creusr.getTipoUser().equals("A")){
-                redireccion = "protected/adminUser.xhtml?faces-redirect=true";
+                redireccion = "protected/adminInicio.xhtml?faces-redirect=true";
                 }else{
                     if(creusr.getTipoUser().equals("E") || creusr.getTipoUser().equals("C") ){}
-                redireccion = "protected/normalUser.xhtml?faces-redirect=true";
+                redireccion = "customer/clienteInicio.xhtml?faces-redirect=true";
                 }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "No existe"));

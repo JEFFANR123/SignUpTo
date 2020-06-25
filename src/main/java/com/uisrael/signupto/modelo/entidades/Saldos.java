@@ -6,12 +6,13 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,11 +20,13 @@ import javax.persistence.Table;
  * @author janrango
  */
 @Entity
-@Table(name = "T_SALDOUSUARIO")
-public class SaldoUsuario implements Serializable{
+@Table(name = "T_SALDOS")
+public class Saldos implements Serializable{
     
     @Id
-    private int idSaldoUsuario;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "IDUSUARIO")
+    private Usuario idUsuario;
     
     @Column(name = "SALDOACTUAL")
     private double saldoActual;
@@ -40,14 +43,29 @@ public class SaldoUsuario implements Serializable{
     @Column(name = "PAGOAPROBADO")
     private double pagoAprobado;
 
-    public int getIdSaldoUsuario() {
-        return idSaldoUsuario;
+    public Saldos() {
+    }
+    
+
+    public Saldos(Usuario idUsuario, double saldoActual, double saldoAnterior, double pagoRealizado, String imgPago, double pagoAprobado) {
+        this.idUsuario = idUsuario;
+        this.saldoActual = saldoActual;
+        this.saldoAnterior = saldoAnterior;
+        this.pagoRealizado = pagoRealizado;
+        this.imgPago = imgPago;
+        this.pagoAprobado = pagoAprobado;
+    }
+    
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdSaldoUsuario(int idSaldoUsuario) {
-        this.idSaldoUsuario = idSaldoUsuario;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
-
+    
+    
     public double getSaldoActual() {
         return saldoActual;
     }
@@ -91,7 +109,7 @@ public class SaldoUsuario implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.idSaldoUsuario;
+        hash = 79 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -106,8 +124,8 @@ public class SaldoUsuario implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SaldoUsuario other = (SaldoUsuario) obj;
-        if (this.idSaldoUsuario != other.idSaldoUsuario) {
+        final Saldos other = (Saldos) obj;
+        if (!Objects.equals(this.idUsuario, other.idUsuario)) {
             return false;
         }
         return true;
@@ -115,8 +133,10 @@ public class SaldoUsuario implements Serializable{
 
     @Override
     public String toString() {
-        return "SaldoUsuario{" + "idSaldoUsuario=" + idSaldoUsuario + '}';
+        return "Saldos{" + "idUsuario=" + idUsuario + '}';
     }
+
+
     
     
 }

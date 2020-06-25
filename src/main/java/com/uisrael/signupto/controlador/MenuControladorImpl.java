@@ -43,19 +43,39 @@ public class MenuControladorImpl implements Serializable {
 
     private Menu menu;
 
-    private List<Menu> listaMenu;
-    
-    private List<Menu> listaFiltrada;
-
     private String f_seleccionada = "";
 
     private String accionMenu;
+
+    private String opcMenu;
+
+    private List<Menu> listaMenu;
+
+    private List<Menu> listaFiltrada;
+
+    private List<Carta> listaEntradas;
+
+    private List<Carta> listaSopas;
+
+    private List<Carta> listaSegundos;
+
+    private List<Carta> listaBebidas;
+
+    private List<Carta> listaPostres;
+
+    private List<Carta> listaOtros;
 
     @PostConstruct
     public void init() {
         menu = new Menu();
         listaMenu = menuFacadeLocal.findAll();
         listaCarta = cartaFacadeLocal.findAll();
+        listaEntradas = cartaFacadeLocal.listaCarta("Entrada");
+        listaSopas = cartaFacadeLocal.listaCarta("Sopa");
+        listaSegundos = cartaFacadeLocal.listaCarta("Segundo");
+        listaBebidas = cartaFacadeLocal.listaCarta("Bebida");
+        listaPostres = cartaFacadeLocal.listaCarta("Postre");
+        listaOtros = cartaFacadeLocal.listaCarta("Otro");
         listarOM();
 
     }
@@ -99,9 +119,9 @@ public class MenuControladorImpl implements Serializable {
             listaFiltrada = menuFacadeLocal.listadoFiltrado(hoy, DiasFecha(hoy, 5));
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Listado disponibles."));
         } catch (Exception e) {
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Error al cargar los disponibles."));
-            
+
         }
     }
 
@@ -186,7 +206,61 @@ public class MenuControladorImpl implements Serializable {
     public void setListaFiltrada(List<Menu> listaFiltrada) {
         this.listaFiltrada = listaFiltrada;
     }
-    
-    
+
+    public String getOpcMenu() {
+        return opcMenu;
+    }
+
+    public void setOpcMenu(String opcMenu) {
+        this.opcMenu = opcMenu;
+    }
+
+    public List<Carta> getListaEntradas() {
+        return listaEntradas;
+    }
+
+    public void setListaEntradas(List<Carta> listaEntradas) {
+        this.listaEntradas = listaEntradas;
+    }
+
+    public List<Carta> getListaSopas() {
+        return listaSopas;
+    }
+
+    public void setListaSopas(List<Carta> listaSopas) {
+        this.listaSopas = listaSopas;
+    }
+
+    public List<Carta> getListaSegundos() {
+        return listaSegundos;
+    }
+
+    public void setListaSegundos(List<Carta> listaSegundos) {
+        this.listaSegundos = listaSegundos;
+    }
+
+    public List<Carta> getListaBebidas() {
+        return listaBebidas;
+    }
+
+    public void setListaBebidas(List<Carta> listaBebidas) {
+        this.listaBebidas = listaBebidas;
+    }
+
+    public List<Carta> getListaPostres() {
+        return listaPostres;
+    }
+
+    public void setListaPostres(List<Carta> listaPostres) {
+        this.listaPostres = listaPostres;
+    }
+
+    public List<Carta> getListaOtros() {
+        return listaOtros;
+    }
+
+    public void setListaOtros(List<Carta> listaOtros) {
+        this.listaOtros = listaOtros;
+    }
 
 }
