@@ -26,32 +26,18 @@ public class Usuario implements Serializable {
     @Column(name = "IDUSUARIO")
     private int idUsuario;
 
-    @Column(name = "NOMBRES")
-    private String nombres;
-
-    @Column(name = "APELLIDOS")
-    private String apellidos;
-
     @Column(name = "CEDULA")
     private String cedula;
 
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "NOMBRE_COMPLETO")
+    private String nombrecompleto;
 
     @Column(name = "TELEFONO")
     private String telefono;
+    
+    @Column(name = "ROL")
+    private String rol;
 
-
-    public Usuario(int idUsuario, String nombres, String apellidos, String cedula, String email, String telefono, Codigos idCodigoGenerado, Saldos idSaldoUsuario, RecuperarPass idPassword, Menu menuSeleccionado) {
-        this.idUsuario = idUsuario;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.cedula = cedula;
-        this.email = email;
-        this.telefono = telefono;
-    }
-
- 
     public Usuario() {
     }
 
@@ -63,20 +49,12 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombrecompleto() {
+        return nombrecompleto;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setNombrecompleto(String nombrecompleto) {
+        this.nombrecompleto = nombrecompleto;
     }
 
     public String getCedula() {
@@ -87,18 +65,19 @@ public class Usuario implements Serializable {
         this.cedula = cedula;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTelefono() {
         return telefono;
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+        
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }

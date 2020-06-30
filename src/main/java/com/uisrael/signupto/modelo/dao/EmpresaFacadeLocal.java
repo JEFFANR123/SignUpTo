@@ -5,7 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
-import com.uisrael.signupto.modelo.entidades.Consumos;
+import com.uisrael.signupto.modelo.entidades.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author janrango
  */
 @Local
-public interface ConsumosFacadeLocal {
+public interface EmpresaFacadeLocal {
 
-    void create(Consumos consumos);
+    void create(Empresa empresa);
 
-    void edit(Consumos consumos);
+    void edit(Empresa empresa);
 
-    void remove(Consumos consumos);
+    void remove(Empresa empresa);
 
-    Consumos find(Object id);
+    Empresa find(Object id);
 
-    List<Consumos> findAll();
+    List<Empresa> findAll();
 
-    List<Consumos> findRange(int[] range);
+    List<Empresa> findRange(int[] range);
 
     int count();
     

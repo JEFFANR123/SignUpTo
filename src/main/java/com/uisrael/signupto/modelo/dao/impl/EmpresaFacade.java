@@ -5,8 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.dao.ConsumosFacadeLocal;
-import com.uisrael.signupto.modelo.entidades.Consumos;
+import com.uisrael.signupto.modelo.dao.EmpresaFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Empresa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class ConsumosFacade extends AbstractFacade<Consumos> implements ConsumosFacadeLocal {
+public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -26,8 +26,8 @@ public class ConsumosFacade extends AbstractFacade<Consumos> implements Consumos
         return em;
     }
 
-    public ConsumosFacade() {
-        super(Consumos.class);
+    public EmpresaFacade() {
+        super(Empresa.class);
     }
     
 }

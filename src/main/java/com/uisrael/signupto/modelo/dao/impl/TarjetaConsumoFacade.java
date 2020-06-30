@@ -5,8 +5,8 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.dao.SaldosFacadeLocal;
-import com.uisrael.signupto.modelo.entidades.Saldos;
+import com.uisrael.signupto.modelo.dao.TarjetaConsumoFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.TarjetaConsumo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author janrango
  */
 @Stateless
-public class SaldosFacade extends AbstractFacade<Saldos> implements SaldosFacadeLocal {
+public class TarjetaConsumoFacade extends AbstractFacade<TarjetaConsumo> implements TarjetaConsumoFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -26,8 +26,8 @@ public class SaldosFacade extends AbstractFacade<Saldos> implements SaldosFacade
         return em;
     }
 
-    public SaldosFacade() {
-        super(Saldos.class);
+    public TarjetaConsumoFacade() {
+        super(TarjetaConsumo.class);
     }
     
 }

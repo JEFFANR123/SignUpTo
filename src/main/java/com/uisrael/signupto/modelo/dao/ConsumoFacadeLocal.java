@@ -5,7 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
-import com.uisrael.signupto.modelo.entidades.Codigos;
+import com.uisrael.signupto.modelo.entidades.Consumo;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author janrango
  */
 @Local
-public interface CodigosFacadeLocal {
+public interface ConsumoFacadeLocal {
 
-    void create(Codigos codigos);
+    void create(Consumo consumo);
 
-    void edit(Codigos codigos);
+    void edit(Consumo consumo);
 
-    void remove(Codigos codigos);
+    void remove(Consumo consumo);
 
-    Codigos find(Object id);
+    Consumo find(Object id);
 
-    List<Codigos> findAll();
+    List<Consumo> findAll();
 
-    List<Codigos> findRange(int[] range);
+    List<Consumo> findRange(int[] range);
 
     int count();
     
