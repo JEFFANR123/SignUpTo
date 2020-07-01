@@ -41,6 +41,7 @@ public class UsuarioCredencialesControlador implements Serializable {
     @PostConstruct
     public void init(){
         credenciales = new Credenciales();
+        usuario = new Usuario();
         listaCredenciales = credencialesFacadeLocal.findAll();
     
     }

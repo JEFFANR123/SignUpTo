@@ -16,7 +16,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-
 /**
  *
  * @author janrango
@@ -27,7 +26,7 @@ public class CredencialesControladorImpl implements Serializable {
 
     @EJB
     private CredencialesFacadeLocal credencialesFacadeLocal;
-    
+
     private Credenciales credenciales;
 
     @PostConstruct
@@ -42,23 +41,23 @@ public class CredencialesControladorImpl implements Serializable {
     public void setCredenciales(Credenciales credenciales) {
         this.credenciales = credenciales;
     }
-    
 
     public String iniciarSesion() {
 
         Credenciales creusr;
-        
+
         String redireccion = null;
-        
+
         try {
             creusr = credencialesFacadeLocal.iniciarSesion(credenciales);
             if (creusr != null) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", creusr);
-                if(creusr.getTipoUser().equals("A")){
-                redireccion = "protected/adminInicio.xhtml?faces-redirect=true";
-                }else{
-                    if(creusr.getTipoUser().equals("E") || creusr.getTipoUser().equals("C") ){}
-                redireccion = "customer/clienteInicio.xhtml?faces-redirect=true";
+                if (creusr.getTipoUser().equals("A")) {
+                    redireccion = "protected/adminInicio.xhtml?faces-redirect=true";
+                } else {
+                    if (creusr.getTipoUser().equals("E") || creusr.getTipoUser().equals("C")) {
+                    }
+                    redireccion = "customer/clienteInicio.xhtml?faces-redirect=true";
                 }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "No existe"));
@@ -67,6 +66,11 @@ public class CredencialesControladorImpl implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Ingresar"));
         }
         return redireccion;
+    }
+
+    public void cerrarSesion() {
+
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
 }

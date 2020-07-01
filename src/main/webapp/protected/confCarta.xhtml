@@ -8,11 +8,10 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/plantillaUser.xhtml">
+        <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
 
             <ui:define name="content">
-                <p:commandButton onclick="PF('wdialogoCarta').show();" icon="ui-icon ui-icon-plus" 
-                                 value="Agregar" actionListener="#{cartaControladorImpl.setAccionCarta('R')}" update=":frmDialogo"/>
+
 
                 <h:form id="frmCarta">
                     <h:panelGrid id="panelCarta" >
@@ -25,52 +24,55 @@
                                 <h:outputText value="#{lstCarta.nombre}"/>
                             </p:column>
                             <p:column headerText="Editar">
-      
+
                             </p:column>
                             <p:column headerText="Eliminar">
-                                
+
                             </p:column>
-                            
+
 
                         </p:dataTable>
                     </h:panelGrid>
 
                 </h:form>
 
-                <p:dialog id="dialogoCarta" widgetVar="wdialogoCarta" header="Agregar" modal="true" resizable="false" draggable="false">
-                    <h:form id="frmDialogo">
-                        <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
-                        <p:panelGrid id="panelDialogo" columns="3" >
+                <p:separator/>
 
-                            <p:outputLabel for="tCarta" value="Tipo Carta"/>
-                            <p:selectOneMenu id="tCarta" value="#{cartaControladorImpl.tipoCarta.idTipoCarta}" required="true" 
-                                             requiredMessage="Tipo de Navegacion es Obligatoria">
-                                <f:selectItems value="#{cartaControladorImpl.listaTipoCartas}" var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}"/>
-                            </p:selectOneMenu>
-                            <p:commandButton onclick="PF('wdialogoTipo').show();" icon="ui-icon ui-icon-plus" 
-                                             value="Agregar" update=":frmDialogo"/>
+                <h:form id="frmDialogo">
 
-                            <p:outputLabel for="nombre" value="Nombre"/>
-                            <p:inputText id="nombre" value="#{cartaControladorImpl.carta.nombre}" required="true"/>
-                            <h:column/>
+                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
 
-                            <p:commandButton icon="ui-icon-check" value="Registrar" oncomplete="PF('wdialogoCarta').hide();" 
-                                             actionListener="#{cartaControladorImpl.insertarCarta()}" 
-                                             update="frmDialogo:panelDialogo, frmCarta:panelCarta, mensaje" rendered="#{cartaControladorImpl.accionCarta == 'R'}"/>
-                            <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wdialogoCarta').hide();" 
-                                             actionListener="#{cartaControladorImpl.modificarCarta()}" 
-                                             update="frmCarta:panelCarta, mensaje" rendered="#{cartaControladorImpl.accionCarta == 'M'}"/>
-                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
+                    <h:panelGrid id="panelDialogo" columns="2" >
 
-                        </p:panelGrid>
+                        <p:outputLabel for="tCarta" value="Tipo"/>
+                        <p:selectOneMenu id="tCarta" value="#{cartaControladorImpl.tipoCarta.idTipoCarta}" required="true" 
+                                         requiredMessage="Tipo de Navegacion es Obligatoria">
+                            <f:selectItems value="#{cartaControladorImpl.listaTipoCartas}" var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}"/>
+                        </p:selectOneMenu>
 
-                    </h:form>
-                </p:dialog>
 
+                        <p:outputLabel for="nombre" value="Nombre"/>
+                        <p:inputText id="nombre" value="#{cartaControladorImpl.carta.nombre}" required="true"/>
+                        
+
+                        <p:commandButton icon="ui-icon-check" value="Agregar" oncomplete="PF('wdialogoCarta').hide();" 
+                                         actionListener="#{cartaControladorImpl.insertarCarta()}" 
+                                         update="frmDialogo:panelDialogo, frmCarta:panelCarta, mensaje"/>
+                        <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
+
+                    </h:panelGrid>
+
+                </h:form>
+
+                <p:separator/>
+
+                <p:commandButton onclick="PF('wdialogoTipo').show();" icon="ui-icon ui-icon-plus" 
+                                 value="Agregar sección a la Carta" update=":frmDialogo"/>
                 <p:dialog id="dialogoTipo" widgetVar="wdialogoTipo" header="Agregar" modal="true" resizable="false" draggable="false">
                     <h:form id="frmTipo">
-                        <p:growl id="mensajeTipo" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
-                        <p:panelGrid id="panelTipo" columns="3" >
+                        <p:growl id="mensajeTipo" severity="info, fatal" showSummary="false" showDetail="true" />
+                        <h:panelGrid id="panelTipo" columns="3" >
+
 
                             <p:outputLabel for="tipo" value="Nombre del Tipo"/>
                             <p:inputText id="tipo" value="#{tipoCartaControladorImpl.tipoCarta.nombreTipo}" required="true"/>
@@ -81,7 +83,7 @@
                                              update=":frmDialogo:panelDialogo,  mensajeTipo"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 
-                        </p:panelGrid>
+                        </h:panelGrid>
 
                     </h:form>
                 </p:dialog>

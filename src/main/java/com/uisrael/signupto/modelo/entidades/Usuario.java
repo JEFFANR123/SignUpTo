@@ -31,6 +31,9 @@ public class Usuario implements Serializable {
 
     @Column(name = "NOMBRE_COMPLETO")
     private String nombrecompleto;
+    
+    @Column(name = "EMAIL")
+    private String email;
 
     @Column(name = "TELEFONO")
     private String telefono;
@@ -77,6 +80,15 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
         
     public void setTelefono(String telefono) {
         this.telefono = telefono;

@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/plantillaUser.xhtml">
+        <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
             <ui:define name="content">
                 <h:form id="frmMenu">
 
@@ -83,7 +83,7 @@
                 <p:dialog header="Agregar un menu" id="dialogoMenu" widgetVar="wDialogoMenu" footer="sfas" modal="true">
 
                     <h:form id="frmlmenu">
-                        <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
+                        <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
                         <p:panelGrid columns="3" id="panelDM">
 
                             <p:outputLabel value="Fecha"/>

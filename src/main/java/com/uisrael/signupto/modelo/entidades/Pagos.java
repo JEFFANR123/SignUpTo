@@ -21,49 +21,61 @@ import javax.persistence.Temporal;
  *
  * @author janrango
  */
-
 @Entity
-@Table(name = "T_TARJETA_CONSUMO")
-public class TarjetaConsumo implements Serializable{
+@Table(name = "T_PAGOS")
+public class Pagos implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idTarjetaConsumo;
+    private int idPago;
     
-    @Column(name = "FECHA_EXPEDICION")
+    @Column(name = "FECHA_PAGO")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaExpedicion;
-          
-    @Column(name = "SALDO")
-    private double saldo;
+    private Date fechaPago;
+    
+    @Column(name = "VALOR_PAGO")
+    private double valorPago;
+    
+    @Column(name = "COMPROBANTE_PAGO")
+    private String comprobantePago;
+    
+    @Column(name = "ESTADO")
+    private boolean estado=false;
     
     @ManyToOne
     @JoinColumn(name = "FK_IDUSUARIO")
     private Usuario fkIdUsuario;
-      
 
-    public int getIdTarjetaConsumo() {
-        return idTarjetaConsumo;
+    public int getIdPago() {
+        return idPago;
     }
 
-    public void setIdTarjetaConsumo(int idTarjetaConsumo) {
-        this.idTarjetaConsumo = idTarjetaConsumo;
+    public void setIdPago(int idPago) {
+        this.idPago = idPago;
     }
 
-    public Date getFechaExpedicion() {
-        return fechaExpedicion;
+    public Date getFechaPago() {
+        return fechaPago;
     }
 
-    public void setFechaExpedicion(Date fechaExpedicion) {
-        this.fechaExpedicion = fechaExpedicion;
+    public void setFechaPago(Date fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getValorPago() {
+        return valorPago;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public Usuario getFkIdUsuario() {
@@ -74,10 +86,18 @@ public class TarjetaConsumo implements Serializable{
         this.fkIdUsuario = fkIdUsuario;
     }
 
+    public String getComprobantePago() {
+        return comprobantePago;
+    }
+
+    public void setComprobantePago(String comprobantePago) {
+        this.comprobantePago = comprobantePago;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.idTarjetaConsumo;
+        int hash = 3;
+        hash = 59 * hash + this.idPago;
         return hash;
     }
 
@@ -92,18 +112,12 @@ public class TarjetaConsumo implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TarjetaConsumo other = (TarjetaConsumo) obj;
-        if (this.idTarjetaConsumo != other.idTarjetaConsumo) {
+        final Pagos other = (Pagos) obj;
+        if (this.idPago != other.idPago) {
             return false;
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "TarjetaConsumo{" + "idTarjetaConsumo=" + idTarjetaConsumo + '}';
-    }
-    
     
     
 }

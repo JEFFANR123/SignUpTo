@@ -43,7 +43,6 @@ public class UsuarioControladorImpl implements Serializable {
     public void init() {
         credenciales = new Credenciales();
         usuario = new Usuario();
-
         listaUsuario = usuarioFacadeLocal.findAll();
         listaCredenciales = credencialesFacadeLocal.findAll();
 
