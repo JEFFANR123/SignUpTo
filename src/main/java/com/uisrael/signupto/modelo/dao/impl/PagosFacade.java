@@ -35,10 +35,10 @@ public class PagosFacade extends AbstractFacade<Pagos> implements PagosFacadeLoc
     }
 
     @Override
-    public List<Pagos> lstFltPagos(String estado) {
+    public List<Pagos> lstFltPagos(String est) {
    
-        return em.createQuery("SELECT p FROM Pagos p WHERE p.estado = :estado")
-                .setParameter("estado", estado).getResultList();
+        return em.createQuery("SELECT p FROM Pagos p WHERE p.estado = :est",Pagos.class)
+                .setParameter("est", est).getResultList();
     }
 
 

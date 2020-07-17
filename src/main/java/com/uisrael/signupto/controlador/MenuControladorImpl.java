@@ -101,6 +101,7 @@ public class MenuControladorImpl implements Serializable {
         menu = lMenu;
         this.setAccionMenu("M");
     }
+    
 
     public void modificarMenu() {
         try {

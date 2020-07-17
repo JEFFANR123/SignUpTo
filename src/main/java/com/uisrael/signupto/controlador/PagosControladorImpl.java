@@ -34,11 +34,11 @@ public class PagosControladorImpl implements Serializable {
     private PagosFacadeLocal pagosFacadeLocal;
 
     private Pagos pagos;
-    
+
     private List<Pagos> lstPagosA;
-    
+
     private List<Pagos> lstPagosR;
-    
+
     private List<Pagos> lstPagosP;
 
     private UploadedFile file;
@@ -65,7 +65,7 @@ public class PagosControladorImpl implements Serializable {
     }
 
     public void insertarPagos() {
-        Date hoy =  new Date();
+        Date hoy = new Date();
 
         try {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -88,6 +88,14 @@ public class PagosControladorImpl implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error al ingresar el pago"));
         }
 
+    }
+
+    public void leePago(Pagos edtPago) {
+        pagos = edtPago;
+    }
+
+    public void modificarPago() {
+        pagosFacadeLocal.edit(pagos);
     }
 
     public UploadedFile getFile() {
@@ -130,7 +138,4 @@ public class PagosControladorImpl implements Serializable {
         this.lstPagosP = lstPagosP;
     }
 
-
-    
-    
 }
