@@ -13,9 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -26,21 +28,25 @@ import javax.persistence.Temporal;
 public class Pagos implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPago;
     
     @Column(name = "FECHA_PAGO")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPago;
     
     @Column(name = "VALOR_PAGO")
     private double valorPago;
-    
+      
+    @Lob
     @Column(name = "COMPROBANTE_PAGO")
-    private String comprobantePago;
+    private byte [] comprobantePago;
+    
+    @Column(name = "COMENTARIO")
+    private String comentario;
     
     @Column(name = "ESTADO")
-    private boolean estado=false;
+    private String estado;
     
     @ManyToOne
     @JoinColumn(name = "FK_IDUSUARIO")
@@ -70,11 +76,11 @@ public class Pagos implements Serializable{
         this.valorPago = valorPago;
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -86,13 +92,22 @@ public class Pagos implements Serializable{
         this.fkIdUsuario = fkIdUsuario;
     }
 
-    public String getComprobantePago() {
+    public byte[] getComprobantePago() {
         return comprobantePago;
     }
 
-    public void setComprobantePago(String comprobantePago) {
+    public void setComprobantePago(byte[] comprobantePago) {
         this.comprobantePago = comprobantePago;
     }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+    
 
     @Override
     public int hashCode() {

@@ -27,7 +27,7 @@ import javax.persistence.Temporal;
 public class TarjetaConsumo implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTarjetaConsumo;
     
     @Column(name = "FECHA_EXPEDICION")

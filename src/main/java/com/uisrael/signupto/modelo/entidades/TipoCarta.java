@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @author janrango
  */
 @Entity
-@Table(name = "t_tipocarta")
+@Table(name = "T_TIPOCARTA")
 public class TipoCarta implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

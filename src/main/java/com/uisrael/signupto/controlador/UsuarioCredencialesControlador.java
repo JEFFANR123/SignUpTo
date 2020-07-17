@@ -6,10 +6,13 @@
 package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CredencialesFacadeLocal;
+import com.uisrael.signupto.modelo.dao.PagosFacadeLocal;
 import com.uisrael.signupto.modelo.dao.UsuarioFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Credenciales;
+import com.uisrael.signupto.modelo.entidades.Pagos;
 import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,9 +34,14 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     @EJB
     private CredencialesFacadeLocal credencialesFacadeLocal;
+    
+    @EJB
+    private PagosFacadeLocal pagosFacadeLocal;
 
     private Usuario usuario;
-
+    
+    private Pagos pagos;
+    
     private Credenciales credenciales;
     
     private List<Credenciales> listaCredenciales;
@@ -42,8 +50,21 @@ public class UsuarioCredencialesControlador implements Serializable {
     public void init(){
         credenciales = new Credenciales();
         usuario = new Usuario();
+        pagos = new Pagos();
         listaCredenciales = credencialesFacadeLocal.findAll();
     
+    }
+    
+    public void iniciaPago(){
+    
+        Date hoy = new Date();
+        this.pagos.setFkIdUsuario(usuario);
+        pagos.setFechaPago(hoy);
+        pagos.setValorPago(0.0);
+        pagos.setEstado("R");
+        pagos.setComentario("Creacion Tarjeta");
+        pagosFacadeLocal.create(pagos);
+        
     }
 
     public void guardarUsuarioCredenciales() {
@@ -51,6 +72,7 @@ public class UsuarioCredencialesControlador implements Serializable {
         try {
             this.credenciales.setIdUsuario(usuario);
             credencialesFacadeLocal.create(credenciales);
+            iniciaPago();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El usuario se guardó exitosamente."));
