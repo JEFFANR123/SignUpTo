@@ -20,7 +20,7 @@
         <div id="top" class="top">
             <ui:insert name="top">
                 <h:form>
-                <p:growl id="messages"/>
+                    <p:growl id="messages"/>
 
                     <p:menubar>
                         <p:menuitem outcome="clienteInicio" >
@@ -39,6 +39,8 @@
                             <p:menuitem value="Calificar servicio" url="#" icon="pi pi-user-minus" />
                         </p:submenu>
 
+
+
                         <f:facet name="options">
 
                             <p:commandButton action="#{buttonView.buttonAction}" id="iconOnly" style="margin-right:20px;" icon="ui-icon-circle-zoomin" title="Icon Only" />
@@ -46,6 +48,7 @@
                             <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" value="Logout" action="./../index.xhtml" icon="pi pi-home" />
                         </f:facet>
                     </p:menubar>
+                    <h:outputText value="#{pagosControladorImpl.saldoUsuario}"/>
                 </h:form>
             </ui:insert>
         </div>

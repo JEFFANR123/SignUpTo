@@ -30,4 +30,6 @@ public interface ConsumoFacadeLocal {
 
     int count();
     
+    List<Double> userConsumos(String ciUser);
+    
 }

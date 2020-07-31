@@ -53,6 +53,8 @@ public class MenuControladorImpl implements Serializable {
 
     private List<Menu> listaFiltrada;
 
+    private List<Menu> listaMenuDiario;
+
     private List<Carta> listaEntradas;
 
     private List<Carta> listaSopas;
@@ -77,7 +79,7 @@ public class MenuControladorImpl implements Serializable {
         listaPostres = cartaFacadeLocal.listaCarta("Postre");
         listaOtros = cartaFacadeLocal.listaCarta("Otro");
         listarOM();
-
+        listarMenuDiario();
     }
 
     public void actualizar_fecha(SelectEvent event) {
@@ -101,7 +103,6 @@ public class MenuControladorImpl implements Serializable {
         menu = lMenu;
         this.setAccionMenu("M");
     }
-    
 
     public void modificarMenu() {
         try {
@@ -123,6 +124,16 @@ public class MenuControladorImpl implements Serializable {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Error al cargar los disponibles."));
 
+        }
+    }
+
+    public void listarMenuDiario() {
+        Date hoy = new Date();
+        try {
+            listaMenuDiario = menuFacadeLocal.listadoFiltrado(hoy, DiasFecha(hoy, 1));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Listado disponibles."));
+
+        } catch (Exception e) {
         }
     }
 
@@ -152,6 +163,16 @@ public class MenuControladorImpl implements Serializable {
 
     }
 
+    //GETs and SETs
+
+    public List<Menu> getListaMenuDiario() {
+        return listaMenuDiario;
+    }
+
+    public void setListaMenuDiario(List<Menu> listaMenuDiario) {
+        this.listaMenuDiario = listaMenuDiario;
+    }
+        
     public String getAccionMenu() {
         return accionMenu;
     }

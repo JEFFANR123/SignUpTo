@@ -16,8 +16,8 @@
                     <h:panelGrid id="panelmenudia" >
 
                         <p:outputLabel value="MENU" />
-                        <p:selectOneListbox  id="advanced" value="#{consumoControladorImpl.menu.idMenu}"  >
-                            <f:selectItems value="#{consumoControladorImpl.listaMenu}" var="lstmn" 
+                        <p:selectOneListbox  id="advanced" value="#{consumoControladorImpl.consumo.idConsumo}"  >
+                            <f:selectItems value="#{menuControladorImpl.listaMenuDiario}" var="lstmn" 
                                            itemLabel="#{lstmn.entrada}" itemValue="#{lstmn.idMenu}" />
                         </p:selectOneListbox>
                         

@@ -34,12 +34,8 @@ public class Consumo implements Serializable {
     private Date fechaConsumo;
     
     @Column(name = "COSTO")
-    private double costo;
-
-    @ManyToOne
-    @JoinColumn(name = "FK_IDUSUARIO")
-    private Usuario fkIdUsuario;
-    
+    private double valorConsumo;
+   
     @ManyToOne
     @JoinColumn(name = "FK_IDTARJETACONSUMO")
     private TarjetaConsumo fkIdTarjetaConsumo;
@@ -64,20 +60,12 @@ public class Consumo implements Serializable {
         this.fechaConsumo = fechaConsumo;
     }
 
-    public double getCosto() {
-        return costo;
+    public double getValorConsumo() {
+        return valorConsumo;
     }
 
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-
-    public Usuario getFkIdUsuario() {
-        return fkIdUsuario;
-    }
-
-    public void setFkIdUsuario(Usuario fkIdUsuario) {
-        this.fkIdUsuario = fkIdUsuario;
+    public void setValorConsumo(double valorConsumo) {
+        this.valorConsumo = valorConsumo;
     }
 
     public TarjetaConsumo getFkIdTarjetaConsumo() {

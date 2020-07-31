@@ -47,6 +47,9 @@ public class Menu implements Serializable{
     @Column(name = "POSTRE")
     private String postre;
     
+    @Column(name = "COSTO")
+    private double costo;
+    
     @Column(name="STOCK")
     private int stock;
     
@@ -80,6 +83,14 @@ public class Menu implements Serializable{
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
     }
 
     

@@ -32,5 +32,7 @@ public interface PagosFacadeLocal {
     int count();
 
     List<Pagos> lstFltPagos(String est);
+    
+    List<Double> contPagos(String idUser);
 
 }

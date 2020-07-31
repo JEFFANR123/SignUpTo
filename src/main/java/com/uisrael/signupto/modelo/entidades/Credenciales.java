@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -24,7 +25,7 @@ import javax.persistence.Table;
 public class Credenciales implements Serializable {
 
     @Id
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "IDUSUARIO", nullable = false )
     private Usuario idUsuario;
 

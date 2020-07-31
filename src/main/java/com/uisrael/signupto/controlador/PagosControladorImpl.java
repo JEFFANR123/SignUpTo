@@ -8,6 +8,7 @@ package com.uisrael.signupto.controlador;
 import com.uisrael.signupto.modelo.dao.PagosFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Credenciales;
 import com.uisrael.signupto.modelo.entidades.Pagos;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -43,12 +46,19 @@ public class PagosControladorImpl implements Serializable {
 
     private UploadedFile file;
 
+    private StreamedContent downFile;
+
+    private int[] sumPagos;
+    
+    private double saldoUsuario;
+
     @PostConstruct
     public void init() {
         pagos = new Pagos();
         lstPagosP = pagosFacadeLocal.lstFltPagos("P");
         lstPagosA = pagosFacadeLocal.lstFltPagos("A");
         lstPagosR = pagosFacadeLocal.lstFltPagos("R");
+        saldoUsuario = calcularSaldo();
     }
 
     public byte[] tranformar(InputStream comprobante) throws IOException {
@@ -90,12 +100,65 @@ public class PagosControladorImpl implements Serializable {
 
     }
 
+    public void descargarPago() throws IOException {
+        byte[] content = pagos.getComprobantePago();
+        downFile = new DefaultStreamedContent(new ByteArrayInputStream(content), "image/jpg", "comprobante.jpg");
+    }
+
     public void leePago(Pagos edtPago) {
         pagos = edtPago;
     }
 
     public void modificarPago() {
         pagosFacadeLocal.edit(pagos);
+    }
+
+    public double calcularSaldo() {
+        String temp;
+        List<Double> listTemp;
+        int i;
+        double sum = 0;
+
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+            temp = usrpass.getIdUsuario().getCedula();
+            listTemp = pagosFacadeLocal.contPagos(temp);
+
+            for (i = 0; i < listTemp.size(); i++) {
+                sum += listTemp.get(i);
+            }
+
+        } catch (Exception e) {
+        }
+        return sum;
+    }
+
+    //GETS Y SETS
+
+    public double getSaldoUsuario() {
+        return saldoUsuario;
+    }
+
+    public void setSaldoUsuario(double saldoUsuario) {
+        this.saldoUsuario = saldoUsuario;
+    }
+    
+    
+    public int[] getSumPagos() {
+        return sumPagos;
+    }
+
+    public void setSumPagos(int[] sumPagos) {
+        this.sumPagos = sumPagos;
+    }
+
+    public StreamedContent getDownFile() {
+        return downFile;
+    }
+
+    public void setDownFile(StreamedContent downFile) {
+        this.downFile = downFile;
     }
 
     public UploadedFile getFile() {

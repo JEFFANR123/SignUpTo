@@ -7,6 +7,7 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.ConsumoFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Consumo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,12 @@ public class ConsumoFacade extends AbstractFacade<Consumo> implements ConsumoFac
 
     public ConsumoFacade() {
         super(Consumo.class);
+    }
+
+    @Override
+    public List<Double> userConsumos(String ciUser) {
+    return em.createQuery("SELECT p.valorConsumo FROM Consumo p WHERE p.fkIdUsuario.cedula =:ciUser",Double.class)
+            .setParameter("ciUser", ciUser).getResultList();
     }
     
 }
