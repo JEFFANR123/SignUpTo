@@ -30,6 +30,6 @@ public interface CartaFacadeLocal {
 
     int count();
     
-    List<Carta> listaCarta(String opc);
+    List<Carta> listaCarta(int opc);
     
 }

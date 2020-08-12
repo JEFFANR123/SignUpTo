@@ -10,39 +10,79 @@
 
         <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
             <ui:define name="content">
+                <br/>
+                <h:form id="frmlmenu">
+                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
+                    <h:panelGrid columns="2" id="panelDM">
+
+                        <p:outputLabel value="Nombre Opcion"/>
+                        <p:inputText value="#{menuControladorImpl.menu.nombreMenu}"/>
+
+                        <p:commandButton value="Añadir Opc" onclick="PF('wvCartas').show();"/>
+                        <p:inputTextarea value="#" />
+                        
+                        <p:outputLabel for="advanced" value="Advanced:" />
+                        <p:selectOneMenu value="#{menuControladorImpl.lstTipoId}">
+                            <f:selectItems value="#{menuControladorImpl.listaTipo}" 
+                                       var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}" /> 
+                            <p:ajax event="change" update="@form" listener="#{menuControladorImpl.cargarItemsRelacionados()}"/>
+                            
+                        </p:selectOneMenu>
+                        <p:column/>
+                        
+                        <p:selectManyMenu id="advanced" value="#{menuControladorImpl.selecciones}"
+                                          filter="true" filterMatchMode="contains" showCheckbox="true">
+                            <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="theme" itemLabel="#{theme.nombre}" itemValue="#{theme.idCarta}" />
+
+                           
+                        </p:selectManyMenu>
+
+                        <p:outputLabel value="Fecha"/>
+
+                        <p:datePicker value="#{menuControladorImpl.menu.fecha}" id="date" showIcon="true" style="width:auto" />
+
+
+
+                        <p:outputLabel value="Precio" />
+                        <p:inputNumber value="#{menuControladorImpl.menu.precio}"/>
+
+                        <p:commandButton icon="ui-icon ui-icon-plus" value="Agregar"
+                                         actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
+
+                        <p:commandButton value="Registrar" oncomplete="PF('wDialogoMenu').hide();" 
+                                         actionListener="#{menuControladorImpl.insertarMenu()}" 
+                                         update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'R'}"/>
+                        <p:commandButton value="Modificar" oncomplete="PF('wDialogoMenu').hide();" 
+                                         actionListener="#{menuControladorImpl.modificarMenu()}" 
+                                         update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'M'}"/>
+
+                        <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
+
+                    </h:panelGrid> 
+
+                </h:form>
+
+                <p:separator/>
+
                 <h:form id="frmMenu">
 
                     <h:panelGrid id="panelMenu" style="border: 0px;">
 
-                        <p:commandButton onclick="PF('wDialogoMenu').show();" icon="ui-icon ui-icon-plus" value="Agregar Menu"
-                                         actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
-
                         <p:dataTable value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
                             <p:growl id="mensaje" showDetail="true" />
-                            <p:column headerText="Fecha" >
+
+                            <p:column headerText="Opcion" >
+                                <p:outputLabel value="#{listaMenu.nombreMenu}" />
+                            </p:column>
+
+                            <p:column headerText="Precio" >
+                                <p:outputLabel value="#{listaMenu.precio}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha Disponible" >
                                 <h:outputText value="#{listaMenu.fecha}" >
                                     <f:convertDateTime pattern="dd MMMMM"/>
                                 </h:outputText>
-                            </p:column>
-
-                            <p:column headerText="Entrada" >
-                                <p:outputLabel value="#{listaMenu.entrada}" />
-                            </p:column>
-
-                            <p:column headerText="Sopa" >
-                                <p:outputLabel value="#{listaMenu.sopa}" />
-                            </p:column>
-
-                            <p:column headerText="Segundo" >
-                                <p:outputLabel value="#{listaMenu.segundo}" />
-                            </p:column>
-
-                            <p:column headerText="Jugo" >
-                                <p:outputLabel value="#{listaMenu.jugo}" />
-                            </p:column>
-
-                            <p:column headerText="Postre" >
-                                <p:outputLabel value="#{listaMenu.postre}" />
                             </p:column>
 
                             <p:column headerText="Editar" >
@@ -61,9 +101,10 @@
 
                         </p:dataTable>
 
-
                     </h:panelGrid>
+
                     <p:separator/>
+
                     <h:panelGrid id="filtrado" >
                         <p:dataTable emptyMessage="Valore no encontrados" value="#{menuControladorImpl.listaFiltrada}" var="listaFlrt">
                             <p:column headerText="Fecha">
@@ -71,7 +112,7 @@
                             </p:column>
 
                             <p:column headerText="Entrada">
-                                <h:outputText value="#{listaFlrt.entrada}"/> 
+                                <h:outputText value="#{listaFlrt.nombreMenu}"/> 
                             </p:column>
 
                         </p:dataTable>
@@ -79,79 +120,20 @@
                     </h:panelGrid>
 
                 </h:form>
+                <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" >
+                    <h:form>
 
-                <p:dialog header="Agregar un menu" id="dialogoMenu" widgetVar="wDialogoMenu" footer="sfas" modal="true">
+                        <h3>Sopas</h3>
+                        <p:selectManyCheckbox id="grid2" value="#{menuControladorImpl.selecciones}" layout="responsive" columns="3">
+                            <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="city" itemLabel="#{city.nombre}" itemValue="#{city.idCarta}" />
+                        </p:selectManyCheckbox>
 
-                    <h:form id="frmlmenu">
-                        <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
-                        <p:panelGrid columns="3" id="panelDM">
+                        
 
-                            <p:outputLabel value="Fecha"/>
-                            <p:calendar  value="#{menuControladorImpl.menu.fecha}" locale="es" pattern="dd/MM/yyyy">
-                                <p:ajax event="dateSelect" listener="#{menuControladorImpl.actualizar_fecha}" update=":frmlmenu:fecha_seleccioanda"/> 
-                            </p:calendar>
-                            <p:outputLabel id="fecha_seleccioanda" value="#{menuControladorImpl.f_seleccionada}"/>
-
-                            <p:outputLabel value="Entrada" />
-
-                            <p:selectOneMenu value="#{menuControladorImpl.menu.entrada}">
-                                <f:selectItems value="#{menuControladorImpl.listaEntradas}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
-                            </p:selectOneMenu>
-                            <p:column/>
-
-
-                            <p:outputLabel value="Sopa" />
-                            <p:selectOneMenu value="#{menuControladorImpl.menu.sopa}">
-                                <f:selectItems value="#{menuControladorImpl.listaSopas}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
-                            </p:selectOneMenu>
-                            <p:column/>
-
-                            <p:outputLabel value="Segundo" />
-                            <p:selectOneMenu value="#{menuControladorImpl.menu.segundo}">
-                                <f:selectItems value="#{menuControladorImpl.listaSegundos}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
-                            </p:selectOneMenu>
-                            <p:column/>
-
-                            <p:outputLabel value="Jugo" />
-                            <p:selectOneMenu value="#{menuControladorImpl.menu.jugo}">
-                                <f:selectItems value="#{menuControladorImpl.listaBebidas}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
-                            </p:selectOneMenu>
-                            <p:column/>
-
-                            <p:outputLabel value="Postre" />
-
-                            <p:selectOneMenu value="#{menuControladorImpl.menu.postre}">
-                                <f:selectItems value="#{menuControladorImpl.listaPostres}" 
-                                               var="lCartaEntrada" itemLabel="#{lCartaEntrada.nombre}" itemValue="#{lCartaEntrada.nombre}"/>
-                            </p:selectOneMenu>
-                            <p:column/>
-
-                            <p:outputLabel value="Probando" />
-
-                            <p:column/>
-
-                            <p:outputLabel value="Stock" />
-                            <p:inputNumber value="#{menuControladorImpl.menu.stock}"/>
-
-                            <p:commandButton value="Registrar" oncomplete="PF('wDialogoMenu').hide();" 
-                                             actionListener="#{menuControladorImpl.insertarMenu()}" 
-                                             update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'R'}"/>
-                            <p:commandButton value="Modificar" oncomplete="PF('wDialogoMenu').hide();" 
-                                             actionListener="#{menuControladorImpl.modificarMenu()}" 
-                                             update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'M'}"/>
-
-                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
-
-                        </p:panelGrid> 
-
+                        <p:commandButton value="Listo"/>
                     </h:form>
 
                 </p:dialog>
-
             </ui:define>
 
         </ui:composition>

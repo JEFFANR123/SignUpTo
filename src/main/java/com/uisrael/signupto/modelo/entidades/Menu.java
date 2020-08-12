@@ -6,12 +6,14 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,110 +34,40 @@ public class Menu implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMenu;
     
-    @Column(name = "ENTRADA")
-    private String entrada;
+    @Column(name = "NOMBREMENU")
+    private String nombreMenu;
     
-    @Column(name = "SOPA")
-    private String sopa;
+    @Column(name = "PRECIO")
+    private BigDecimal precio;
     
-    @Column(name = "SEGUNDO")
-    private String segundo;
-    
-    @Column(name = "BEBIDA")
-    private String jugo;
-    
-    @Column(name = "POSTRE")
-    private String postre;
-    
-    @Column(name = "COSTO")
-    private double costo;
-    
-    @Column(name="STOCK")
-    private int stock;
-    
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    private List<MenuCarta> lstMenuCarta;
+
     @Column(name = "FECHA")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
+
     
-    public Menu() {
+    //GETs & SETs
+    
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public Menu(int idMenu, String entrada, String sopa, String segundo, String jugo, String postre, int stock, Date fecha) {
-        this.idMenu = idMenu;
-        this.entrada = entrada;
-        this.sopa = sopa;
-        this.segundo = segundo;
-        this.jugo = jugo;
-        this.postre = postre;
-        this.stock = stock;
-        this.fecha = fecha;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
-
-
-    public int getIdMenu() {
-        return idMenu;
+    public List<MenuCarta> getLstMenuCarta() {
+        return lstMenuCarta;
     }
 
-    public int getStock() {
-        return stock;
+    public void setLstMenuCarta(List<MenuCarta> lstMenuCarta) {
+        this.lstMenuCarta = lstMenuCarta;
     }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-
     
     public void setIdMenu(int idMenu) {
         this.idMenu = idMenu;
-    }
-
-    public String getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(String entrada) {
-        this.entrada = entrada;
-    }
-
-    public String getSopa() {
-        return sopa;
-    }
-
-    public void setSopa(String sopa) {
-        this.sopa = sopa;
-    }
-
-    public String getSegundo() {
-        return segundo;
-    }
-
-    public void setSegundo(String segundo) {
-        this.segundo = segundo;
-    }
-
-    public String getJugo() {
-        return jugo;
-    }
-
-    public void setJugo(String jugo) {
-        this.jugo = jugo;
-    }
-
-    public String getPostre() {
-        return postre;
-    }
-
-    public void setPostre(String postre) {
-        this.postre = postre;
     }
 
     public Date getFecha() {
@@ -146,6 +78,13 @@ public class Menu implements Serializable{
         this.fecha = fecha;
     }
 
+    public String getNombreMenu() {
+        return nombreMenu;
+    }
+
+    public void setNombreMenu(String nombreMenu) {
+        this.nombreMenu = nombreMenu;
+    }
 
     @Override
     public int hashCode() {

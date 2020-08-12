@@ -33,9 +33,9 @@ public class CartaFacade extends AbstractFacade<Carta> implements CartaFacadeLoc
     }
 
     @Override
-    public List<Carta> listaCarta(String opc) {
+    public List<Carta> listaCarta(int opc) {
        
-       return em.createQuery("SELECT p FROM Carta p JOIN p.tipoCarta t WHERE t.nombreTipo = :opc",Carta.class)
+       return em.createQuery("SELECT p FROM Carta p WHERE p.tipoCarta.idTipoCarta = :opc",Carta.class)
                .setParameter("opc", opc).getResultList();
     }
 

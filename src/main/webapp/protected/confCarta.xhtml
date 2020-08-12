@@ -23,6 +23,11 @@
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{lstCarta.nombre}"/>
                             </p:column>
+                            <p:column headerText="Precio">
+                                <h:outputText value="#{lstCarta.precio}">
+                                    <f:convertNumber pattern="#0.00" />
+                                </h:outputText>
+                            </p:column>
                             <p:column headerText="Editar">
 
                             </p:column>
@@ -50,10 +55,11 @@
                             <f:selectItems value="#{cartaControladorImpl.listaTipoCartas}" var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}"/>
                         </p:selectOneMenu>
 
-
                         <p:outputLabel for="nombre" value="Nombre"/>
                         <p:inputText id="nombre" value="#{cartaControladorImpl.carta.nombre}" required="true"/>
-                        
+
+                        <p:outputLabel for="precio" value="Precio"/>
+                        <p:inputNumber id="precio" decimalSeparator="." value="#{cartaControladorImpl.carta.precio}" required="true"/>
 
                         <p:commandButton icon="ui-icon-check" value="Agregar" oncomplete="PF('wdialogoCarta').hide();" 
                                          actionListener="#{cartaControladorImpl.insertarCarta()}" 

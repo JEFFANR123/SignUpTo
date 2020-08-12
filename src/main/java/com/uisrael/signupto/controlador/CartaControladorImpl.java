@@ -28,18 +28,18 @@ public class CartaControladorImpl implements Serializable {
 
     @EJB
     private CartaFacadeLocal cartaFacadeLocal;
-    
+
     @EJB
     private TipoCartaFacadeLocal tipoCartaFacadeLocal;
 
     private Carta carta;
-    
+
     private TipoCarta tipoCarta;
 
     private List<Carta> listaCarta;
-    
+
     private List<TipoCarta> listaTipoCartas;
-    
+  
     private String accionCarta;
 
     @PostConstruct
@@ -76,12 +76,12 @@ public class CartaControladorImpl implements Serializable {
         }
     }
 
-    public void leerCarta(Carta lCarta) {
+      public void leerCarta(Carta lCarta) {
         carta = lCarta;
         this.setAccionCarta("M");
     }
-    
-        public void modificarCarta() {
+
+    public void modificarCarta() {
         try {
             cartaFacadeLocal.edit(carta);
             listaCarta = cartaFacadeLocal.findAll();
@@ -149,7 +149,5 @@ public class CartaControladorImpl implements Serializable {
     public void setTipoCartaFacadeLocal(TipoCartaFacadeLocal tipoCartaFacadeLocal) {
         this.tipoCartaFacadeLocal = tipoCartaFacadeLocal;
     }
-
-    
 
 }

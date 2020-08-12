@@ -7,8 +7,10 @@ package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
+import com.uisrael.signupto.modelo.dao.TipoCartaFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Carta;
 import com.uisrael.signupto.modelo.entidades.Menu;
+import com.uisrael.signupto.modelo.entidades.TipoCarta;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,6 +41,9 @@ public class MenuControladorImpl implements Serializable {
     @EJB
     private CartaFacadeLocal cartaFacadeLocal;
 
+    @EJB
+    private TipoCartaFacadeLocal tipoCartaFacadeLocal;
+
     private List<Carta> listaCarta;
 
     private Menu menu;
@@ -55,29 +60,24 @@ public class MenuControladorImpl implements Serializable {
 
     private List<Menu> listaMenuDiario;
 
-    private List<Carta> listaEntradas;
+    private List<Carta> listaOpcionesCartas;
 
-    private List<Carta> listaSopas;
+    private List<Integer> selecciones;
 
-    private List<Carta> listaSegundos;
+    private List<TipoCarta> listaTipo;
 
-    private List<Carta> listaBebidas;
-
-    private List<Carta> listaPostres;
-
-    private List<Carta> listaOtros;
+    private int lstTipoId;
 
     @PostConstruct
     public void init() {
         menu = new Menu();
         listaMenu = menuFacadeLocal.findAll();
         listaCarta = cartaFacadeLocal.findAll();
-        listaEntradas = cartaFacadeLocal.listaCarta("Entrada");
-        listaSopas = cartaFacadeLocal.listaCarta("Sopa");
-        listaSegundos = cartaFacadeLocal.listaCarta("Segundo");
-        listaBebidas = cartaFacadeLocal.listaCarta("Bebida");
-        listaPostres = cartaFacadeLocal.listaCarta("Postre");
-        listaOtros = cartaFacadeLocal.listaCarta("Otro");
+        listaTipo = tipoCartaFacadeLocal.findAll();
+        if (!listaTipo.isEmpty()) {
+            lstTipoId = listaTipo.get(0).getIdTipoCarta();
+            cargarItemsRelacionados();
+        }
         listarOM();
         listarMenuDiario();
     }
@@ -97,6 +97,10 @@ public class MenuControladorImpl implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Ocurrio un error al eliminar"));
         }
 
+    }
+
+    public void cargarItemsRelacionados() {
+        listaOpcionesCartas = cartaFacadeLocal.listaCarta(lstTipoId);
     }
 
     public void leerMenu(Menu lMenu) {
@@ -164,6 +168,22 @@ public class MenuControladorImpl implements Serializable {
     }
 
     //GETs and SETs
+    
+    public int getLstTipoId() {
+        return lstTipoId;
+    }
+
+    public void setLstTipoId(int lstTipoId) {
+        this.lstTipoId = lstTipoId;
+    }
+
+    public List<TipoCarta> getListaTipo() {
+        return listaTipo;
+    }
+
+    public void setListaTipo(List<TipoCarta> listaTipo) {
+        this.listaTipo = listaTipo;
+    }
 
     public List<Menu> getListaMenuDiario() {
         return listaMenuDiario;
@@ -172,7 +192,7 @@ public class MenuControladorImpl implements Serializable {
     public void setListaMenuDiario(List<Menu> listaMenuDiario) {
         this.listaMenuDiario = listaMenuDiario;
     }
-        
+
     public String getAccionMenu() {
         return accionMenu;
     }
@@ -237,52 +257,20 @@ public class MenuControladorImpl implements Serializable {
         this.opcMenu = opcMenu;
     }
 
-    public List<Carta> getListaEntradas() {
-        return listaEntradas;
+    public List<Carta> getListaOpcionesCartas() {
+        return listaOpcionesCartas;
     }
 
-    public void setListaEntradas(List<Carta> listaEntradas) {
-        this.listaEntradas = listaEntradas;
+    public void setListaOpcionesCartas(List<Carta> listaOpcionesCartas) {
+        this.listaOpcionesCartas = listaOpcionesCartas;
     }
 
-    public List<Carta> getListaSopas() {
-        return listaSopas;
+    public List<Integer> getSelecciones() {
+        return selecciones;
     }
 
-    public void setListaSopas(List<Carta> listaSopas) {
-        this.listaSopas = listaSopas;
-    }
-
-    public List<Carta> getListaSegundos() {
-        return listaSegundos;
-    }
-
-    public void setListaSegundos(List<Carta> listaSegundos) {
-        this.listaSegundos = listaSegundos;
-    }
-
-    public List<Carta> getListaBebidas() {
-        return listaBebidas;
-    }
-
-    public void setListaBebidas(List<Carta> listaBebidas) {
-        this.listaBebidas = listaBebidas;
-    }
-
-    public List<Carta> getListaPostres() {
-        return listaPostres;
-    }
-
-    public void setListaPostres(List<Carta> listaPostres) {
-        this.listaPostres = listaPostres;
-    }
-
-    public List<Carta> getListaOtros() {
-        return listaOtros;
-    }
-
-    public void setListaOtros(List<Carta> listaOtros) {
-        this.listaOtros = listaOtros;
+    public void setSelecciones(List<Integer> selecciones) {
+        this.selecciones = selecciones;
     }
 
 }

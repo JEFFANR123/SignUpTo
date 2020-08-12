@@ -6,6 +6,7 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,9 @@ public class Carta implements Serializable{
     
     @Column(name = "NOMBRE")
     private String nombre;
+    
+    @Column(name = "PRECIO")
+    private BigDecimal precio;
 
     public int getIdCarta() {
         return idCarta;
@@ -43,7 +47,13 @@ public class Carta implements Serializable{
         this.idCarta = idCarta;
     }
 
+    public BigDecimal getPrecio() {
+        return precio;
+    }
 
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
 
     public String getNombre() {
         return nombre;
