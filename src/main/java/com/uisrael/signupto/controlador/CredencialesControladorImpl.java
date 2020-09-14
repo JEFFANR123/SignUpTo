@@ -34,14 +34,6 @@ public class CredencialesControladorImpl implements Serializable {
         credenciales = new Credenciales();
     }
 
-    public Credenciales getCredenciales() {
-        return credenciales;
-    }
-
-    public void setCredenciales(Credenciales credenciales) {
-        this.credenciales = credenciales;
-    }
-
     public String iniciarSesion() {
 
         Credenciales creusr;
@@ -71,6 +63,14 @@ public class CredencialesControladorImpl implements Serializable {
     public void cerrarSesion() {
 
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    }
+
+    public Credenciales getCredenciales() {
+        return credenciales;
+    }
+
+    public void setCredenciales(Credenciales credenciales) {
+        this.credenciales = credenciales;
     }
 
 }

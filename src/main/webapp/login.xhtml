@@ -10,22 +10,32 @@
         <ui:composition template="./WEB-INF/template/template.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    <p:growl showDetail="true"/>
+                <div id="login">
+                    <h:form id="frmLogin" >
+                        
+                        <p:growl id="messaje" severity="info, fatal" showSummary="false" showDetail="true"/>
 
-                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="3">
 
-                        <p:outputLabel for="usuario" value="Usuario"/>
-                        <p:inputText id="usuario" value="#{credencialesControladorImpl.credenciales.userName}" required="true" />
+                            <p:outputLabel for="usuario" value="Usuario"/>
+                            <p:inputText id="usuario" value="#{credencialesControladorImpl.credenciales.userName}" 
+                                         required="true" requiredMessage="Campo requerido"  />
+                            <p:message for="usuario"/>
+                            
+                            <p:outputLabel for="password" value="Password"/>
+                            <p:password id="password" value="#{credencialesControladorImpl.credenciales.userPass}" 
+                                         required="true" requiredMessage="Campo requerido"/>
+                            <p:message for="password"/>
+                            <h:column/>
+                            
+                            <p:commandButton  icon="ui-icon-key" update="frmLogin, messaje" value="Iniciar Sesión" 
+                                              action="#{credencialesControladorImpl.iniciarSesion()}"/>
 
-                        <p:outputLabel for="password" value="Password"/>
-                        <p:inputText id="password" value="#{credencialesControladorImpl.credenciales.userPass}" required="true"/>
+                        </h:panelGrid>
+                        <p:separator/>
 
-                        <p:commandButton icon="ui-icon-key" value="Iniciar Sesión" action="#{credencialesControladorImpl.iniciarSesion()}"/>
-
-
-                    </h:panelGrid>
-                </h:form>
+                    </h:form>
+                </div>
 
             </ui:define>
 

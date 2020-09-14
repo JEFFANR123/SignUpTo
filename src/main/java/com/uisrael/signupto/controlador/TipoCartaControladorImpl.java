@@ -22,29 +22,37 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class TipoCartaControladorImpl implements Serializable{
+public class TipoCartaControladorImpl implements Serializable {
 
     @EJB
     private TipoCartaFacadeLocal tipoCartaFacadeLocal;
 
     private TipoCarta tipoCarta;
 
-    private List<TipoCarta> lTipoCarta;
+    private List<TipoCarta> listaTipoCarta;
 
     @PostConstruct
     public void init() {
         tipoCarta = new TipoCarta();
-        lTipoCarta = tipoCartaFacadeLocal.findAll();
+        listaTipoCarta = tipoCartaFacadeLocal.findAll();
     }
-    
-    public void insertarTipoCarta(){
-    
+
+    public void insertarTipoCarta() {
+
         try {
             tipoCartaFacadeLocal.create(tipoCarta);
-            lTipoCarta = tipoCartaFacadeLocal.findAll();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Ingresado Correctamente"));
+            listaTipoCarta = tipoCartaFacadeLocal.findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Ingresado Correctamente"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Aviso","Ingresado Correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Ingresado Correctamente"));
+        }
+    }
+
+    public void eliminarTipoCarta(TipoCarta dltTipoCarta) {
+        try {
+            tipoCartaFacadeLocal.remove(dltTipoCarta);
+            listaTipoCarta = tipoCartaFacadeLocal.findAll();
+        } catch (Exception e) {
         }
     }
 
@@ -64,14 +72,12 @@ public class TipoCartaControladorImpl implements Serializable{
         this.tipoCarta = tipoCarta;
     }
 
-    public List<TipoCarta> getlTipoCarta() {
-        return lTipoCarta;
+    public List<TipoCarta> getListaTipoCarta() {
+        return listaTipoCarta;
     }
 
-    public void setlTipoCarta(List<TipoCarta> lTipoCarta) {
-        this.lTipoCarta = lTipoCarta;
+    public void setListaTipoCarta(List<TipoCarta> listaTipoCarta) {
+        this.listaTipoCarta = listaTipoCarta;
     }
-    
-    
 
 }

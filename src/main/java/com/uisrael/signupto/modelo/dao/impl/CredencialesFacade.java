@@ -54,4 +54,11 @@ public class CredencialesFacade extends AbstractFacade<Credenciales> implements 
         return credenciales;
     }
 
+    @Override
+    public List<Credenciales> listaUsuarioCredencialeses(String tipo) {
+    return em.createQuery("SELECT p FROM Credenciales p WHERE p.tipoUser = :tipo", Credenciales.class)
+            .setParameter("tipo", tipo).getResultList();
+    }
+
+    
 }

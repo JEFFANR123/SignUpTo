@@ -6,7 +6,6 @@
 package com.uisrael.signupto.modelo.dao;
 
 import com.uisrael.signupto.modelo.entidades.Pagos;
-import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 

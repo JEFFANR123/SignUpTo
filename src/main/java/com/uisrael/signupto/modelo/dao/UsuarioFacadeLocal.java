@@ -5,6 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
+import com.uisrael.signupto.modelo.entidades.Credenciales;
 import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,8 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
+    
+    List<Usuario> consultaUsuarios(String var1);
+    
     
 }

@@ -1,7 +1,7 @@
 
 #top {
     position: relative;
-    background-color: #036fab;
+    background-color: aliceblue;
     color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
@@ -9,45 +9,45 @@
 
 #bottom {
     position: relative;
-    background-color: #c2dfef;
+    background-color: aliceblue;
     padding: 5px;
     margin: 10px 0px 0px 0px;
 }
 
 #left {
     float: left;
-    background-color: #ece3a5;
+    background-color: appworkspace;
     padding: 5px;
     width: 150px;
 }
 
 #right {
     float: right;
-    background-color: #ece3a5;
+    background-color: activecaption;
     padding: 5px;
     width: 150px;
 }
 
 .center_content {
     position: relative;
-    background-color: #dddddd;
+    background-color: aliceblue;
     padding: 5px;
 }
 
 .left_content {
-    background-color: #dddddd;
+    background-color: aliceblue;
     padding: 5px;
     margin-left: 170px;
 }
 
 .right_content {
-    background-color: #dddddd;
+    background-color: activecaption;
     padding: 5px;
     margin: 0px 170px 0px 170px;
 }
 
 #top a:link, #top a:visited {
-  color: white;
+  color: black;
   font-weight : bold;
   text-decoration: none;
 }
@@ -57,5 +57,14 @@
   font-weight : bold;
   text-decoration : underline;
 }
+
+#login {
+    width: 30%;
+    margin: 60px auto;
+    text-align: center;
+
+}
+
+
 
 

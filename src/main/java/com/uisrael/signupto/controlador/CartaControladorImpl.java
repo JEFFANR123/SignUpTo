@@ -7,6 +7,7 @@ package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.TipoCartaFacadeLocal;
+import com.uisrael.signupto.modelo.dao.impl.CartaFacade;
 import com.uisrael.signupto.modelo.entidades.Carta;
 import com.uisrael.signupto.modelo.entidades.TipoCarta;
 import java.io.Serializable;
@@ -39,7 +40,7 @@ public class CartaControladorImpl implements Serializable {
     private List<Carta> listaCarta;
 
     private List<TipoCarta> listaTipoCartas;
-  
+
     private String accionCarta;
 
     @PostConstruct
@@ -50,7 +51,7 @@ public class CartaControladorImpl implements Serializable {
         listaTipoCartas = tipoCartaFacadeLocal.findAll();
     }
 
-    public void insertarCarta() {
+    public void insertarOpcionCarta() {
         try {
             carta.setTipoCarta(tipoCarta);
             cartaFacadeLocal.create(carta);
@@ -62,6 +63,10 @@ public class CartaControladorImpl implements Serializable {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error al guardar"));
         }
+    }
+
+    public void editarOpcionCarta() {
+        cartaFacadeLocal.edit(carta);
     }
 
     public void eliminarCarta() {
@@ -76,9 +81,9 @@ public class CartaControladorImpl implements Serializable {
         }
     }
 
-      public void leerCarta(Carta lCarta) {
+    public void leerCarta(Carta lCarta) {
         carta = lCarta;
-        this.setAccionCarta("M");
+        //this.setAccionCarta("M");
     }
 
     public void modificarCarta() {
@@ -100,7 +105,6 @@ public class CartaControladorImpl implements Serializable {
     public void setListaTipoCartas(List<TipoCarta> listaTipoCartas) {
         this.listaTipoCartas = listaTipoCartas;
     }
-
 
     public CartaFacadeLocal getCartaFacadeLocal() {
         return cartaFacadeLocal;

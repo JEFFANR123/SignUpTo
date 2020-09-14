@@ -32,4 +32,6 @@ public interface CredencialesFacadeLocal {
     
     Credenciales iniciarSesion(Credenciales cre);
     
+    List<Credenciales> listaUsuarioCredencialeses(String tipo);
+    
 }

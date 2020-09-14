@@ -16,36 +16,27 @@
                     <h:panelGrid columns="2" id="panelDM">
 
                         <p:outputLabel value="Nombre Opcion"/>
-                        <p:inputText value="#{menuControladorImpl.menu.nombreMenu}"/>
-
-                        <p:commandButton value="Añadir Opc" onclick="PF('wvCartas').show();"/>
-                        <p:inputTextarea value="#" />
-                        
-                        <p:outputLabel for="advanced" value="Advanced:" />
-                        <p:selectOneMenu value="#{menuControladorImpl.lstTipoId}">
-                            <f:selectItems value="#{menuControladorImpl.listaTipo}" 
-                                       var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}" /> 
-                            <p:ajax event="change" update="@form" listener="#{menuControladorImpl.cargarItemsRelacionados()}"/>
-                            
+                        <p:selectOneMenu id="console" value="#{menuControladorImpl.menu.nombreMenu}" style="width:125px">
+                            <f:selectItem itemLabel="Desayuno Opc-1" itemValue="Desayuno Opc1" />
+                            <f:selectItem itemLabel="Desayuno Opc-2" itemValue="Desayuno Opc2" />
+                            <f:selectItem itemLabel="Almuerzo Opc-1 (Solo Sopa)" itemValue="Almuerzo Opc1 (Solo Sopa)" />
+                            <f:selectItem itemLabel="Almuerzo Opc-2 (Solo Sopa)" itemValue="Almuerzo Opc2 (Solo Sopa)" />
+                            <f:selectItem itemLabel="Almuerzo Opc-1" itemValue="Almuerzo Opc1" />
+                            <f:selectItem itemLabel="Almuerzo Opc-2" itemValue="Almuerzo Opc2" />
+                            <f:facet name="footer">
+                                <p:separator />
+                                <h:outputText value="Almuerzos del Día." style="font-weight:bold;"/>
+                            </f:facet>
                         </p:selectOneMenu>
+
                         <p:column/>
-                        
-                        <p:selectManyMenu id="advanced" value="#{menuControladorImpl.selecciones}"
-                                          filter="true" filterMatchMode="contains" showCheckbox="true">
-                            <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="theme" itemLabel="#{theme.nombre}" itemValue="#{theme.idCarta}" />
-
-                           
-                        </p:selectManyMenu>
-
+                        <p:commandButton value="Agregar opciones al Menú." onclick="PF('wvCartas').show();"/>
+                        <p:column/>
+                        <p:inputTextarea value="#"/>
                         <p:outputLabel value="Fecha"/>
-
                         <p:datePicker value="#{menuControladorImpl.menu.fecha}" id="date" showIcon="true" style="width:auto" />
-
-
-
                         <p:outputLabel value="Precio" />
                         <p:inputNumber value="#{menuControladorImpl.menu.precio}"/>
-
                         <p:commandButton icon="ui-icon ui-icon-plus" value="Agregar"
                                          actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
 
@@ -122,15 +113,30 @@
                 </h:form>
                 <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" >
                     <h:form>
+                        <h:panelGrid columns="2">
 
-                        <h3>Sopas</h3>
-                        <p:selectManyCheckbox id="grid2" value="#{menuControladorImpl.selecciones}" layout="responsive" columns="3">
-                            <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="city" itemLabel="#{city.nombre}" itemValue="#{city.idCarta}" />
-                        </p:selectManyCheckbox>
+                            <p:selectOneMenu value="#{menuControladorImpl.lstTipoId}">
+                                <f:selectItems value="#{menuControladorImpl.listaTipo}" 
+                                               var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}" /> 
+                                <p:ajax event="change" update="@form" listener="#{menuControladorImpl.cargarItemsRelacionados()}"/>
 
-                        
+                            </p:selectOneMenu>
+                            <p:column />
+                            
+                                
+                            <p:selectManyMenu id="advanced" value="#{menuControladorImpl.selecciones}"
+                                              filter="true" filterMatchMode="contains" showCheckbox="true">
+                                <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="theme" 
+                                               itemLabel="#{theme.nombre}" itemValue="#{theme.idCarta}" />
+                            </p:selectManyMenu>
+                            <p:commandButton icon="pi pi-plus"/>
+                            <br/>
+                        </h:panelGrid>
 
+                        <p:inputTextarea value="#" />
+                        <p:separator/>
                         <p:commandButton value="Listo"/>
+
                     </h:form>
 
                 </p:dialog>

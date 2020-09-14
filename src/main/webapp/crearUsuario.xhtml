@@ -10,8 +10,8 @@
         <ui:composition template="./WEB-INF/template/template.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    <p:growl id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="false" showDetail="true" />
+                <h:form id="frmCrearUsr">
+                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
 
                     <p:fieldset legend="Datos del nuevo Suscriptor">
                         <h:panelGrid columns="3" cellpadding="5" id="datosUser">
@@ -72,7 +72,8 @@
 
                         </h:panelGrid>
 
-                        <p:commandButton update="matchGrid, datosUser, mensaje" value="Registrar" actionListener="#{usuarioCredencialesControlador.guardarUsuarioCredenciales()}" />    
+                        <p:commandButton update="frmCrearUsr, matchGrid, datosUser, mensaje" value="Registrar" 
+                                         actionListener="#{usuarioCredencialesControlador.guardarUsuarioCredenciales()}" />    
 
                     </p:fieldset>
 

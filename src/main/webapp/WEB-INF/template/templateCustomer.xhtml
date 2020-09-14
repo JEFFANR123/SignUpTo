@@ -8,8 +8,8 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/cssLayout.css"/>
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
         <title>Facelets Template</title>
         <f:event type="preRenderView" listener="#{controladorUserImpl.sesionActiva()}"/>
@@ -53,8 +53,37 @@
             </ui:insert>
         </div>
 
-        <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+        <div>
+            <div id="left">
+
+                <ui:insert name="left">
+                    <h:form>
+                        <p:dataView value="#{usuarioCredencialesControlador.infomacionUsuarios}" var="datosUser">
+                            <p:dataViewListItem>
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="Id Usuario: "/>
+                                        <h:outputText value="#{datosUser.cedula}"/>
+                                        <h:outputText value="Saldo disponible: "/>
+                                        <h:outputText value="#{pagosControladorImpl.saldoUsuario}"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </p:dataViewListItem>
+                        </p:dataView>
+
+
+                    </h:form>
+                </ui:insert>
+
+            </div>
+            <div id="content" class="left_content">
+
+                <ui:insert name="content">
+
+
+                </ui:insert>
+
+            </div>
         </div>
 
     </h:body>
