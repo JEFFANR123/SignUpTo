@@ -27,7 +27,7 @@
                             <p:graphicImage name="logo.png" library="images" />
                         </p:menuitem>
                         <p:submenu label="Usuario" icon="pi pi-users">
-                            <p:menuitem value="Mi perfil" url="#" icon="pi pi-user" />
+                            <p:menuitem value="Mi perfil" url="perfilUsuario.xhtml" icon="pi pi-user" />
                             <p:menuitem value="Pagos" url="pagos.xhtml" icon="pi pi-user" />
                             <p:separator />
                             <p:menuitem value="Dar de Baja" url="#" icon="pi pi-user-minus" />
@@ -58,18 +58,19 @@
 
                 <ui:insert name="left">
                     <h:form>
-                        <p:dataView value="#{usuarioCredencialesControlador.infomacionUsuarios}" var="datosUser">
+                        <p:dataList value="#{usuarioCredencialesControlador.infomacionUsuarios}" var="datosUser" type="definition">
+                            <f:facet name="header">
+                                Perfil
+                            </f:facet>
                             <p:dataViewListItem>
-                                <p:outputPanel>
                                     <h:panelGrid columns="2">
                                         <h:outputText value="Id Usuario: "/>
-                                        <h:outputText value="#{datosUser.cedula}"/>
+                                        <h:outputText value="#{datosUser.cedula}"/>  
                                         <h:outputText value="Saldo disponible: "/>
                                         <h:outputText value="#{pagosControladorImpl.saldoUsuario}"/>
                                     </h:panelGrid>
-                                </p:outputPanel>
                             </p:dataViewListItem>
-                        </p:dataView>
+                        </p:dataList>
 
 
                     </h:form>

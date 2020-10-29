@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -20,29 +21,27 @@
                             <p:inputText id="nombre" value="#{usuarioCredencialesControlador.usuario.nombrecompleto}" 
                                          requiredMessage="Campo Requerido" required="true"/>
                             <p:message for="nombre"/>
-                            
+
                             <p:outputLabel for="cedula" value="Cedula " />
                             <p:inputText id="cedula" value="#{usuarioCredencialesControlador.usuario.cedula}" 
-                                         requiredMessage="Campo Requerido" required="true" />
+                                         requiredMessage="Campo Requerido" required="true"/>
                             <p:message for="cedula"/>
 
                             <p:outputLabel for="email" value="Email " />
                             <p:inputText id="email" value="#{usuarioCredencialesControlador.usuario.email}" 
-                                         requiredMessage="Campo Requerido" required="true" />
+                                         requiredMessage="Campo Requerido" required="true" validatorMessage="El correo ingresado es incorrecto." >
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /></p:inputText>
                             <p:message for="email"/>
 
                             <p:outputLabel for="telefono" value="Telefono " />
-                            <p:inputText id="telefono" value="#{usuarioCredencialesControlador.usuario.telefono}" 
-                                         requiredMessage="Campo Requerido" required="true" />
-                            <p:message for="telefono"/>
+                            <p:inputMask id="telefono" value="#{usuarioCredencialesControlador.usuario.telefono}" 
+                                         requiredMessage="Campo Requerido" required="true" mask="(99) 99999999"/>
 
+                            <p:message for="telefono"/>
                         </h:panelGrid>
                     </p:fieldset>
 
                     <p:spacer height="10" />
-
-
-
 
                     <p:fieldset legend="Credenciales">
 

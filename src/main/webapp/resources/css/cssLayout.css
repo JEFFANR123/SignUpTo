@@ -18,7 +18,7 @@
     float: left;
     background-color: appworkspace;
     padding: 5px;
-    width: 150px;
+    width: 200px;
 }
 
 #right {
@@ -47,24 +47,24 @@
 }
 
 #top a:link, #top a:visited {
-  color: black;
-  font-weight : bold;
-  text-decoration: none;
+    color: black;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
 }
 
 #login {
     width: 30%;
     margin: 60px auto;
     text-align: center;
+    justify-content:center;
 
 }
-
 
 
 

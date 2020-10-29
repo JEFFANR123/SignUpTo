@@ -32,20 +32,20 @@
                         <p:column/>
                         <p:commandButton value="Agregar opciones al Menú." onclick="PF('wvCartas').show();"/>
                         <p:column/>
-                        <p:inputTextarea value="#"/>
+                        <p:dataList value="#{menuControladorImpl.lstMenuCartas}" var="opt" type="ordered">
+                            <f:facet name="header">
+                                Menu
+                            </f:facet>
+                            #{opt.carta.nombre}
+                            
+                        </p:dataList>
                         <p:outputLabel value="Fecha"/>
                         <p:datePicker value="#{menuControladorImpl.menu.fecha}" id="date" showIcon="true" style="width:auto" />
                         <p:outputLabel value="Precio" />
                         <p:inputNumber value="#{menuControladorImpl.menu.precio}"/>
                         <p:commandButton icon="ui-icon ui-icon-plus" value="Agregar"
-                                         actionListener="#{menuControladorImpl.setAccionMenu('R')}" update=":frmlmenu"/>
+                                         actionListener="#{menuControladorImpl.insertarMenu()}" update=":frmlmenu"/>
 
-                        <p:commandButton value="Registrar" oncomplete="PF('wDialogoMenu').hide();" 
-                                         actionListener="#{menuControladorImpl.insertarMenu()}" 
-                                         update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'R'}"/>
-                        <p:commandButton value="Modificar" oncomplete="PF('wDialogoMenu').hide();" 
-                                         actionListener="#{menuControladorImpl.modificarMenu()}" 
-                                         update=":frmMenu:panelMenu, mensaje" rendered="#{menuControladorImpl.accionMenu == 'M'}"/>
 
                         <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 
@@ -65,6 +65,14 @@
                             <p:column headerText="Opcion" >
                                 <p:outputLabel value="#{listaMenu.nombreMenu}" />
                             </p:column>
+                            
+                            <p:column headerText="Opciones" >
+                                <p:dataList value="#{listaMenu.lstMenuCarta}" var="varMenuCarta">
+                                    #{varMenuCarta.carta.nombre}
+                       
+                                </p:dataList>
+                                
+                            </p:column>
 
                             <p:column headerText="Precio" >
                                 <p:outputLabel value="#{listaMenu.precio}" />
@@ -77,7 +85,7 @@
                             </p:column>
 
                             <p:column headerText="Editar" >
-                                <p:commandLink value="Editar" actionListener="#{menuControladorImpl.leerMenu(listaMenu)}" oncomplete="PF('wDialogoMenu').show();" update="dialogoMenu" />
+                                <p:commandLink value="Editar" actionListener="#{menuControladorImpl.leerMenu(listaMenu)}" oncomplete="PF('wDialogoMenu').show();" />
                             </p:column>
 
                             <p:column headerText="Eliminar" >
@@ -96,23 +104,9 @@
 
                     <p:separator/>
 
-                    <h:panelGrid id="filtrado" >
-                        <p:dataTable emptyMessage="Valore no encontrados" value="#{menuControladorImpl.listaFiltrada}" var="listaFlrt">
-                            <p:column headerText="Fecha">
-                                <h:outputText value="#{listaFlrt.fecha}"/> 
-                            </p:column>
-
-                            <p:column headerText="Entrada">
-                                <h:outputText value="#{listaFlrt.nombreMenu}"/> 
-                            </p:column>
-
-                        </p:dataTable>
-
-                    </h:panelGrid>
-
                 </h:form>
                 <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" >
-                    <h:form>
+                    <h:form id="frmDlgCartas">
                         <h:panelGrid columns="2">
 
                             <p:selectOneMenu value="#{menuControladorImpl.lstTipoId}">
@@ -122,20 +116,21 @@
 
                             </p:selectOneMenu>
                             <p:column />
-                            
-                                
+
+
                             <p:selectManyMenu id="advanced" value="#{menuControladorImpl.selecciones}"
-                                              filter="true" filterMatchMode="contains" showCheckbox="true">
+                                              filter="true" filterMatchMode="contains" showCheckbox="true" 
+                                              converter="javax.faces.Integer">
                                 <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="theme" 
                                                itemLabel="#{theme.nombre}" itemValue="#{theme.idCarta}" />
                             </p:selectManyMenu>
-                            <p:commandButton icon="pi pi-plus"/>
+                           
                             <br/>
                         </h:panelGrid>
 
-                        <p:inputTextarea value="#" />
                         <p:separator/>
-                        <p:commandButton value="Listo"/>
+                        <p:commandButton oncomplete="PF('wvCartas').hide()" value="Listo" 
+                                         actionListener="#{menuControladorImpl.agregarSeleccion()}" update="@form :frmlmenu"/>
 
                     </h:form>
 

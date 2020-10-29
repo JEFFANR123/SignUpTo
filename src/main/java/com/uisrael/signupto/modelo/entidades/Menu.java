@@ -40,7 +40,7 @@ public class Menu implements Serializable{
     @Column(name = "PRECIO")
     private BigDecimal precio;
     
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<MenuCarta> lstMenuCarta;
 
     @Column(name = "FECHA")
@@ -70,6 +70,11 @@ public class Menu implements Serializable{
         this.idMenu = idMenu;
     }
 
+    public int getIdMenu() {
+        return idMenu;
+    }
+
+    
     public Date getFecha() {
         return fecha;
     }
@@ -85,6 +90,7 @@ public class Menu implements Serializable{
     public void setNombreMenu(String nombreMenu) {
         this.nombreMenu = nombreMenu;
     }
+    
 
     @Override
     public int hashCode() {

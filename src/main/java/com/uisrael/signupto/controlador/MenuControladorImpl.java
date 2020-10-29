@@ -6,10 +6,13 @@
 package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
+import com.uisrael.signupto.modelo.dao.MenuCartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
 import com.uisrael.signupto.modelo.dao.TipoCartaFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Carta;
 import com.uisrael.signupto.modelo.entidades.Menu;
+import com.uisrael.signupto.modelo.entidades.MenuCarta;
+import com.uisrael.signupto.modelo.entidades.MenuCartaId;
 import com.uisrael.signupto.modelo.entidades.TipoCarta;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -19,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -40,6 +44,9 @@ public class MenuControladorImpl implements Serializable {
 
     @EJB
     private CartaFacadeLocal cartaFacadeLocal;
+
+    @EJB
+    private MenuCartaFacadeLocal menuCartaFacadeLocal;
 
     @EJB
     private TipoCartaFacadeLocal tipoCartaFacadeLocal;
@@ -66,6 +73,8 @@ public class MenuControladorImpl implements Serializable {
 
     private List<TipoCarta> listaTipo;
 
+    private List<MenuCarta> lstMenuCartas;
+
     private int lstTipoId;
 
     @PostConstruct
@@ -74,6 +83,9 @@ public class MenuControladorImpl implements Serializable {
         listaMenu = menuFacadeLocal.findAll();
         listaCarta = cartaFacadeLocal.findAll();
         listaTipo = tipoCartaFacadeLocal.findAll();
+        lstMenuCartas = new ArrayList<>();
+        selecciones = new ArrayList<>();
+
         if (!listaTipo.isEmpty()) {
             lstTipoId = listaTipo.get(0).getIdTipoCarta();
             cargarItemsRelacionados();
@@ -155,6 +167,7 @@ public class MenuControladorImpl implements Serializable {
             if (menu.getFecha().before(DiasFecha(hoy, -1))) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Fecha incorrecta"));
             } else if (menu.getFecha().before(DiasFecha(hoy, 5)) || menu.getFecha().equals(hoy)) {
+                menu.setLstMenuCarta(lstMenuCartas);
                 menuFacadeLocal.create(menu);
                 listaMenu = menuFacadeLocal.findAll();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Agregado correctamente."));
@@ -167,8 +180,71 @@ public class MenuControladorImpl implements Serializable {
 
     }
 
+    public void agregarSeleccion() {
+        for (int i = 0; i < selecciones.size(); i++) {
+            final int id = selecciones.get(i);
+            MenuCarta mc = new MenuCarta();
+            Optional<Carta> optCartaOptional = listaOpcionesCartas.stream().filter(x -> x.getIdCarta() == id).findFirst();
+            if (optCartaOptional.isPresent()) {
+                mc.setCarta(optCartaOptional.get());
+                mc.setMenu(menu);
+                MenuCartaId menuCartaId =  new MenuCartaId();
+                menuCartaId.setCartaId(mc.getCarta().getIdCarta());
+                menuCartaId.setMenuId(mc.getMenu().getIdMenu());
+                mc.setMenuCartaId(menuCartaId);
+                lstMenuCartas.add(mc);
+            }
+        }
+        selecciones.clear();
+    }
+
+    public int[] ordenarArreglos(int[] arreglo) {
+        int i, j, k;
+        if (arreglo.length > 1) {
+            int nElmsIzq = arreglo.length / 2;
+            int nElmsDer = arreglo.length - nElmsIzq;
+            int arrayIzq[] = new int[nElmsIzq];
+            int arrayDer[] = new int[nElmsDer];
+
+            //Arreglo Izquierda
+            for (i = 0; i < nElmsIzq; i++) {
+                arrayIzq[i] = arreglo[i];
+            }
+            //Arreglo Derecha
+            for (i = nElmsIzq; i < nElmsIzq + nElmsDer; i++) {
+                arrayDer[i = nElmsIzq] = arreglo[i];
+            }
+            arrayIzq = ordenarArreglos(arrayIzq);
+            arrayDer = ordenarArreglos(arrayDer);
+            i = 0;
+            j = 0;
+            k = 0;
+            while (arrayIzq.length != j && arrayDer.length != k) {
+                if (arrayIzq[j] < arrayDer[k]) {
+                    arreglo[i] = arrayIzq[j];
+                    i++;
+                    j++;
+                } else {
+                    arreglo[i] = arrayDer[j];
+                    i++;
+                    k++;
+                }
+            }
+            while (arrayIzq.length != j) {
+                arreglo[i] = arrayIzq[j];
+                i++;
+                j++;
+            }
+            while (arrayDer.length != k) {
+                arreglo[i] = arrayDer[k];
+                i++;
+                k++;
+            }
+        }
+        return arreglo;
+    }
+
     //GETs and SETs
-    
     public int getLstTipoId() {
         return lstTipoId;
     }
@@ -271,6 +347,14 @@ public class MenuControladorImpl implements Serializable {
 
     public void setSelecciones(List<Integer> selecciones) {
         this.selecciones = selecciones;
+    }
+
+    public List<MenuCarta> getLstMenuCartas() {
+        return lstMenuCartas;
+    }
+
+    public void setLstMenuCartas(List<MenuCarta> lstMenuCartas) {
+        this.lstMenuCartas = lstMenuCartas;
     }
 
 }

@@ -19,12 +19,12 @@
 
                             <p:outputLabel for="usuario" value="Usuario"/>
                             <p:inputText id="usuario" value="#{credencialesControladorImpl.credenciales.userName}" 
-                                         required="true" requiredMessage="Campo requerido"  />
+                                         required="true" placeholder="Username" requiredMessage="Campo requerido"  />
                             <p:message for="usuario"/>
                             
                             <p:outputLabel for="password" value="Password"/>
                             <p:password id="password" value="#{credencialesControladorImpl.credenciales.userPass}" 
-                                         required="true" requiredMessage="Campo requerido"/>
+                                        required="true" placeholder="Password" requiredMessage="Campo requerido"/>
                             <p:message for="password"/>
                             <h:column/>
                             
@@ -33,6 +33,7 @@
 
                         </h:panelGrid>
                         <p:separator/>
+                        <p:link value="Crear Usuario" outcome="crearUsuario.xhtml"/>
 
                     </h:form>
                 </div>
