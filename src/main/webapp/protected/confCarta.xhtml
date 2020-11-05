@@ -13,7 +13,7 @@
             <ui:define name="content">
 
                 <p:commandButton onclick="PF('wdialogoTipo').show();" icon="pi pi-eye" 
-                                 value="Ver todos los tipos" update=":frmAgrOpcion:panelAgrOpcion"/>
+                                 value="Ver todos los tipos" update=":frmAgrOpcion:panelAgrOpcion, :frmTipo"/>
                 <p:separator/>
                 <h:form id="frmAgrOpcion">
 
@@ -35,7 +35,7 @@
 
                         <p:commandButton icon="ui-icon-check" value="Agregar" oncomplete="PF('wdialogoCarta').hide();" 
                                          actionListener="#{cartaControladorImpl.insertarOpcionCarta()}" 
-                                         update="frmCarta:panelCarta, mensaje">
+                                         update="panelAgrOpcion, :frmCarta:panelCarta, :frmTipo:panelTipo, mensaje, dialogoTipo">
 
                         </p:commandButton>
                         <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
@@ -90,7 +90,7 @@
                             <p:inputText id="tipo" value="#{tipoCartaControladorImpl.tipoCarta.nombreTipo}" required="true"/>
                             <p:commandButton icon="pi pi-plus" 
                                              actionListener="#{tipoCartaControladorImpl.insertarTipoCarta()}" 
-                                             update=":frmAgrOpcion:panelAgrOpcion, frmTipo, :frmLstTCarta,  mensajeTipo"/>                          
+                                             update=":frmAgrOpcion:panelAgrOpcion, :frmLstTCarta ,:frmCarta,  mensajeTipo"/>                          
                         </h:panelGrid>
                     </h:form> 
                     <p:separator/>

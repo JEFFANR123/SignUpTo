@@ -26,6 +26,20 @@
                             <p:inputText id="cedula" value="#{usuarioCredencialesControlador.usuario.cedula}" 
                                          requiredMessage="Campo Requerido" required="true"/>
                             <p:message for="cedula"/>
+                            
+                            <h:outputLabel for="pwd1" value="Password: *" />
+                            <p:password id="pwd1" value="#{usuarioCredencialesControlador.credenciales.userPass}" 
+                                        validatorMessage="¡Las contraseñas no coinciden!"
+                                        weakLabel="Baja" goodLabel="Media" strongLabel="Alta"
+                                        match="pwd2" feedback="true" promptLabel="Ingrese un Password" required="true" 
+                                        requiredMessage="Campo Requerido"/>
+                            <p:message for="pwd1"/>
+
+
+                            <h:outputLabel for="pwd2" value="Verificar Password: *" />
+                            <p:password id="pwd2" required="true" 
+                                        requiredMessage="Campo Requerido"/>
+                            <p:message for="pwd2"/>
 
                             <p:outputLabel for="email" value="Email " />
                             <p:inputText id="email" value="#{usuarioCredencialesControlador.usuario.email}" 
@@ -38,45 +52,13 @@
                                          requiredMessage="Campo Requerido" required="true" mask="(99) 99999999"/>
 
                             <p:message for="telefono"/>
+                            
+                            <p:commandButton update="frmCrearUsr, datosUser, mensaje" value="Registrar" 
+                                         actionListener="#{usuarioCredencialesControlador.guardarUsuarioCredenciales()}" /> 
                         </h:panelGrid>
                     </p:fieldset>
 
                     <p:spacer height="10" />
-
-                    <p:fieldset legend="Credenciales">
-
-                        <h:panelGrid columns="3" id="matchGrid" cellpadding="5">  
-
-                            <p:outputLabel for="username" value="Username"/>
-                            <p:inputText id="username" value="#{usuarioCredencialesControlador.credenciales.userName}" required="true"
-                                         requiredMessage="Campo Requerido"/>
-                            <p:message for="username"/>
-
-
-
-                            <h:outputLabel for="pwd1" value="Password 1: *" />
-                            <p:password id="pwd1" value="#{usuarioCredencialesControlador.credenciales.userPass}" 
-                                        validatorMessage="¡Las contraseñas no coinciden!"
-                                        weakLabel="Baja" goodLabel="Media" strongLabel="Alta"
-                                        match="pwd2" feedback="true" promptLabel="Ingrese un Password" required="true" 
-                                        requiredMessage="Campo Requerido"/>
-                            <p:message for="pwd1"/>
-
-
-                            <h:outputLabel for="pwd2" value="Password 2: *" />
-                            <p:password id="pwd2" required="true" 
-                                        requiredMessage="Campo Requerido"/>
-                            <p:message for="pwd2"/>
-
-
-                        </h:panelGrid>
-
-                        <p:commandButton update="frmCrearUsr, matchGrid, datosUser, mensaje" value="Registrar" 
-                                         actionListener="#{usuarioCredencialesControlador.guardarUsuarioCredenciales()}" />    
-
-                    </p:fieldset>
-
-
 
                 </h:form>
             </ui:define>

@@ -6,6 +6,7 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 
@@ -17,10 +18,10 @@ import javax.persistence.JoinColumn;
 public class MenuCartaId implements Serializable {
 
     
-    @JoinColumn(name = "IDMENU")
+    @Column(name = "MENUID")
     private int menuId;
 
-    @JoinColumn(name = "IDCARTA")
+    @Column(name = "CARTAID")
     private int cartaId;
 
     public MenuCartaId() {

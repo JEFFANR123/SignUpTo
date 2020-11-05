@@ -32,7 +32,7 @@
                         <p:column/>
                         <p:commandButton value="Agregar opciones al Menú." onclick="PF('wvCartas').show();"/>
                         <p:column/>
-                        <p:dataList value="#{menuControladorImpl.lstMenuCartas}" var="opt" type="ordered">
+                        <p:dataList id="listaSeleccionada" value="#{menuControladorImpl.lstMenuCartas}" emptyMessage="Menú vacío" var="opt" type="ordered">
                             <f:facet name="header">
                                 Menu
                             </f:facet>
@@ -40,11 +40,13 @@
                             
                         </p:dataList>
                         <p:outputLabel value="Fecha"/>
-                        <p:datePicker value="#{menuControladorImpl.menu.fecha}" id="date" showIcon="true" style="width:auto" />
+                        <p:datePicker value="#{menuControladorImpl.menu.fecha}" required="true" id="date" showIcon="true" style="width:auto" />
                         <p:outputLabel value="Precio" />
-                        <p:inputNumber value="#{menuControladorImpl.menu.precio}"/>
+                        <p:inputNumber value="#{menuControladorImpl.menu.precio}" required="true" requiredMessage="El precio es mandatorio."/>
                         <p:commandButton icon="ui-icon ui-icon-plus" value="Agregar"
-                                         actionListener="#{menuControladorImpl.insertarMenu()}" update=":frmlmenu"/>
+                                         actionListener="#{menuControladorImpl.insertarMenu()}" update="panelDM, :frmLstMenuCarta:outputDatosMenuCarta, mensaje">
+                        <p:resetInput target="panelDM" />
+                        </p:commandButton>
 
 
                         <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
@@ -53,13 +55,11 @@
 
                 </h:form>
 
-                <p:separator/>
+                
 
-                <h:form id="frmMenu">
-
-                    <h:panelGrid id="panelMenu" style="border: 0px;">
-
-                        <p:dataTable value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
+                <h:form id="frmLstMenuCarta">
+                    <p:outputPanel id="outputDatosMenuCarta">
+                        <p:dataTable id="datosMenuCarta" value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
                             <p:growl id="mensaje" showDetail="true" />
 
                             <p:column headerText="Opcion" >
@@ -89,7 +89,7 @@
                             </p:column>
 
                             <p:column headerText="Eliminar" >
-                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminarMenu(listaMenu)}" update="frmMenu:panelMenu, mensaje">
+                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminarMenu(listaMenu)}" update="frmLstMenuCarta , mensaje">
                                     <p:confirm header="Confirmacion" message="Estas seguro de esta accion?" icon="pi pi-exclamation-triangle" />
                                 </p:commandButton>
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -100,12 +100,16 @@
 
                         </p:dataTable>
 
-                    </h:panelGrid>
+                        
+                    </p:outputPanel>
+
+                        
+                  
 
                     <p:separator/>
 
                 </h:form>
-                <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" >
+                <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" header="Opciones disponibles" >
                     <h:form id="frmDlgCartas">
                         <h:panelGrid columns="2">
 

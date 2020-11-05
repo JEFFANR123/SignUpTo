@@ -57,6 +57,8 @@ public class CartaControladorImpl implements Serializable {
             cartaFacadeLocal.create(carta);
             listaCarta = cartaFacadeLocal.findAll();
             listaTipoCartas = tipoCartaFacadeLocal.findAll();
+            carta = new Carta();
+            tipoCarta = new TipoCarta();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Agregado Correctamente "));
 
         } catch (Exception e) {

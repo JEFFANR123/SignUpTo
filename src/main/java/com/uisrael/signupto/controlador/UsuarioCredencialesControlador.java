@@ -46,9 +46,9 @@ public class UsuarioCredencialesControlador implements Serializable {
     private Credenciales credenciales;
 
     private List<Credenciales> listaCredenciales;
-    
+
     private List<Credenciales> listaAdministradores;
-    
+
     private List<Credenciales> listaClientes;
 
     private List<Usuario> infomacionUsuarios;
@@ -74,7 +74,7 @@ public class UsuarioCredencialesControlador implements Serializable {
     public void iniciaPago() {
 
         Date hoy = new Date();
-        this.pagos.setFkIdUsuario(usuario);
+        pagos.setFkIdUsuario(usuario);
         pagos.setFechaPago(hoy);
         pagos.setValorPago(0.0);
         pagos.setEstado("R");
@@ -136,15 +136,20 @@ public class UsuarioCredencialesControlador implements Serializable {
         try {
             if (validaCedula(usuario.getCedula()) == true) {
                 if (listaBusquedaUsuario.isEmpty()) {
-                    this.credenciales.setIdUsuario(usuario);
+                    //usuarioFacadeLocal.create(usuario);
+                    credenciales.setIdUsuario(usuario);
+                    credenciales.setUserName(usuario.getCedula());
                     credencialesFacadeLocal.create(credenciales);
                     iniciaPago();
+                    usuario = new Usuario();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "La cédula ya existe."));
+                    usuario = new Usuario();
                 }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los Datos Ingresados"));
+                usuario = new Usuario();
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los Datos Ingresados"));
@@ -215,5 +220,4 @@ public class UsuarioCredencialesControlador implements Serializable {
         this.listaClientes = listaClientes;
     }
 
-    
 }

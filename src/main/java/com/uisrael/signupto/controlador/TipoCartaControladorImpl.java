@@ -42,6 +42,7 @@ public class TipoCartaControladorImpl implements Serializable {
         try {
             tipoCartaFacadeLocal.create(tipoCarta);
             listaTipoCarta = tipoCartaFacadeLocal.findAll();
+            tipoCarta = new TipoCarta();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Ingresado Correctamente"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Ingresado Correctamente"));

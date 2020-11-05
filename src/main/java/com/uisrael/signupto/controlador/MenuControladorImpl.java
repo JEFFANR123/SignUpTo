@@ -167,9 +167,18 @@ public class MenuControladorImpl implements Serializable {
             if (menu.getFecha().before(DiasFecha(hoy, -1))) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Fecha incorrecta"));
             } else if (menu.getFecha().before(DiasFecha(hoy, 5)) || menu.getFecha().equals(hoy)) {
-                menu.setLstMenuCarta(lstMenuCartas);
+                //menu.setLstMenuCarta(lstMenuCartas);
                 menuFacadeLocal.create(menu);
+                lstMenuCartas.forEach((mc) -> {
+                    mc.getMenuCartaId().setMenuId(menu.getIdMenu());
+                });
+                lstMenuCartas.forEach((mc) -> {
+                    menuCartaFacadeLocal.create(mc);
+                });
+                listarOM();
                 listaMenu = menuFacadeLocal.findAll();
+                menu = new Menu();
+                lstMenuCartas.clear();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Agregado correctamente."));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Fecha incorrecta"));

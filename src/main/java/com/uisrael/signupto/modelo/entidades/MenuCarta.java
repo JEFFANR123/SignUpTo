@@ -27,11 +27,11 @@ public class MenuCarta implements Serializable {
     @EmbeddedId MenuCartaId menuCartaId;
         
     @ManyToOne
-    @JoinColumn(name = "IDCARTA", updatable = false, insertable = false)
+    @JoinColumn(name = "CARTAID", updatable = false, insertable = false)
     private Carta carta;
 
     @ManyToOne
-    @JoinColumn(name = "IDMENU", insertable = false, updatable = false)
+    @JoinColumn(name = "MENUID", insertable = false, updatable = false)
     private Menu menu;
 
     public MenuCartaId getMenuCartaId() {
