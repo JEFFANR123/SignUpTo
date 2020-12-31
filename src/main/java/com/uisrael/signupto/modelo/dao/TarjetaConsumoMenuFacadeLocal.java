@@ -5,7 +5,7 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
-import com.uisrael.signupto.modelo.entidades.Consumo;
+import com.uisrael.signupto.modelo.entidades.TarjetaConsumoMenu;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author janrango
  */
 @Local
-public interface ConsumoFacadeLocal {
+public interface TarjetaConsumoMenuFacadeLocal {
 
-    void create(Consumo consumo);
+    void create(TarjetaConsumoMenu consumo);
 
-    void edit(Consumo consumo);
+    void edit(TarjetaConsumoMenu consumo);
 
-    void remove(Consumo consumo);
+    void remove(TarjetaConsumoMenu consumo);
 
-    Consumo find(Object id);
+    TarjetaConsumoMenu find(Object id);
 
-    List<Consumo> findAll();
+    List<TarjetaConsumoMenu> findAll();
 
-    List<Consumo> findRange(int[] range);
+    List<TarjetaConsumoMenu> findRange(int[] range);
 
     int count();
     

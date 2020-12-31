@@ -7,9 +7,11 @@ package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CredencialesFacadeLocal;
 import com.uisrael.signupto.modelo.dao.PagosFacadeLocal;
+import com.uisrael.signupto.modelo.dao.TarjetaConsumoFacadeLocal;
 import com.uisrael.signupto.modelo.dao.UsuarioFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Credenciales;
 import com.uisrael.signupto.modelo.entidades.Pagos;
+import com.uisrael.signupto.modelo.entidades.TarjetaConsumo;
 import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,7 +41,14 @@ public class UsuarioCredencialesControlador implements Serializable {
     @EJB
     private PagosFacadeLocal pagosFacadeLocal;
 
+    @EJB
+    private TarjetaConsumoFacadeLocal tarjetaConsumoFacadeLocal;
+
     private Usuario usuario;
+
+    private TarjetaConsumo tarjetaConsumo;
+
+    private TarjetaConsumoControladorImpl tarjetaConsumoControladorImpl;
 
     private Pagos pagos;
 
@@ -58,6 +67,7 @@ public class UsuarioCredencialesControlador implements Serializable {
         credenciales = new Credenciales();
         usuario = new Usuario();
         pagos = new Pagos();
+        tarjetaConsumo = new TarjetaConsumo();
         listaCredenciales = credencialesFacadeLocal.findAll();
         listaAdministradores = credencialesFacadeLocal.listaUsuarioCredencialeses("A");
         listaClientes = credencialesFacadeLocal.listaUsuarioCredencialeses("C");
@@ -121,38 +131,39 @@ public class UsuarioCredencialesControlador implements Serializable {
         }
     }
 
-    public void buscarUsuario() {
-        String ciUsuario;
-        boolean existe = false;
-        try {
+    public void generaTarjetaConsumoInicial() {
 
-        } catch (Exception e) {
-        }
+        Date hoy = new Date();
+        tarjetaConsumo.setFkIdUsuario(usuario);
+        tarjetaConsumo.setFechaExpedicion(hoy);
+        tarjetaConsumo.setSaldo(0.0);
+        tarjetaConsumoFacadeLocal.create(tarjetaConsumo);
     }
 
     public void guardarUsuarioCredenciales() {
         ArrayList listaBusquedaUsuario = new ArrayList();
         listaBusquedaUsuario.addAll(usuarioFacadeLocal.consultaUsuarios(usuario.getCedula()));
+
         try {
-            if (validaCedula(usuario.getCedula()) == true) {
-                if (listaBusquedaUsuario.isEmpty()) {
-                    //usuarioFacadeLocal.create(usuario);
-                    credenciales.setIdUsuario(usuario);
-                    credenciales.setUserName(usuario.getCedula());
-                    credencialesFacadeLocal.create(credenciales);
-                    iniciaPago();
-                    usuario = new Usuario();
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "La cédula ya existe."));
-                    usuario = new Usuario();
-                }
+            if (validaCedula(usuario.getCedula()) == false) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "La cédula ya existe."));
+                usuario = new Usuario();
+            } else if (listaBusquedaUsuario.isEmpty()) {
+                //usuarioFacadeLocal.create(usuario);
+                credenciales.setIdUsuario(usuario);
+                credenciales.setUserName(usuario.getCedula());
+                credencialesFacadeLocal.create(credenciales);
+
+                generaTarjetaConsumoInicial();
+                usuario = new Usuario();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los Datos Ingresados"));
                 usuario = new Usuario();
             }
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los Datos Ingresados"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error en el controlador"));
+            usuario = new Usuario();
         }
     }
 

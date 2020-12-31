@@ -48,25 +48,6 @@ public class UsuarioControladorImpl implements Serializable {
 
     }
 
-    public void insertarUsuario() {
-
-        try {
-            this.credenciales.setIdUsuario(usuario);
-            credencialesFacadeLocal.create(credenciales);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
-            System.out.println("\n Ingresado correctamente \n");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Ocurrio un error registrando el usuario."));
-
-            System.err.println("\n Ocurrio un error desde el controlador \n");
-        }
-    }
-    
-    public void seleccionarMenu(){
-    
-        
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }

@@ -12,27 +12,12 @@
 
             <ui:define name="content">
                 <h:form id="menudia">
-                    <p:dataTable value="#{menuControladorImpl.listaFiltrada}" var="lstFlt">
-                        <p:column headerText="Entrada">
-                            <p:outputLabel value="#{lstFlt.entrada}"/>
-
-                        </p:column>
-
-                        <p:column headerText="Sopa">
-                            <p:outputLabel value="#{lstFlt.sopa}"/>
-
-                        </p:column>
-
-                        <p:column headerText="Segundo">
-                            <p:outputLabel value="#{lstFlt.segundo}"/>
-
-                        </p:column>
-
-                        <p:column headerText="Jugo">
-                            <p:outputLabel value="#{lstFlt.jugo}"/>
-
-                        </p:column>
-                    </p:dataTable>
+                   
+                        <h3>Responsive</h3>
+                        <p:selectOneRadio id="city2" value="#{radioView.city2}" layout="responsive" columns="1">
+                            <f:selectItems value="#{menuControladorImpl.listaFiltrada}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
+                        </p:selectOneRadio>
+                  
                     <h:panelGrid id="panelmenudia" >
                         <p:selectOneListbox id="basic" value="">
                             <f:selectItems value="#{menuControladorImpl.listaFiltrada}" var="lstOpt" itemLabel="#{lstOpt.entrada}"/>

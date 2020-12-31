@@ -30,4 +30,8 @@ public interface TarjetaConsumoFacadeLocal {
 
     int count();
     
+    List<Double> sumaConsumosCliente(String ciUser); 
+    
+    TarjetaConsumo idTarjetaConsumoEditar(int idUsuario);
+    
 }

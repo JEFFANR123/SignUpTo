@@ -42,7 +42,7 @@ public class PagosFacade extends AbstractFacade<Pagos> implements PagosFacadeLoc
     }
 
     @Override
-    public List<Double> contPagos(String idUser) {
+    public List<Double> sumaPagosCliente(String idUser) {
         return em.createQuery("SELECT p.valorPago FROM Pagos p WHERE p.fkIdUsuario.cedula = :idUser and p.estado ='A'", Double.class)
                 .setParameter("idUser", idUser).getResultList();
     }

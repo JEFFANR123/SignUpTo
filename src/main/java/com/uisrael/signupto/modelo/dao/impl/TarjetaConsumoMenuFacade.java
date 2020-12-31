@@ -5,19 +5,19 @@
  */
 package com.uisrael.signupto.modelo.dao.impl;
 
-import com.uisrael.signupto.modelo.dao.ConsumoFacadeLocal;
-import com.uisrael.signupto.modelo.entidades.Consumo;
+import com.uisrael.signupto.modelo.entidades.TarjetaConsumoMenu;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import com.uisrael.signupto.modelo.dao.TarjetaConsumoMenuFacadeLocal;
 
 /**
  *
  * @author janrango
  */
 @Stateless
-public class ConsumoFacade extends AbstractFacade<Consumo> implements ConsumoFacadeLocal {
+public class TarjetaConsumoMenuFacade extends AbstractFacade<TarjetaConsumoMenu> implements TarjetaConsumoMenuFacadeLocal {
 
     @PersistenceContext(unitName = "signuptoPU")
     private EntityManager em;
@@ -27,8 +27,8 @@ public class ConsumoFacade extends AbstractFacade<Consumo> implements ConsumoFac
         return em;
     }
 
-    public ConsumoFacade() {
-        super(Consumo.class);
+    public TarjetaConsumoMenuFacade() {
+        super(TarjetaConsumoMenu.class);
     }
 
     @Override

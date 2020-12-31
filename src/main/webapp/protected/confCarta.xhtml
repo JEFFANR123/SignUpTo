@@ -68,9 +68,17 @@
 
                             </p:column>
                             <p:column headerText="Eliminar" width="8%">
-                                <p:commandLink action="#" >
+                                <p:commandLink actionListener="#{cartaControladorImpl.eliminarCarta(lstCarta)}" update="frmLstTCarta, :frmTipo, :frmAgrOpcion:panelAgrOpcion" >
                                     <i class="pi pi-trash"></i>
+                                    <p:confirm header="Confirmacion" message="¿Está seguro de esta acción?" icon="pi pi-exclamation-triangle" />
                                 </p:commandLink>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                </p:confirmDialog> 
+
+
 
                             </p:column>
 

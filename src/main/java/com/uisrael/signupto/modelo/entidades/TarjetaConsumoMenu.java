@@ -7,7 +7,10 @@ package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,35 +25,25 @@ import javax.persistence.Temporal;
  * @author janrango
  */
 @Entity
-@Table(name = "T_CONSUMO")
-public class Consumo implements Serializable {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idConsumo;
-    
-    @Column(name = "FECHACONSUMO")
+@Table(name = "T_TARJETACONSUMO_MENU")
+public class TarjetaConsumoMenu implements Serializable {
+
+    @EmbeddedId TarjetaConsumoMenuId tarjetaConsumoMenuId;
+
+    @ManyToOne
+    @JoinColumn(name = "TARJETACONSUMOID", updatable = false, insertable = false)
+    private TarjetaConsumo tarjetaConsumo;
+
+    @ManyToOne
+    @JoinColumn(name = "MENUID", updatable = false, insertable = false)
+    private Menu menu;
+
+    @Column(name = "FECHA_CONSUMO")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaConsumo;
-    
-    @Column(name = "COSTO")
+
+    @Column(name = "VALOR_CONSUMO")
     private double valorConsumo;
-   
-    @ManyToOne
-    @JoinColumn(name = "FK_IDTARJETACONSUMO")
-    private TarjetaConsumo fkIdTarjetaConsumo;
-    
-    @ManyToOne
-    @JoinColumn(name = "FK_IDMENU")
-    private Menu fkIdMenu;
-
-    public int getIdConsumo() {
-        return idConsumo;
-    }
-
-    public void setIdConsumo(int idConsumo) {
-        this.idConsumo = idConsumo;
-    }
 
     public Date getFechaConsumo() {
         return fechaConsumo;
@@ -68,26 +61,36 @@ public class Consumo implements Serializable {
         this.valorConsumo = valorConsumo;
     }
 
-    public TarjetaConsumo getFkIdTarjetaConsumo() {
-        return fkIdTarjetaConsumo;
+    public TarjetaConsumoMenuId getTarjetaConsumoMenuId() {
+        return tarjetaConsumoMenuId;
     }
 
-    public void setFkIdTarjetaConsumo(TarjetaConsumo fkIdTarjetaConsumo) {
-        this.fkIdTarjetaConsumo = fkIdTarjetaConsumo;
+    public void setTarjetaConsumoMenuId(TarjetaConsumoMenuId tarjetaConsumoMenuId) {
+        this.tarjetaConsumoMenuId = tarjetaConsumoMenuId;
     }
 
-    public Menu getFkIdMenu() {
-        return fkIdMenu;
+    public TarjetaConsumo getTarjetaConsumo() {
+        return tarjetaConsumo;
     }
 
-    public void setFkIdMenu(Menu fkIdMenu) {
-        this.fkIdMenu = fkIdMenu;
+    public void setTarjetaConsumo(TarjetaConsumo tarjetaConsumo) {
+        this.tarjetaConsumo = tarjetaConsumo;
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+ 
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + this.idConsumo;
+        hash = 59 * hash + Objects.hashCode(this.tarjetaConsumoMenuId);
         return hash;
     }
 
@@ -102,13 +105,11 @@ public class Consumo implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Consumo other = (Consumo) obj;
-        if (this.idConsumo != other.idConsumo) {
+        final TarjetaConsumoMenu other = (TarjetaConsumoMenu) obj;
+        if (!Objects.equals(this.tarjetaConsumoMenuId, other.tarjetaConsumoMenuId)) {
             return false;
         }
         return true;
     }
-    
-    
-    
+
 }

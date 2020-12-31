@@ -7,6 +7,7 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Menu;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -37,6 +38,18 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
      return em.createQuery("SELECT p FROM Menu p WHERE p.fecha >= :inicio AND p.fecha < :fin",Menu.class)
              .setParameter("inicio", inicio).setParameter("fin", fin).getResultList();
     
+    }
+
+    @Override
+    public BigDecimal capturaValorMenu(int idMenu) {
+    return em.createQuery("SELECT p.precio FROM Menu p WHERE p.idMenu =:idMenu", BigDecimal.class)
+             .setParameter("idMenu", idMenu).getSingleResult();
+    }
+
+    @Override
+    public Menu capturaObjetoMenuId(int idMenu) {
+       return em.createQuery("SELECT p FROM Menu p WHERE p.idMenu =:idMenu", Menu.class)
+             .setParameter("idMenu", idMenu).getSingleResult();
     }
 
     

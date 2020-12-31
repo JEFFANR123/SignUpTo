@@ -71,17 +71,19 @@ public class CartaControladorImpl implements Serializable {
         cartaFacadeLocal.edit(carta);
     }
 
-    public void eliminarCarta() {
+    public void eliminarCarta(Carta deleteCarta) {
         try {
             cartaFacadeLocal.remove(carta);
             listaCarta = cartaFacadeLocal.findAll();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Agregado Correctamente "));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Eliminado correctamente "));
 
         } catch (Exception e) {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error al guardar"));
         }
     }
+    
+ 
 
     public void leerCarta(Carta lCarta) {
         carta = lCarta;

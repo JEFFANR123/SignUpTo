@@ -58,7 +58,7 @@ public class PagosControladorImpl implements Serializable {
         lstPagosP = pagosFacadeLocal.lstFltPagos("P");
         lstPagosA = pagosFacadeLocal.lstFltPagos("A");
         lstPagosR = pagosFacadeLocal.lstFltPagos("R");
-        saldoUsuario = calcularSaldo();
+        
     }
 
     public byte[] tranformar(InputStream comprobante) throws IOException {
@@ -111,27 +111,6 @@ public class PagosControladorImpl implements Serializable {
 
     public void modificarPago() {
         pagosFacadeLocal.edit(pagos);
-    }
-
-    public double calcularSaldo() {
-        String temp;
-        List<Double> listTemp;
-        int i;
-        double sum = 0;
-
-        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
-            temp = usrpass.getIdUsuario().getCedula();
-            listTemp = pagosFacadeLocal.contPagos(temp);
-
-            for (i = 0; i < listTemp.size(); i++) {
-                sum += listTemp.get(i);
-            }
-
-        } catch (Exception e) {
-        }
-        return sum;
     }
 
     //GETS Y SETS

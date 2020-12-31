@@ -13,20 +13,21 @@
             <ui:define name="content">
 
                 <h:form id="menudia">
-                    <h:panelGrid id="panelmenudia" >
-
-                        <p:outputLabel value="MENU" />
-                        <p:selectOneListbox  id="advanced" value="#{consumoControladorImpl.consumo.idConsumo}"  >
-                            <f:selectItems value="#{menuControladorImpl.listaMenuDiario}" var="lstmn" 
-                                           itemLabel="#{lstmn.entrada}" itemValue="#{lstmn.idMenu}" />
-                        </p:selectOneListbox>
-                        
-                        <p:column/>
-                        <p:commandButton action="#{consumoControladorImpl.guardarConsumo()}" value="Registrar Almuerzo"/>
-
-
-                    </h:panelGrid>
-
+                    
+                        <h3>Menu del Dia</h3>
+                        <p:outputPanel id="test">
+                            <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
+                            <p:selectOneMenu id="sorMenudelDia" value="#{tarjetaConsumoControladorImpl.obtieneMenuId}" 
+                                               required="true" requiredMessage="Seleccione una opcion" >
+                                <f:selectItems value="#{tarjetaConsumoControladorImpl.listaFiltradaHoy}" 
+                                               var="c" itemLabel="#{c.nombreMenu}" itemValue="#{c.idMenu}" >
+                                    
+                                </f:selectItems>
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton value="Guardar" actionListener="#{tarjetaConsumoControladorImpl.guardarConsumoCliente()}" 
+                                             update="menudia:mensaje" />
+                        </p:outputPanel>
 
                 </h:form>
             </ui:define>

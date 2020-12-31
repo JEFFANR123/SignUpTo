@@ -14,6 +14,7 @@ import com.uisrael.signupto.modelo.entidades.Menu;
 import com.uisrael.signupto.modelo.entidades.MenuCarta;
 import com.uisrael.signupto.modelo.entidades.MenuCartaId;
 import com.uisrael.signupto.modelo.entidades.TipoCarta;
+import com.uisrael.signupto.servicio.MenuServicio;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
@@ -50,6 +52,9 @@ public class MenuControladorImpl implements Serializable {
 
     @EJB
     private TipoCartaFacadeLocal tipoCartaFacadeLocal;
+
+    @Inject
+    private MenuServicio menuServicio;
 
     private List<Carta> listaCarta;
 
@@ -134,7 +139,8 @@ public class MenuControladorImpl implements Serializable {
     public void listarOM() {
         Date hoy = new Date();
         try {
-            listaFiltrada = menuFacadeLocal.listadoFiltrado(hoy, DiasFecha(hoy, 5));
+            listaFiltrada = menuServicio.listaMenuDiario();
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Listado disponibles."));
         } catch (Exception e) {
 
@@ -197,7 +203,7 @@ public class MenuControladorImpl implements Serializable {
             if (optCartaOptional.isPresent()) {
                 mc.setCarta(optCartaOptional.get());
                 mc.setMenu(menu);
-                MenuCartaId menuCartaId =  new MenuCartaId();
+                MenuCartaId menuCartaId = new MenuCartaId();
                 menuCartaId.setCartaId(mc.getCarta().getIdCarta());
                 menuCartaId.setMenuId(mc.getMenu().getIdMenu());
                 mc.setMenuCartaId(menuCartaId);
