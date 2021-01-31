@@ -44,6 +44,8 @@ public class TarjetaConsumoMenu implements Serializable {
 
     @Column(name = "VALOR_CONSUMO")
     private double valorConsumo;
+    
+    
 
     public Date getFechaConsumo() {
         return fechaConsumo;

@@ -47,4 +47,10 @@ public class PagosFacade extends AbstractFacade<Pagos> implements PagosFacadeLoc
                 .setParameter("idUser", idUser).getResultList();
     }
 
+    @Override
+    public List<Pagos> listaPagosUsuario(String idUser) {
+        return em.createQuery("SELECT p FROM Pagos p WHERE p.fkIdUsuario.cedula = :idUser", Pagos.class)
+                .setParameter("idUser", idUser).getResultList();
+      }
+
 }

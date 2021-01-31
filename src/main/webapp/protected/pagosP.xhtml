@@ -12,8 +12,22 @@
 
             <ui:define name="content">
                 <h:form>
+                    <h:commandLink>
+                        <p:graphicImage name="excelicon.png" library="images" width="24"/>
+                        <p:dataExporter type="xls" target="dtPagosP" fileName="PagosPendientes" />
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="pdficon.png" library="images" width="24"/>
+                        <p:dataExporter type="pdf" target="dtPagosP" fileName="PagosPendientes" />
+                    </h:commandLink>
                     <h:panelGrid id="pnlPagos" >
-                        <p:dataTable id="dtPagosP" value="#{pagosControladorImpl.lstPagosP}" var="pagosP">
+
+                        <p:dataTable id="dtPagosP" value="#{pagosControladorImpl.lstPagosP}" var="pagosP"
+                                     rows="5" paginator="true"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     >
                             <p:growl id="mensajes" showDetail="true" />
                             <p:column headerText="CI Usuario">
                                 <h:outputText value="#{pagosP.fkIdUsuario.cedula}"/>
@@ -29,7 +43,7 @@
 
                             <p:column headerText="Accion">
                                 <p:commandLink value="Ver" actionListener="#{pagosControladorImpl.leePago(pagosP)}"
-                                                 oncomplete="PF('dlgwrPagos').show();" update="dlgPagos" />
+                                               oncomplete="PF('dlgwrPagos').show();" update="dlgPagos" />
                             </p:column>
 
 
@@ -46,22 +60,22 @@
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Cedula"/>
                             <p:outputLabel value="#{pagosControladorImpl.pagos.fkIdUsuario.cedula}"/>
-                            
+
                             <p:outputLabel value="Nombre"/>
                             <h:outputText value="#{pagosControladorImpl.pagos.fkIdUsuario.nombrecompleto}"/>
-                            
+
                             <p:outputLabel value="Estado del Pago"/>
                             <p:selectOneMenu id="somPagos" value="#{pagosControladorImpl.pagos.estado}">
                                 <f:selectItem itemValue="P" itemLabel="Pendiente"/>
                                 <f:selectItem itemValue="A" itemLabel="Aprovado"/>
                                 <f:selectItem itemValue="R" itemLabel="Rechazado"/>
                             </p:selectOneMenu>
-                            
+
                             <p:commandButton value="Guardar" action="#{pagosControladorImpl.modificarPago()}"/>
                             <p:commandButton value="Descargar comprobante" actionListener="#{pagosControladorImpl.descargarPago()}" ajax="false">
                                 <p:fileDownload value="#{pagosControladorImpl.downFile}"/>
                             </p:commandButton>
-                            
+
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>

@@ -33,5 +33,7 @@ public interface PagosFacadeLocal {
     List<Pagos> lstFltPagos(String est);
     
     List<Double> sumaPagosCliente(String idUser);
+    
+    List<Pagos> listaPagosUsuario(String idUser);
 
 }

@@ -44,13 +44,19 @@ public class PagosControladorImpl implements Serializable {
 
     private List<Pagos> lstPagosP;
 
+    private List<Pagos> lstPagosUsuario;
+
     private UploadedFile file;
 
     private StreamedContent downFile;
 
+    private Credenciales usrpass;
+
     private int[] sumPagos;
-    
+
     private double saldoUsuario;
+
+    String temp;
 
     @PostConstruct
     public void init() {
@@ -58,7 +64,16 @@ public class PagosControladorImpl implements Serializable {
         lstPagosP = pagosFacadeLocal.lstFltPagos("P");
         lstPagosA = pagosFacadeLocal.lstFltPagos("A");
         lstPagosR = pagosFacadeLocal.lstFltPagos("R");
-        
+        FacesContext context = FacesContext.getCurrentInstance();
+        usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+        try {
+            temp = usrpass.getIdUsuario().getCedula();
+            lstPagosUsuario = pagosFacadeLocal.listaPagosUsuario(temp);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Lista de pagos para el usuario" + temp));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "No se encontro un usuario valido para la consulta"));
+        }
+
     }
 
     public byte[] tranformar(InputStream comprobante) throws IOException {
@@ -79,7 +94,7 @@ public class PagosControladorImpl implements Serializable {
 
         try {
             FacesContext context = FacesContext.getCurrentInstance();
-            Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+            //Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
             if (usrpass != null && file != null) {
 
                 pagos.setFkIdUsuario(usrpass.getIdUsuario());
@@ -114,6 +129,13 @@ public class PagosControladorImpl implements Serializable {
     }
 
     //GETS Y SETS
+    public List<Pagos> getLstPagosUsuario() {
+        return lstPagosUsuario;
+    }
+
+    public void setLstPagosUsuario(List<Pagos> lstPagosUsuario) {
+        this.lstPagosUsuario = lstPagosUsuario;
+    }
 
     public double getSaldoUsuario() {
         return saldoUsuario;
@@ -122,8 +144,7 @@ public class PagosControladorImpl implements Serializable {
     public void setSaldoUsuario(double saldoUsuario) {
         this.saldoUsuario = saldoUsuario;
     }
-    
-    
+
     public int[] getSumPagos() {
         return sumPagos;
     }

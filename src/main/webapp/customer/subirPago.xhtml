@@ -21,10 +21,10 @@
                         <p:inputTextarea value="#{pagosControladorImpl.pagos.comentario}"/>
 
                         <p:outputLabel value="Comprobate de Pago"/>
-                        <p:fileUpload value="#{pagosControladorImpl.file}" mode="simple" skinSimple="true"/>
+                        <p:fileUpload value="#{pagosControladorImpl.file}" label="Seleccionar"  mode="simple" skinSimple="true"/>
                         <br />
 
-                        <p:commandButton value="Submit" ajax="false" action="#{pagosControladorImpl.insertarPagos()}" />
+                        <p:commandButton value="Subir Pago" ajax="false" action="#{pagosControladorImpl.insertarPagos()}" />
 
 
                     </h:panelGrid>

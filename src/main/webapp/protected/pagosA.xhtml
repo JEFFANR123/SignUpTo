@@ -11,8 +11,22 @@
 
             <ui:define name="content">
                 <h:form>
+                    <h:commandLink>
+                        <p:graphicImage name="excelicon.png" library="images" width="24"/>
+                        <p:dataExporter type="xls" target="dtPagosA" fileName="PagosAprobados" />
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="pdficon.png" library="images" width="24"/>
+                        <p:dataExporter type="pdf" target="dtPagosA" fileName="PagosAprobados" />
+                    </h:commandLink>
                     <h:panelGrid id="pnlPagosA" >
-                        <p:dataTable id="dtPagosA" value="#{pagosControladorImpl.lstPagosA}" var="pagosA">
+
+                        <p:dataTable id="dtPagosA" value="#{pagosControladorImpl.lstPagosA}" var="pagosA"
+                                     rows="5" paginator="true"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     >
                             <p:growl id="mensajes" showDetail="true" />
                             <p:column headerText="CI Usuario">
                                 <h:outputText value="#{pagosA.fkIdUsuario.cedula}"/>

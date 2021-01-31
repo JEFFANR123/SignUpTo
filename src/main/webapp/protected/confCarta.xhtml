@@ -48,12 +48,16 @@
 
                 <h:form id="frmCarta">
                     <h:panelGrid id="panelCarta" >
-                        <p:dataTable id="dataCarta" value="#{cartaControladorImpl.listaCarta}" var="lstCarta">
+                        <p:dataTable id="dataCarta" value="#{cartaControladorImpl.listaCarta}" var="lstCarta"
+                                     rows="5" paginator="true"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    >
                             <p:growl id="mensajes" showDetail="true" />
-                            <p:column headerText="Tipo">
+                            <p:column headerText="Tipo" filterBy="#{lstCarta.tipoCarta.nombreTipo}">
                                 <h:outputText value="#{lstCarta.tipoCarta.nombreTipo}"/>
                             </p:column>
-                            <p:column headerText="Nombre">
+                            <p:column headerText="Nombre" filterBy="#{lstCarta.nombre}">
                                 <h:outputText value="#{lstCarta.nombre}"/>
                             </p:column>
                             <p:column headerText="Precio" width="8%">
@@ -104,7 +108,11 @@
                     <p:separator/>
                     <h:form id="frmLstTCarta"> 
                         <p:panelGrid>
-                            <p:dataTable id="datosTipoCarta" value="#{tipoCartaControladorImpl.listaTipoCarta}" var="lstTipoCarta">
+                            <p:dataTable id="datosTipoCarta" value="#{tipoCartaControladorImpl.listaTipoCarta}" var="lstTipoCarta"
+                                         rows="5" paginator="true"
+                                         rowsPerPageTemplate="5,10,15"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         >
                                 <p:column headerText="Nombre del Tipo de sección.">
                                     <h:outputText value="#{lstTipoCarta.nombreTipo}"/>
                                 </p:column>

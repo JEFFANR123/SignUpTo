@@ -55,6 +55,8 @@ public class TarjetaConsumoControladorImpl implements Serializable {
     private TarjetaConsumoMenu tarjetaConsumoMenu;
 
     private TarjetaConsumo tarjetaConsumo;
+    
+    private List<TarjetaConsumoMenu> tarjetaConsumoMenusList;
 
     private Menu menu;
 
@@ -69,6 +71,8 @@ public class TarjetaConsumoControladorImpl implements Serializable {
     private List listaFiltradaHoy;
     
     private Credenciales usrpass;
+    
+    String temp;
 
     @PostConstruct
     public void init() {
@@ -80,12 +84,16 @@ public class TarjetaConsumoControladorImpl implements Serializable {
         usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
         saldoDisponibleCliente = calculoSaldoDisponible();
         listaFiltradaHoy = menuServicio.listaMenuDiario();
+        temp = usrpass.getIdUsuario().getCedula();
+        tarjetaConsumoMenusList = tarjetaConsumoMenuFacadeLocal.consultaTarjetaConsumoMenu(temp);
         
     }
+    
+    
 
     public double calculoSaldoDisponible() {
 
-        String temp;
+
         List<Double> listTempConsumos;
         List<Double> listTempPagos;
         int i;
@@ -153,16 +161,27 @@ public class TarjetaConsumoControladorImpl implements Serializable {
                 tarjetaConsumoMenuId.setTarjetaConsumoId(tarjetaConsumo.getIdTarjetaConsumo());
                 tarjetaConsumoMenu.setTarjetaConsumoMenuId(tarjetaConsumoMenuId);
                 tarjetaConsumoMenuFacadeLocal.create(tarjetaConsumoMenu);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se ha guardado correctamente!"));
 
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Ocrrio un error en el controlador"));
 
             }
         } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Error desde Exception, contacte al Administrador "));
         }
     }
 
     //GETs & SETs
+
+    public List<TarjetaConsumoMenu> getTarjetaConsumoMenusList() {
+        return tarjetaConsumoMenusList;
+    }
+
+    public void setTarjetaConsumoMenusList(List<TarjetaConsumoMenu> tarjetaConsumoMenusList) {
+        this.tarjetaConsumoMenusList = tarjetaConsumoMenusList;
+    }   
+    
     public List getListaFiltradaHoy() {
         return listaFiltradaHoy;
     }

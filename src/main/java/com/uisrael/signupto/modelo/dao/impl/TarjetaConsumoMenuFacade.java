@@ -36,5 +36,11 @@ public class TarjetaConsumoMenuFacade extends AbstractFacade<TarjetaConsumoMenu>
     return em.createQuery("SELECT p.valorConsumo FROM Consumo p WHERE p.fkIdUsuario.cedula =:ciUser",Double.class)
             .setParameter("ciUser", ciUser).getResultList();
     }
+
+    @Override
+    public List<TarjetaConsumoMenu> consultaTarjetaConsumoMenu(String ciUser) {
+    return em.createQuery("SELECT p FROM TarjetaConsumoMenu p WHERE p.tarjetaConsumo.fkIdUsuario.cedula =:ciUser",TarjetaConsumoMenu.class)
+            .setParameter("ciUser", ciUser).getResultList();
+    }
     
 }

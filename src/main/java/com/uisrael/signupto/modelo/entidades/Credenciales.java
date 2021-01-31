@@ -59,8 +59,6 @@ public class Credenciales implements Serializable {
         this.userPass = userPass;
     }
 
-
-
     public String getUserName() {
         return userName;
     }

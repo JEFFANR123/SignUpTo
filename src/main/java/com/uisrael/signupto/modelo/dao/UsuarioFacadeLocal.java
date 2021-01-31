@@ -30,8 +30,8 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-    
+
     List<Usuario> consultaUsuarios(String var1);
-    
-    
+
+
 }

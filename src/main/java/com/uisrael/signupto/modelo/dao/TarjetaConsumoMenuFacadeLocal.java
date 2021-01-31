@@ -32,4 +32,6 @@ public interface TarjetaConsumoMenuFacadeLocal {
     
     List<Double> userConsumos(String ciUser);
     
+    List<TarjetaConsumoMenu> consultaTarjetaConsumoMenu(String ciUser);
+    
 }

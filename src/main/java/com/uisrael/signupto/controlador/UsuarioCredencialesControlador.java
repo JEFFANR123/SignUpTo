@@ -140,6 +140,40 @@ public class UsuarioCredencialesControlador implements Serializable {
         tarjetaConsumoFacadeLocal.create(tarjetaConsumo);
     }
 
+    public void leerUsuario(Usuario leeUsr) {
+
+        usuario = leeUsr;
+    }
+
+    public void editarUsuario() {
+
+        usuarioFacadeLocal.edit(usuario);
+    }
+
+    public void leerCredenciales(Credenciales leeCredenciales) {
+
+        credenciales = leeCredenciales;
+    }
+
+    public void editarCredenciales() {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+            if (credenciales.getUserName().equals(usrpass.getIdUsuario().getCedula())) {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "El Usuario esta en uso, operacion no permitida!"));
+            } else {
+                credencialesFacadeLocal.edit(credenciales);
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se guardo los cambios correctamente!"));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Error al Editar el Tipo de Usuario, contacte al administrador!"));
+        }
+
+    }
+
     public void guardarUsuarioCredenciales() {
         ArrayList listaBusquedaUsuario = new ArrayList();
         listaBusquedaUsuario.addAll(usuarioFacadeLocal.consultaUsuarios(usuario.getCedula()));

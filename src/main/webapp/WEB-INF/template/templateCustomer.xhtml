@@ -28,13 +28,16 @@
                         </p:menuitem>
                         <p:submenu label="Usuario" icon="pi pi-users">
                             <p:menuitem value="Mi perfil" url="perfilUsuario.xhtml" icon="pi pi-user" />
-                            <p:menuitem value="Pagos" url="pagos.xhtml" icon="pi pi-user" />
+                            <p:menuitem value="Pagos" url="subirPago.xhtml" icon="pi pi-user" />
                             <p:separator />
                             <p:menuitem value="Dar de Baja" url="#" icon="pi pi-user-minus" />
                         </p:submenu>
                         <p:submenu label="Otras Opciones" icon="pi pi-users">
-                            <p:menuitem value="Consumos" url="#" icon="pi pi-user" />
-                            <p:menuitem value="Reportes" url="#" icon="pi pi-user" />
+                            <p:submenu label="Reportes" icon="pi pi-search">
+                                <p:menuitem value="Consumos" url="reporteConsumos.xhtml" icon="pi pi-user" />
+                                <p:menuitem value="Pagos" url="reportePagos.xhtml" icon="pi pi-user" />
+                            </p:submenu>
+
                             <p:separator />
                             <p:menuitem value="Calificar servicio" url="#" icon="pi pi-user-minus" />
                         </p:submenu>
@@ -63,12 +66,16 @@
                                 Perfil
                             </f:facet>
                             <p:dataViewListItem>
-                                    <h:panelGrid columns="2">
-                                        <h:outputText value="Id Usuario: "/>
-                                        <h:outputText value="#{datosUser.cedula}"/>  
-                                        <h:outputText value="Saldo disponible: "/>
-                                        <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>
-                                    </h:panelGrid>
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="Nombre: "/>
+                                    <h:outputText value="#{datosUser.nombrecompleto}"/> 
+                                    <br/>
+                                    <h:outputText value="Cédula:  "/>
+                                    <h:outputText value="#{datosUser.cedula}"/> 
+                                    <br/>
+                                    <h:outputText value="Saldo: "/>
+                                    <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>
+                                </h:panelGrid>
                             </p:dataViewListItem>
                         </p:dataList>
 
