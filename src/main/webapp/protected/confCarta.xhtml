@@ -23,7 +23,7 @@
 
                         <p:outputLabel for="tCarta" value="Tipo"/>
                         <p:selectOneMenu id="tCarta" value="#{cartaControladorImpl.tipoCarta.idTipoCarta}" required="true" 
-                                         requiredMessage="Tipo de Navegacion es Obligatoria">
+                                         requiredMessage="Tipo es Obligatoria">
                             <f:selectItems id="options" value="#{tipoCartaControladorImpl.listaTipoCarta}" var="lcarta" itemLabel="#{lcarta.nombreTipo}" itemValue="#{lcarta.idTipoCarta}"/>
                         </p:selectOneMenu>
 

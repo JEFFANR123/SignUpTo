@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,22 +28,31 @@ public class Usuario implements Serializable {
     @Column(name = "IDUSUARIO")
     private int idUsuario;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_EMPRESA")
+    private Empresa fkEmpresa;
+
     @Column(name = "CEDULA")
     private String cedula;
 
     @Column(name = "NOMBRE_COMPLETO")
     private String nombrecompleto;
-    
+
     @Column(name = "EMAIL")
     private String email;
 
     @Column(name = "TELEFONO")
     private String telefono;
-    
-    @Column(name = "ROL")
-    private String rol;
 
     public Usuario() {
+    }
+
+    public Empresa getFkEmpresa() {
+        return fkEmpresa;
+    }
+
+    public void setFkEmpresa(Empresa fkEmpresa) {
+        this.fkEmpresa = fkEmpresa;
     }
 
     public int getIdUsuario() {
@@ -72,14 +83,6 @@ public class Usuario implements Serializable {
         return telefono;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -88,8 +91,6 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    
-        
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }

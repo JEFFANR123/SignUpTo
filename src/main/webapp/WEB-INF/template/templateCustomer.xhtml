@@ -46,9 +46,8 @@
 
                         <f:facet name="options">
 
-                            <p:commandButton action="#{buttonView.buttonAction}" id="iconOnly" style="margin-right:20px;" icon="ui-icon-circle-zoomin" title="Icon Only" />
-                            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-                            <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" value="Logout" action="./../index.xhtml" icon="pi pi-home" />
+                            
+                            <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" value="Salir" action="./../index.xhtml" icon="pi pi-home" />
                         </f:facet>
                     </p:menubar>
                     <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>

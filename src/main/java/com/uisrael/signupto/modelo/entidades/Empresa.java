@@ -6,6 +6,7 @@
 package com.uisrael.signupto.modelo.entidades;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,13 +26,12 @@ public class Empresa implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idEmpresa;
     
+    @Column(name = "RUC")
     private String ruc;
     
+    @Column(name = "Nombre_Empresa")
     private String nombreEmpresa;
     
-    private String tipo;
-    
-    private double costo;
 
     public int getIdEmpresa() {
         return idEmpresa;
@@ -55,22 +55,6 @@ public class Empresa implements Serializable{
 
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
     }
 
     @Override

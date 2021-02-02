@@ -24,16 +24,18 @@
 
             <div id="menuBar">
 
-                <h:form>  
+                <h:form id="frmTmpAdmin">  
                     <p:growl id="messages"/>
 
                     <p:menubar>
                         <p:menuitem outcome="adminInicio" >
                             <p:graphicImage name="logo.png" library="images" />
                         </p:menuitem>
-                        <p:submenu label="Usuarios" icon="pi pi-users">
+                        <p:submenu label="General" icon="pi pi-users">
                             <p:menuitem value="Administradores" url="adminsConfig.xhtml" icon="pi pi-user" />
+                            <p:menuitem value="Empleados" url="emplConf.xhtml" icon="pi pi-user" />
                             <p:menuitem value="Clientes" url="usrsConfig.xhtml" icon="pi pi-user" />
+                            <p:menuitem value="Empresas" url="confEmpresa.xhtml" icon="pi pi-user" />
                             <p:separator />
                             <p:menuitem value="Dar de Baja" url="#" icon="pi pi-user-minus" />
                         </p:submenu>
@@ -56,12 +58,57 @@
 
                         <f:facet name="options">
 
-                            <p:commandButton action="#{buttonView.buttonAction}" id="iconOnly" style="margin-right:20px;" icon="ui-icon-circle-zoomin" title="Icon Only" />
-                            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-                            <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" value="Logout" action="./../index.xhtml" icon="pi pi-home" />
+                            <p:commandButton actionListener="#{tarjetaConsumoControladorImpl.buscarCodigoConsumo()}" 
+                                             oncomplete="PF('wDlgCdgConsumo').show();"                                             
+                                             style="margin-right:20px;" 
+                                             icon="ui-icon-circle-zoomin" 
+                                             update="dlgCdgConsumo"
+                                             />
+                            <p:inputText id="txtCodMenu" style="margin:1px 10px 1px 1px;" 
+                                         value="#{tarjetaConsumoControladorImpl.tarjetaConsumoMenu.codigoConsumo}" 
+                                         placeholder="Código de Consumo" />
+                            <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" 
+                                             value="Salir" action="./../index.xhtml" icon="pi pi-home" />
                         </f:facet>
                     </p:menubar>
+
+
                 </h:form>
+
+                <p:dialog id="dlgCdgConsumo" widgetVar="wDlgCdgConsumo" width="30%" header="Validar código de consumo." >
+                    <h:form id="frmCdgConsumo">
+
+                        <p:growl id="mensajeMod" severity="info, error, fatal" showSummary="false" showDetail="true" />
+
+                        <h:panelGrid id="panelCdgConsumo" columns="2" >
+
+                            <p:outputLabel value="Cedula"/>
+                            <p:outputLabel value="#{tarjetaConsumoControladorImpl.tarjetaConsumoMenu.tarjetaConsumo.fkIdUsuario.cedula}"/>
+
+                            <p:outputLabel value="Nombre Cliente"/>
+                            <p:outputLabel value="#{tarjetaConsumoControladorImpl.tarjetaConsumoMenu.tarjetaConsumo.fkIdUsuario.nombrecompleto}"/>
+
+                            <p:outputLabel value="Precio"/>
+                            <p:dataList value="#{tarjetaConsumoControladorImpl.tarjetaConsumoMenu.menu.lstMenuCarta}" var="lstOptSlt">
+                                <f:facet name="header">
+                                    Menu
+                                </f:facet>
+                                #{lstOptSlt.carta.nombre}
+
+                            </p:dataList>
+
+                            <p:commandButton icon="ui-icon-check" value="Validar Código" oncomplete="PF('wDlgCdgConsumo').hide();" 
+                                             actionListener="#{tarjetaConsumoControladorImpl.validaCodigoConsumo()}" 
+                                             update="@form"/>
+                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
+                                             update="@form" oncomplete="PF('wDlgCdgConsumo').hide();" />
+
+                        </h:panelGrid>
+
+
+                    </h:form>
+                </p:dialog>
+
             </div>
         </div>
         <div>
@@ -84,18 +131,25 @@
 
 
                     </h:form>
+
+
                 </ui:insert>
 
             </div>
             <div id="content" class="left_content">
 
+
                 <ui:insert name="content">
+
+
 
 
                 </ui:insert>
 
             </div>
+
         </div>
+
 
     </h:body>
 

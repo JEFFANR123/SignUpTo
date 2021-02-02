@@ -42,7 +42,10 @@
 
                             <p:column headerText="Tipo de Usuario" >
                                 <p:outputLabel value="#{lstClientes.tipoUser}"/>
-
+                            </p:column>
+                            
+                            <p:column headerText="Empresa" >
+                                <p:outputLabel value="#{lstClientes.idUsuario.fkEmpresa.nombreEmpresa}"/>
                             </p:column>
 
                             <p:column headerText="Estado" >
@@ -98,7 +101,7 @@
                             </p:selectOneMenu>
 
                             <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgUsrRol').hide();" 
-                                             actionListener="#{usuarioCredencialesControlador.editarCredenciales()}" 
+                                             actionListener="#{usuarioCredencialesControlador.editarUsuario()}" 
                                              update="frmUsrLst, frmDlgUsrRol"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 

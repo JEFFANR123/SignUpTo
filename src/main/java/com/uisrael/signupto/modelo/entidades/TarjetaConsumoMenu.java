@@ -45,7 +45,28 @@ public class TarjetaConsumoMenu implements Serializable {
     @Column(name = "VALOR_CONSUMO")
     private double valorConsumo;
     
+    @Column(name = "CODIGO_CONSUMO")
+    private int codigoConsumo;
     
+    @Column(name = "ESTADO_CONSUMO")
+    private boolean estado = false;
+
+        
+    public int getCodigoConsumo() {
+        return codigoConsumo;
+    }
+
+    public void setCodigoConsumo(int codigoConsumo) {
+        this.codigoConsumo = codigoConsumo;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    } 
 
     public Date getFechaConsumo() {
         return fechaConsumo;

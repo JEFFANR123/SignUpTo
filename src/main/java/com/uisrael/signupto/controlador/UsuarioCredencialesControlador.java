@@ -6,10 +6,12 @@
 package com.uisrael.signupto.controlador;
 
 import com.uisrael.signupto.modelo.dao.CredencialesFacadeLocal;
+import com.uisrael.signupto.modelo.dao.EmpresaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.PagosFacadeLocal;
 import com.uisrael.signupto.modelo.dao.TarjetaConsumoFacadeLocal;
 import com.uisrael.signupto.modelo.dao.UsuarioFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Credenciales;
+import com.uisrael.signupto.modelo.entidades.Empresa;
 import com.uisrael.signupto.modelo.entidades.Pagos;
 import com.uisrael.signupto.modelo.entidades.TarjetaConsumo;
 import com.uisrael.signupto.modelo.entidades.Usuario;
@@ -44,7 +46,12 @@ public class UsuarioCredencialesControlador implements Serializable {
     @EJB
     private TarjetaConsumoFacadeLocal tarjetaConsumoFacadeLocal;
 
+    @EJB
+    private EmpresaFacadeLocal empresaFacadeLocal;
+
     private Usuario usuario;
+
+    private Empresa empresa;
 
     private TarjetaConsumo tarjetaConsumo;
 
@@ -62,12 +69,16 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     private List<Usuario> infomacionUsuarios;
 
+    private List<Empresa> lstEmpresas;
+
     @PostConstruct
     public void init() {
         credenciales = new Credenciales();
         usuario = new Usuario();
         pagos = new Pagos();
+        empresa = new Empresa();
         tarjetaConsumo = new TarjetaConsumo();
+        lstEmpresas = empresaFacadeLocal.findAll();
         listaCredenciales = credencialesFacadeLocal.findAll();
         listaAdministradores = credencialesFacadeLocal.listaUsuarioCredencialeses("A");
         listaClientes = credencialesFacadeLocal.listaUsuarioCredencialeses("C");
@@ -147,8 +158,70 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     public void editarUsuario() {
 
-        usuarioFacadeLocal.edit(usuario);
+        try {
+            usuario.setFkEmpresa(empresa);
+            usuarioFacadeLocal.edit(usuario);
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Datos modificados correctamente"));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
+
+        }
+
     }
+
+    //Agregar - eliminar - modificar empresas
+    public void insertarEmpresa() {
+        try {
+            empresaFacadeLocal.create(empresa);
+            lstEmpresas = empresaFacadeLocal.findAll();
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Lista actualizada"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
+
+        }
+
+    }
+
+    public void leerEmpresa(Empresa lEmpresa) {
+
+        empresa = lEmpresa;
+    }
+
+    public void editarEmpresa() {
+        try {
+            empresaFacadeLocal.edit(empresa);
+            lstEmpresas = empresaFacadeLocal.findAll();
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Lista Actualizada"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
+
+        }
+
+    }
+
+    public void eliminarEmpresa(Empresa delEmpresa) {
+
+        try {
+            empresaFacadeLocal.remove(delEmpresa);
+            lstEmpresas = empresaFacadeLocal.findAll();
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Datos eliminados correctamente"));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
+        }
+
+    }
+    
+    // Credenciales - Inserta - Modifica - Lee
 
     public void leerCredenciales(Credenciales leeCredenciales) {
 
@@ -201,6 +274,14 @@ public class UsuarioCredencialesControlador implements Serializable {
         }
     }
 
+    public List<Empresa> getLstEmpresas() {
+        return lstEmpresas;
+    }
+
+    public void setLstEmpresas(List<Empresa> lstEmpresas) {
+        this.lstEmpresas = lstEmpresas;
+    }
+
     public UsuarioFacadeLocal getUsuarioFacadeLocal() {
         return usuarioFacadeLocal;
     }
@@ -223,6 +304,14 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public Credenciales getCredenciales() {

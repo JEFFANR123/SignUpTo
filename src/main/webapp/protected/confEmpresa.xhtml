@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form id="frmEmpresa">
+                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
+                    <h:panelGrid id="panelEmpresa" columns="2" >
+                        <p:outputLabel for="ruc" value="Ingrese el RUC de la empresa:"/>
+                        <p:inputText id="ruc" value="#{usuarioCredencialesControlador.empresa.ruc}" required="true"/>
+
+                        <p:outputLabel for="nombreEmpresa" value="Ingrese el nombre de la empresa:"/>
+                        <p:inputText id="nombreEmpresa" value="#{usuarioCredencialesControlador.empresa.nombreEmpresa}" required="true"/>
+
+                        <p:commandButton icon="pi pi-plus" 
+                                         actionListener="#{usuarioCredencialesControlador.insertarEmpresa()}" 
+                                         update=""/>                          
+                    </h:panelGrid>
+                </h:form> 
+                <p:separator/>
+                <h:form id="frmLstEmpresa"> 
+                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
+                    <h:panelGrid>
+                        <p:dataTable id="datosEmpresa" value="#{usuarioCredencialesControlador.lstEmpresas}" var="lstEmpresas"
+                                     rows="5" paginator="true"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     >
+                            <p:column headerText="Ruc.">
+                                <h:outputText value="#{lstEmpresas.ruc}"/>
+                            </p:column>
+                            <p:column headerText="Nombre.">
+                                <h:outputText value="#{lstEmpresas.nombreEmpresa}"/>
+                            </p:column>
+                            <p:column headerText="Editar" width="8%"  >
+                                <p:commandLink actionListener="#{usuarioCredencialesControlador.leerEmpresa(lstEmpresas)}" 
+                                               oncomplete="PF('wDlgAdminRol').show();" update="">
+                                    <i class="pi pi-pencil"></i>
+                                </p:commandLink>
+
+                            </p:column>
+                            <p:column headerText="Eliminar" width="12%">
+                                <p:commandLink action="#{usuarioCredencialesControlador.eliminarEmpresa(lstEmpresas)}" update="frmLstEmpresa" >
+                                    <i class="pi pi-trash"></i>
+                                    <p:confirm header="Confirmacion" message="¿Está seguro de esta acción?" icon="pi pi-exclamation-triangle" />
+                                </p:commandLink>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                </p:confirmDialog> 
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
