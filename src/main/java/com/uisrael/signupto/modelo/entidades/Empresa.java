@@ -19,17 +19,18 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "T_EMPRESA")
+@Table(name = "T_EMPRESAS")
 public class Empresa implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_EMPRESA")
     private int idEmpresa;
     
     @Column(name = "RUC")
     private String ruc;
     
-    @Column(name = "Nombre_Empresa")
+    @Column(name = "NOMBRE_EMPRESA")
     private String nombreEmpresa;
     
 
@@ -82,10 +83,5 @@ public class Empresa implements Serializable{
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Empresa{" + "idEmpresa=" + idEmpresa + '}';
-    }
-    
     
 }

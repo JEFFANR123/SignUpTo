@@ -7,6 +7,7 @@ package com.uisrael.signupto.modelo.dao.impl;
 
 import com.uisrael.signupto.modelo.dao.CredencialesFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Credenciales;
+import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -45,20 +46,32 @@ public class CredencialesFacade extends AbstractFacade<Credenciales> implements 
             query.setParameter(2, cre.getUserPass());
             List<Credenciales> lista = query.getResultList();
             if (!lista.isEmpty()) {
-               credenciales = lista.get(0);
+                credenciales = lista.get(0);
             }
 
         } catch (Exception e) {
             throw e;
-        } 
+        }
         return credenciales;
     }
 
     @Override
     public List<Credenciales> listaUsuarioCredencialeses(String tipo) {
-    return em.createQuery("SELECT p FROM Credenciales p WHERE p.tipoUser = :tipo", Credenciales.class)
-            .setParameter("tipo", tipo).getResultList();
+        return em.createQuery("SELECT p FROM Credenciales p WHERE p.tipoUser = :tipo", Credenciales.class)
+                .setParameter("tipo", tipo).getResultList();
     }
 
-    
+    @Override
+    public List<Usuario> listaUsuario(String idCredenciales) {
+
+        return em.createQuery("SELECT p FROM Usuario p WHERE p.idUsuario = :idCredenciales", Usuario.class)
+                .setParameter("idCredenciales", idCredenciales).getResultList();
+    }
+
+    @Override
+    public List<Credenciales> consultaUsuarios(String var1) {
+        return em.createQuery("SELECT p FROM Credenciales p WHERE p.idUsuario.cedula = :var1", Credenciales.class)
+                .setParameter("var1", var1).getResultList();
+    }
+
 }

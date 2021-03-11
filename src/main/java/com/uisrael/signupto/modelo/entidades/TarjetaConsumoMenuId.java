@@ -17,10 +17,10 @@ import javax.persistence.Embedded;
 @Embeddable
 public class TarjetaConsumoMenuId implements Serializable {
        
-    @Column(name = "TARJETACONSUMOID")
+    @Column(name = "TARJETACONSUMO_ID")
     private int tarjetaConsumoId;
 
-    @Column(name = "MENUID")
+    @Column(name = "MENU_ID")
     private int menuId;
 
     public int getTarjetaConsumoId() {

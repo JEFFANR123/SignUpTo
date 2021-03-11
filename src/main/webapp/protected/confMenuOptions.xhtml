@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
+        <ui:composition template="./../WEB-INF/template/templateEmploye.xhtml">
             <ui:define name="content">
                 <br/>
                 <h:form id="frmlmenu">
@@ -62,11 +62,11 @@
                         <p:dataTable id="datosMenuCarta" value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
                             <p:growl id="mensaje" showDetail="true" />
 
-                            <p:column headerText="Opcion" >
+                            <p:column headerText="Nombre" >
                                 <p:outputLabel value="#{listaMenu.nombreMenu}" />
                             </p:column>
                             
-                            <p:column headerText="Opciones" >
+                            <p:column headerText="Detalle" >
                                 <p:dataList value="#{listaMenu.lstMenuCarta}" var="varMenuCarta">
                                     #{varMenuCarta.carta.nombre}
                        
@@ -89,7 +89,7 @@
                             </p:column>
 
                             <p:column headerText="Eliminar" >
-                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminarMenu(listaMenu)}" update="frmLstMenuCarta , mensaje">
+                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminaMenu(listaMenu.idMenu)}" update=":frmLstMenuCarta , mensaje">
                                     <p:confirm header="Confirmacion" message="Estas seguro de esta accion?" icon="pi pi-exclamation-triangle" />
                                 </p:commandButton>
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

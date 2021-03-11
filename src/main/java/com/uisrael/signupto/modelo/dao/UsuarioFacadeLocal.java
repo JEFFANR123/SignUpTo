@@ -31,7 +31,6 @@ public interface UsuarioFacadeLocal {
 
     int count();
 
-    List<Usuario> consultaUsuarios(String var1);
-
+   
 
 }

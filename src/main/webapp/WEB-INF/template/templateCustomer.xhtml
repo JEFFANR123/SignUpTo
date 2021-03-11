@@ -45,7 +45,6 @@
 
 
                         <f:facet name="options">
-
                             
                             <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" value="Salir" action="./../index.xhtml" icon="pi pi-home" />
                         </f:facet>
@@ -67,10 +66,10 @@
                             <p:dataViewListItem>
                                 <h:panelGrid columns="1">
                                     <h:outputText value="Nombre: "/>
-                                    <h:outputText value="#{datosUser.nombrecompleto}"/> 
+                                    <h:outputText value="#{datosUser.idUsuario.nombrecompleto}"/> 
                                     <br/>
                                     <h:outputText value="Cédula:  "/>
-                                    <h:outputText value="#{datosUser.cedula}"/> 
+                                    <h:outputText value="#{datosUser.idUsuario.cedula}"/> 
                                     <br/>
                                     <h:outputText value="Saldo: "/>
                                     <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>

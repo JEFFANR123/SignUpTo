@@ -32,12 +32,4 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
-    @Override
-    public List<Usuario> consultaUsuarios(String var1) {
-        return em.createQuery("SELECT p FROM Usuario p WHERE p.cedula = :var1", Usuario.class)
-                .setParameter("var1", var1).getResultList();
-    }
-
-
-
 }

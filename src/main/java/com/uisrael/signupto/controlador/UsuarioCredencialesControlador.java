@@ -65,11 +65,15 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     private List<Credenciales> listaAdministradores;
 
+    private List<Credenciales> listaEmpleados;
+
     private List<Credenciales> listaClientes;
 
-    private List<Usuario> infomacionUsuarios;
+    private List<Credenciales> infomacionUsuarios;
 
     private List<Empresa> lstEmpresas;
+
+    private String passTemp;
 
     @PostConstruct
     public void init() {
@@ -81,11 +85,12 @@ public class UsuarioCredencialesControlador implements Serializable {
         lstEmpresas = empresaFacadeLocal.findAll();
         listaCredenciales = credencialesFacadeLocal.findAll();
         listaAdministradores = credencialesFacadeLocal.listaUsuarioCredencialeses("A");
+        listaEmpleados = credencialesFacadeLocal.listaUsuarioCredencialeses("E");
         listaClientes = credencialesFacadeLocal.listaUsuarioCredencialeses("C");
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
-            infomacionUsuarios = usuarioFacadeLocal.consultaUsuarios(usrpass.getIdUsuario().getCedula());
+            infomacionUsuarios = credencialesFacadeLocal.consultaUsuarios(usrpass.getIdUsuario().getCedula());
         } catch (Exception e) {
             System.out.println("Ningún usuario ha iniciado sesión.");
         }
@@ -156,20 +161,50 @@ public class UsuarioCredencialesControlador implements Serializable {
         usuario = leeUsr;
     }
 
-    public void editarUsuario() {
+    public void editarInformacionUsuario() {
 
         try {
-            usuario.setFkEmpresa(empresa);
+            usuario = credenciales.getIdUsuario();
             usuarioFacadeLocal.edit(usuario);
+            credencialesFacadeLocal.edit(credenciales);
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Datos modificados correctamente"));
-
+            usuario = new Usuario();
+            credenciales = new Credenciales();
         } catch (Exception e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
 
         }
 
+    }
+
+    public void editarPasswordUsuario() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+        Credenciales credencialesTemp;
+        credencialesTemp = credencialesFacadeLocal.consultaUsuarios(usrpass.getIdUsuario().getCedula()).stream().findFirst().orElse(null);
+
+        try {
+            if (credencialesTemp == null || !credencialesTemp.getUserPass().equals(passTemp)) {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Validacion incorrecta"));
+                credenciales = new Credenciales();
+                usuario = new Usuario();
+            } else if (credencialesTemp.getUserPass().equals(passTemp)) {
+                usuario = credenciales.getIdUsuario();
+                credencialesFacadeLocal.edit(credenciales);
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Contraseña modificada"));
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ocurrio un error validando la contraseña"));
+            }
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ocurrió una excepción, contacte al Administrador"));
+        }
     }
 
     //Agregar - eliminar - modificar empresas
@@ -203,7 +238,6 @@ public class UsuarioCredencialesControlador implements Serializable {
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
 
         }
-
     }
 
     public void eliminarEmpresa(Empresa delEmpresa) {
@@ -220,15 +254,31 @@ public class UsuarioCredencialesControlador implements Serializable {
         }
 
     }
-    
+
     // Credenciales - Inserta - Modifica - Lee
+    public void editarUsuarioEmpresa() {
+
+        try {
+            usuario = credenciales.getIdUsuario();
+            usuario.setFkEmpresa(empresa);
+            usuarioFacadeLocal.edit(usuario);
+            credencialesFacadeLocal.edit(credenciales);
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se guardo los cambios correctamente!"));
+            usuario = new Usuario();
+            credenciales = new Credenciales();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Ocurrio un error, contacte al administrador"));
+        }
+    }
 
     public void leerCredenciales(Credenciales leeCredenciales) {
 
         credenciales = leeCredenciales;
     }
 
-    public void editarCredenciales() {
+    public void editarInformacionAdmins() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
@@ -249,14 +299,14 @@ public class UsuarioCredencialesControlador implements Serializable {
 
     public void guardarUsuarioCredenciales() {
         ArrayList listaBusquedaUsuario = new ArrayList();
-        listaBusquedaUsuario.addAll(usuarioFacadeLocal.consultaUsuarios(usuario.getCedula()));
+        listaBusquedaUsuario.addAll(credencialesFacadeLocal.consultaUsuarios(usuario.getCedula()));
 
         try {
             if (validaCedula(usuario.getCedula()) == false) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "La cédula ya existe."));
                 usuario = new Usuario();
             } else if (listaBusquedaUsuario.isEmpty()) {
-                //usuarioFacadeLocal.create(usuario);
+                usuarioFacadeLocal.create(usuario);
                 credenciales.setIdUsuario(usuario);
                 credenciales.setUserName(usuario.getCedula());
                 credencialesFacadeLocal.create(credenciales);
@@ -272,6 +322,24 @@ public class UsuarioCredencialesControlador implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error en el controlador"));
             usuario = new Usuario();
         }
+    }
+
+    // GETs and SETs
+
+    public String getPassTemp() {
+        return passTemp;
+    }
+
+    public void setPassTemp(String passTemp) {
+        this.passTemp = passTemp;
+    }
+    
+    public List<Credenciales> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+    public void setListaEmpleados(List<Credenciales> listaEmpleados) {
+        this.listaEmpleados = listaEmpleados;
     }
 
     public List<Empresa> getLstEmpresas() {
@@ -330,11 +398,11 @@ public class UsuarioCredencialesControlador implements Serializable {
         this.listaCredenciales = listaCredenciales;
     }
 
-    public List<Usuario> getInfomacionUsuarios() {
+    public List<Credenciales> getInfomacionUsuarios() {
         return infomacionUsuarios;
     }
 
-    public void setInfomacionUsuarios(List<Usuario> infomacionUsuarios) {
+    public void setInfomacionUsuarios(List<Credenciales> infomacionUsuarios) {
         this.infomacionUsuarios = infomacionUsuarios;
     }
 

@@ -23,11 +23,12 @@ import javax.persistence.Temporal;
  */
 
 @Entity
-@Table(name = "T_TARJETA_CONSUMO")
+@Table(name = "T_TARJETA_CONSUMOS")
 public class TarjetaConsumo implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_TARJETA_CONSUMO")
     private int idTarjetaConsumo;
     
     @Column(name = "FECHA_EXPEDICION")
@@ -38,7 +39,7 @@ public class TarjetaConsumo implements Serializable{
     private double saldo;
     
     @ManyToOne
-    @JoinColumn(name = "FK_IDUSUARIO")
+    @JoinColumn(name = "USUARIO_ID")
     private Usuario fkIdUsuario;
       
 

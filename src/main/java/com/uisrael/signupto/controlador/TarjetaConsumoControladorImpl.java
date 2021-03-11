@@ -89,6 +89,8 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
     private Credenciales usrpass;
 
+    private int codTempConsumo;
+
     private BarChartModel barModel;
 
     String temp;
@@ -252,7 +254,8 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
         try {
             if (saldoDisponibleCliente < valorMenuSeleccionado) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", " !Saldo insuficiente!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", " !Saldo insuficiente!"));
+                obtieneMenuId = 0;
             } else if (saldoDisponibleCliente >= valorMenuSeleccionado) {
                 tarjetaConsumo.setSaldo(valorSaldoNuevoCalculado);
                 tarjetaConsumoFacadeLocal.edit(tarjetaConsumo);
@@ -271,19 +274,18 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Ocrrio un error en el controlador"));
-
+                obtieneMenuId = 0;
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Error desde Exception, contacte al Administrador "));
+            obtieneMenuId = 0;
         }
     }
 
     public void buscarCodigoConsumo() {
 
-        int codConsumo;
-        codConsumo = tarjetaConsumoMenu.getCodigoConsumo();
         try {
-            tarjetaConsumoMenu = tarjetaConsumoMenuFacadeLocal.buscarCodidoConsumo(codConsumo).stream().findFirst().orElse(null);
+            tarjetaConsumoMenu = tarjetaConsumoMenuFacadeLocal.buscarCodidoConsumo(codTempConsumo).stream().findFirst().orElse(null);
             if (tarjetaConsumoMenu == null) {
                 FacesContext.getCurrentInstance()
                         .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " El codigo no existe"));
@@ -301,25 +303,36 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
     public void validaCodigoConsumo() {
 
-        int codConsumo;
-        codConsumo = tarjetaConsumoMenu.getCodigoConsumo();
-
         try {
-            tarjetaConsumoMenu = tarjetaConsumoMenuFacadeLocal.buscarCodidoConsumo(codConsumo).stream().findFirst().orElse(null);
-            if (tarjetaConsumoMenu.isEstado() == true) {
+            tarjetaConsumoMenu = tarjetaConsumoMenuFacadeLocal.buscarCodidoConsumo(codTempConsumo).stream().findFirst().orElse(null);
+            if (tarjetaConsumoMenu == null) {
                 FacesContext.getCurrentInstance()
-                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", " El código fue consumido o invalido"));
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " El código " + codTempConsumo + " es invalido"));
+                tarjetaConsumoMenu = new TarjetaConsumoMenu();
+            } else if (tarjetaConsumoMenu.isEstado() == true) {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " El código " + codTempConsumo + " fue consumido"));
+                tarjetaConsumoMenu = new TarjetaConsumoMenu();
             } else {
                 tarjetaConsumoMenu.setEstado(true);
                 tarjetaConsumoMenuFacadeLocal.edit(tarjetaConsumoMenu);
                 FacesContext.getCurrentInstance()
-                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se validó el consumo"));
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se validó el código: " + codTempConsumo));
+                tarjetaConsumoMenu = new TarjetaConsumoMenu();
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ocurrió un error al validar el código, contacte al Administrador"));
         }
 
+    }
+
+    public int getCodTempConsumo() {
+        return codTempConsumo;
+    }
+
+    public void setCodTempConsumo(int codTempConsumo) {
+        this.codTempConsumo = codTempConsumo;
     }
 
     public List<TarjetaConsumoMenu> getLstCodigoConsumo() {

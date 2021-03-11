@@ -7,41 +7,41 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/templateEmploye.xhtml">
+        <ui:composition template="./../../WEB-INF/template/templateAdmin.xhtml">
 
             <ui:define name="content">
                 <h:form>
                     <h:commandLink>
                         <p:graphicImage name="excelicon.png" library="images" width="24"/>
-                        <p:dataExporter type="xls" target="dtPagosA" fileName="PagosAprobados" />
+                        <p:dataExporter type="xls" target="dtPagosR" fileName="PagosRechazados" />
                     </h:commandLink>
 
                     <h:commandLink>
                         <p:graphicImage name="pdficon.png" library="images" width="24"/>
-                        <p:dataExporter type="pdf" target="dtPagosA" fileName="PagosAprobados" />
+                        <p:dataExporter type="pdf" target="dtPagosR" fileName="PagosRechazados" />
                     </h:commandLink>
-                    <h:panelGrid id="pnlPagosA" >
+                    <h:panelGrid id="pnlPagosR" >
 
-                        <p:dataTable id="dtPagosA" value="#{pagosControladorImpl.lstPagosA}" var="pagosA"
+                        <p:dataTable id="dtPagosR" value="#{pagosControladorImpl.lstPagosR}" var="pagosR"
                                      rows="5" paginator="true"
                                      rowsPerPageTemplate="5,10,15"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      >
                             <p:growl id="mensajes" showDetail="true" />
                             <p:column headerText="CI Usuario">
-                                <h:outputText value="#{pagosA.fkIdUsuario.cedula}"/>
+                                <h:outputText value="#{pagosR.fkIdUsuario.cedula}"/>
                             </p:column>
 
                             <p:column headerText="Nombre">
-                                <h:outputText value="#{pagosA.fkIdUsuario.nombrecompleto}"/>
+                                <h:outputText value="#{pagosR.fkIdUsuario.nombrecompleto}"/>
                             </p:column>
 
                             <p:column headerText="Estado del Pago">
-                                <h:outputText value="#{pagosA.estado}"/>
+                                <h:outputText value="#{pagosR.estado}"/>
                             </p:column>
 
                             <p:column headerText="Accion">
-                                <p:commandLink value="Ver" actionListener="#{pagosControladorImpl.leePago(pagosA)}"
+                                <p:commandLink value="Ver" actionListener="#{pagosControladorImpl.leePago(pagosR)}"
                                                oncomplete="PF('dlgwrPagos').show();" />
                             </p:column>
 

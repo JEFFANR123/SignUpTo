@@ -20,14 +20,15 @@ import javax.persistence.Table;
  * @author janrango
  */
 @Entity
-@Table(name = "T_TIPOCARTA")
+@Table(name = "T_TIPO_CARTAS")
 public class TipoCarta implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "ID_TIPO_CARTA")
     private int idTipoCarta;
 
-    @Column(name = "NOMBRETIPO")
+    @Column(name = "NOMBRE_TIPO")
     private String nombreTipo;
 
     @Column(name = "ESTADO")

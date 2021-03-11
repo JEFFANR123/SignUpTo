@@ -27,20 +27,21 @@ import javax.persistence.Temporal;
  * @author janrango
  */
 @Entity
-@Table(name = "T_MENU")
+@Table(name = "T_MENUS")
 public class Menu implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_MENU")
     private int idMenu;
     
-    @Column(name = "NOMBREMENU")
+    @Column(name = "NOMBRE_MENU")
     private String nombreMenu;
     
     @Column(name = "PRECIO")
     private BigDecimal precio;
     
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MenuCarta> lstMenuCarta;
 
     @Column(name = "FECHA")

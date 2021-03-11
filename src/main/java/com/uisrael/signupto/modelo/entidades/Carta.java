@@ -22,15 +22,16 @@ import javax.persistence.Table;
  * @author janrango
  */
 @Entity
-@Table(name = "T_CARTA")
+@Table(name = "T_CARTAS")
 public class Carta implements Serializable{
     
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "ID_CARTA")
     private int idCarta;
     
     @ManyToOne
-    @JoinColumn(name = "IDTIPOCARTA")
+    @JoinColumn(name = "TIPOCARTA_ID")
     private TipoCarta tipoCarta;
     
     @Column(name = "NOMBRE")

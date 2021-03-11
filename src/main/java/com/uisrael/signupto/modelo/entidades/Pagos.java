@@ -29,6 +29,7 @@ public class Pagos implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_PAGO")
     private int idPago;
     
     @Column(name = "FECHA_PAGO")
@@ -49,7 +50,7 @@ public class Pagos implements Serializable{
     private String estado;
     
     @ManyToOne
-    @JoinColumn(name = "FK_IDUSUARIO")
+    @JoinColumn(name = "USUARIO_ID")
     private Usuario fkIdUsuario;
 
     public int getIdPago() {

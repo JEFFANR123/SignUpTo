@@ -45,24 +45,33 @@ public class CredencialesControladorImpl implements Serializable {
             if (creusr != null) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", creusr);
                 if (creusr.getTipoUser().equals("A")) {
-                    redireccion = "protected/adminInicio.xhtml?faces-redirect=true";
+                    redireccion = "protected/administrator/adminInicio.xhtml?faces-redirect=true";
+                } else if (creusr.getTipoUser().equals("E")) {
+                    redireccion = "protected/employeeInicio.xhtml?faces-redirect=true";
                 } else {
-                    if (creusr.getTipoUser().equals("E") || creusr.getTipoUser().equals("C")) {
+                    if (creusr.getTipoUser().equals("C")) {
+                        redireccion = "customer/clienteInicio.xhtml?faces-redirect=true";
                     }
-                    redireccion = "customer/clienteInicio.xhtml?faces-redirect=true";
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "No existe"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Usuario o Contraseña incorrectos"));
+                credenciales = new Credenciales();
             }
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Ingresar"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al validar las credenciales"));
+            credenciales = new Credenciales();
         }
         return redireccion;
     }
 
     public void cerrarSesion() {
+        String redireccion = null;
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        } catch (Exception e) {
+        }
+
     }
 
     public Credenciales getCredenciales() {

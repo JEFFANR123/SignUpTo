@@ -16,19 +16,19 @@
                         <p:dataViewListItem>
                             <h:panelGrid columns="2">
                                 <h:outputText value="Nombre Completo: "/>
-                                <h:outputText value="#{datosUser.nombrecompleto}"/>
+                                <h:outputText value="#{datosUser.idUsuario.nombrecompleto}"/>
                                 <h:outputText value="Cedula: "/>
-                                <h:outputText value="#{datosUser.cedula}"/>
+                                <h:outputText value="#{datosUser.idUsuario.cedula}"/>
                                 <h:outputText value="Telefono "/>
-                                <h:outputText value="#{datosUser.telefono}"/>
+                                <h:outputText value="#{datosUser.idUsuario.telefono}"/>
                                 <h:outputText value="Correo: "/>
-                                <h:outputText value="#{datosUser.email}"/>
+                                <h:outputText value="#{datosUser.idUsuario.email}"/>
 
                                 <h:outputText value="Saldo disponible: "/>
                                 <h:outputText value="#{pagosControladorImpl.saldoUsuario}"/>
                                 <p:column/>
                                 <p:commandButton value="Editar Informacion" oncomplete="PF('wdialogoUsuario').show();" 
-                                                 actionListener="#{usuarioCredencialesControlador.leerUsuario(datosUser)}" update="dialogoUsuario"/>
+                                                 actionListener="#{usuarioCredencialesControlador.leerCredenciales(datosUser)}" update="dialogoUsuario"/>
                                 <p:column/>
                                 <p:commandButton value="Cambiar Contraseña" oncomplete="PF('wdialogoUsuarioPass').show();" 
                                                  actionListener="#{usuarioCredencialesControlador.leerCredenciales(datosUser)}" update="dialogoUsuarioPass"/>
@@ -46,23 +46,24 @@
                           modal="true" resizable="false" draggable="false">
 
                     <h:form id="frmUsuario">
-                        <p:growl id="mensajeUsuario" severity="info, fatal" showSummary="false" showDetail="true" />
+                        <p:growl id="mensajeUsuario" severity="info, error, fatal" showSummary="false" showDetail="true" />
                         <h:panelGrid id="panelUsuario" columns="2" >
                             <p:outputLabel for="nombreusuario" value="Nombre Completo: "/>
-                            <p:inputText id="nombreusuario" value="#{usuarioCredencialesControlador.usuario.nombrecompleto}" required="true"/>
+                            <p:inputText id="nombreusuario" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}" required="true"/>
                             <p:outputLabel for="cedulausuario" value="Cédula: "/>
-                            <h:outputText id="cedulausuario" value="#{usuarioCredencialesControlador.usuario.cedula}"/>
+                            <h:outputText id="cedulausuario" value="#{usuarioCredencialesControlador.credenciales.idUsuario.cedula}"/>
                             <p:outputLabel for="telefono" value="Telefono " />
-                            <p:inputMask id="telefono" value="#{usuarioCredencialesControlador.usuario.telefono}" 
+                            <p:inputMask id="telefono" value="#{usuarioCredencialesControlador.credenciales.idUsuario.telefono}" 
                                          requiredMessage="Campo Requerido" required="true" mask="(99) 99999999"/>
                             <p:outputLabel for="mailusuario" value="Correo: "/>
-                            <p:inputText id="mailusuario" value="#{usuarioCredencialesControlador.usuario.email}" required="true"/>
+                            <p:inputText id="mailusuario" value="#{usuarioCredencialesControlador.credenciales.idUsuario.email}" required="true"/>
+
+                            <p:commandButton icon="pi pi-plus" value="Guardar" oncomplete="PF('wdialogoUsuario').hide();" 
+                                             action="#{usuarioCredencialesControlador.editarInformacionUsuario()}" 
+                                             update="frmUsuario, :frmInfoUser "/> 
                             <p:commandButton icon="pi pi-plus" value="Cancelar"
                                              actionListener="#" 
-                                             update="frmUsuario"/> 
-                            <p:commandButton icon="pi pi-plus" value="Guardar"
-                                             action="#{usuarioCredencialesControlador.editarUsuario()}" 
-                                             update="frmUsuario, frmInfoUser"/> 
+                                             update="frmUsuario"/>
                         </h:panelGrid>
 
                     </h:form> 
@@ -76,21 +77,25 @@
                         <h:panelGrid id="panelPassword" columns="2" >
                             <p:outputLabel for="cedulausuario" value="Cédula: "/>
                             <h:outputText id="cedulausuario" value="#{usuarioCredencialesControlador.credenciales.userName}"/>
-                            <h:outputLabel for="pwd1" value="Password: *" />
+                            <h:outputLabel for="pwdold" value="Contraseña Anterior: *" />
+                            <p:password id="pwdold" required="true" value="#{usuarioCredencialesControlador.passTemp}"
+                                        requiredMessage="Campo Requerido"/>
+                            <h:outputLabel for="pwd1" value="Nueva Contraseña *" />
                             <p:password id="pwd1" value="#{usuarioCredencialesControlador.credenciales.userPass}" 
                                         validatorMessage="¡Las contraseñas no coinciden!"
                                         weakLabel="Baja" goodLabel="Media" strongLabel="Alta"
                                         match="pwd2" feedback="true" promptLabel="Ingrese un Password" required="true" 
                                         requiredMessage="Campo Requerido"/>
-                            <h:outputLabel for="pwd2" value="Verificar Password: *" />
+                            <h:outputLabel for="pwd2" value="Verificar Contraseña *" />
                             <p:password id="pwd2" required="true" 
                                         requiredMessage="Campo Requerido"/>
+                            <p:commandButton icon="pi pi-plus" value="Aceptar" oncomplete="PF('wdialogoUsuarioPass').hide();" 
+                                             actionListener="#{usuarioCredencialesControlador.editarPasswordUsuario()}" 
+                                             update="frmUsuario, :frmInfoUser, :frmUsuarioPass"/> 
                             <p:commandButton icon="pi pi-plus" value="Cancelar"
                                              actionListener="#" 
-                                             update="frmUsuario"/> 
-                            <p:commandButton icon="pi pi-plus" value="Guardar"
-                                             actionListener="#" 
-                                             update="frmUsuario"/>                          
+                                             update="frmUsuario"/>      
+
                         </h:panelGrid>
                     </h:form> 
                 </p:dialog>

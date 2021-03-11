@@ -140,7 +140,7 @@ public class MenuControladorImpl implements Serializable {
         Date hoy = new Date();
         try {
             listaFiltrada = menuServicio.listaMenuDiario();
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Listado disponibles."));
         } catch (Exception e) {
 
@@ -257,6 +257,23 @@ public class MenuControladorImpl implements Serializable {
             }
         }
         return arreglo;
+    }
+
+    public void eliminaMenu(int idMenu) {
+
+        Menu tempMenuCarta = menuFacadeLocal.find(idMenu);
+        try {
+            for (MenuCarta mc : tempMenuCarta.getLstMenuCarta()) {
+                menuCartaFacadeLocal.remove(mc);
+            }
+            menuFacadeLocal.remove(tempMenuCarta);
+            listarOM();
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Eliminado Correctamente."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ocurrio un error al eliminar."));
+        }
     }
 
     //GETs and SETs

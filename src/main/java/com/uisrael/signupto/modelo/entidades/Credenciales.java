@@ -26,7 +26,7 @@ public class Credenciales implements Serializable {
 
     @Id
     @OneToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "IDUSUARIO", nullable = false )
+    @JoinColumn(name = "USUARIO_ID", nullable = false )
     private Usuario idUsuario;
 
     @Column(name = "USERNAME")
@@ -35,7 +35,7 @@ public class Credenciales implements Serializable {
     @Column(name = "USERPASS")
     private String userPass;
 
-    @Column(name = "TIPOUSER")
+    @Column(name = "TIPO_USER")
     private String tipoUser = "C";
 
     @Column(name = "ESTADO")

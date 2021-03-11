@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -18,17 +19,17 @@ import javax.persistence.ManyToOne;
  *
  * @author janrango
  */
-@Entity(name = "T_MENUCARTA")
+@Entity(name = "T_MENUS_CARTAS")
 public class MenuCarta implements Serializable {
 
     @EmbeddedId MenuCartaId menuCartaId;
         
-    @ManyToOne
-    @JoinColumn(name = "CARTAID", updatable = false, insertable = false)
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "CARTA_ID", updatable = false, insertable = false)
     private Carta carta;
 
-    @ManyToOne
-    @JoinColumn(name = "MENUID", insertable = false, updatable = false)
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "MENU_ID", insertable = false, updatable = false)
     private Menu menu;
 
     public MenuCartaId getMenuCartaId() {

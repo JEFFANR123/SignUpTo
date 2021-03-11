@@ -18,10 +18,10 @@ import javax.persistence.JoinColumn;
 public class MenuCartaId implements Serializable {
 
     
-    @Column(name = "MENUID")
+    @Column(name = "MENU_ID")
     private int menuId;
 
-    @Column(name = "CARTAID")
+    @Column(name = "CARTA_ID")
     private int cartaId;
 
     public MenuCartaId() {

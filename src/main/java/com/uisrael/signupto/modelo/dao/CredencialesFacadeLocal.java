@@ -6,6 +6,7 @@
 package com.uisrael.signupto.modelo.dao;
 
 import com.uisrael.signupto.modelo.entidades.Credenciales;
+import com.uisrael.signupto.modelo.entidades.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,9 +30,13 @@ public interface CredencialesFacadeLocal {
     List<Credenciales> findRange(int[] range);
 
     int count();
-    
+
     Credenciales iniciarSesion(Credenciales cre);
-    
+
     List<Credenciales> listaUsuarioCredencialeses(String tipo);
-    
+
+    List<Usuario> listaUsuario(String idCredenciales);
+
+    List<Credenciales> consultaUsuarios(String var1);
+
 }

@@ -20,16 +20,16 @@ import javax.persistence.Table;
  * @author janrango
  */
 @Entity
-@Table(name = "T_USUARIO")
+@Table(name = "T_USUARIOS")
 public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDUSUARIO")
+    @Column(name = "ID_USUARIO")
     private int idUsuario;
 
     @ManyToOne
-    @JoinColumn(name = "FK_EMPRESA")
+    @JoinColumn(name = "EMPRESA_ID")
     private Empresa fkEmpresa;
 
     @Column(name = "CEDULA")

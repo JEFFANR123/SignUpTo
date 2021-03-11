@@ -27,7 +27,6 @@
 
     </script>
 
-
     <h:body>
 
 
@@ -38,19 +37,18 @@
             <div id="menuBar">
 
                 <h:form id="frmTmpAdmin">  
-                    <p:growl id="messages" severity="info, error, fatal" showSummary="false" showDetail="true"/>
+                    <p:growl id="messages"/>
 
-                    <p:menubar id="menuTmpAdmin">
-                        <p:menuitem outcome="adminInicio" >
+                    <p:menubar>
+                        <p:menuitem outcome="employeeInicio" >
                             <p:graphicImage name="logo.png" library="images" />
                         </p:menuitem>
-                        <p:submenu label="General" icon="pi pi-users">
-                            <p:menuitem value="Administradores" url="adminsConfig.xhtml" icon="pi pi-user" />
-                            <p:menuitem value="Empleados" url="emplConf.xhtml" icon="pi pi-user" />
-                            <p:menuitem value="Clientes" url="usrsConfig.xhtml" icon="pi pi-user" />
-                            <p:menuitem value="Empresas" url="confEmpresa.xhtml" icon="pi pi-user" />
+
+                        <p:submenu label="Menú del Restaurante" icon="pi pi-bars">
+                            <p:menuitem value="Menú del día." url="confMenuOptions.xhtml" icon="pi pi-list" />
+                            <p:menuitem value="Otros platos" url="otrosConsumibles.xhtml" icon="pi pi-list" />
                             <p:separator />
-                            <p:menuitem value="Dar de Baja" url="#" icon="pi pi-user-minus" />
+                            <p:menuitem value="Carta del Restaurante" url="confCarta.xhtml" icon="pi pi-list" />
                         </p:submenu>
 
                         <p:submenu label="Pagos" icon="pi pi-dollar">
@@ -72,7 +70,7 @@
                                              />
                             <p:inputText id="txtCodMenu" style="margin:1px 10px 1px 1px;" 
                                          value="#{tarjetaConsumoControladorImpl.codTempConsumo}" 
-                                         placeholder="Código de Consumo" onkeypress="return justNumbers(event);" />
+                                         placeholder="Código de Consumo" />
                             <p:commandButton actionListener="#{credencialesControladorImpl.cerrarSesion()}" 
                                              value="Salir" action="/index.xhtml?faces-redirect=true" icon="pi pi-home" />
                         </f:facet>
@@ -105,12 +103,9 @@
 
                             <p:commandButton icon="ui-icon-check" value="Validar Código" oncomplete="PF('wDlgCdgConsumo').hide();" 
                                              actionListener="#{tarjetaConsumoControladorImpl.validaCodigoConsumo()}" 
-                                             update="@form, :frmTmpAdmin">
-                            </p:commandButton>
+                                             update="@form, :frmTmpAdmin"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
-                                             update=":frmTmpAdmin:menuTmpAdmin" onclick="PF('wDlgCdgConsumo').hide();" >
-                                <p:ajax update=":frmTmpAdmin:menuTmpAdmin" resetValues="true" />
-                            </p:commandButton>
+                                             update="@form, :frmTmpAdmin" oncomplete="PF('wDlgCdgConsumo').hide();" />
 
                         </h:panelGrid>
 

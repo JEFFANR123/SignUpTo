@@ -25,17 +25,17 @@ import javax.persistence.Temporal;
  * @author janrango
  */
 @Entity
-@Table(name = "T_TARJETACONSUMO_MENU")
+@Table(name = "T_TARJETACONSUMOS_MENUS")
 public class TarjetaConsumoMenu implements Serializable {
 
     @EmbeddedId TarjetaConsumoMenuId tarjetaConsumoMenuId;
 
     @ManyToOne
-    @JoinColumn(name = "TARJETACONSUMOID", updatable = false, insertable = false)
+    @JoinColumn(name = "TARJETACONSUMO_ID", updatable = false, insertable = false)
     private TarjetaConsumo tarjetaConsumo;
 
     @ManyToOne
-    @JoinColumn(name = "MENUID", updatable = false, insertable = false)
+    @JoinColumn(name = "MENU_ID", updatable = false, insertable = false)
     private Menu menu;
 
     @Column(name = "FECHA_CONSUMO")

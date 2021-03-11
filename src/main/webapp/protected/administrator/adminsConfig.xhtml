@@ -2,60 +2,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/templateAdmin.xhtml">
+        <ui:composition template="./../../WEB-INF/template/templateAdmin.xhtml">
 
             <ui:define name="content">
-                <h:form id="frmUsrLst">
+                <h:form id="frmAdminsLst">
                     <h:commandLink>
                         <p:graphicImage name="excelicon.png" library="images" width="24"/>
-                        <p:dataExporter type="xls" target="tblClsLst" fileName="ListaClientes" />
+                        <p:dataExporter type="xls" target="tblAdmLst" fileName="ListaAdministradores" />
                     </h:commandLink>
 
                     <h:commandLink>
                         <p:graphicImage name="pdficon.png" library="images" width="24"/>
-                        <p:dataExporter type="pdf" target="tblClsLst" fileName="ListaClientes" />
+                        <p:dataExporter type="pdf" target="tblAdmLst" fileName="ListaAdministradores" />
                     </h:commandLink>
                     <h:panelGrid>
-                        <p:dataTable id="tblClsLst" value="#{usuarioCredencialesControlador.listaClientes}" var="lstClientes"
+
+                        <p:dataTable id="tblAdmLst" value="#{usuarioCredencialesControlador.listaAdministradores}" var="lstAdmins"
                                      rows="5" paginator="true"
                                      rowsPerPageTemplate="5,10,15"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      >
-                            <p:column headerText="Identificación" filterBy="#{lstClientes.idUsuario.cedula}">
-                                <p:outputLabel value="#{lstClientes.idUsuario.cedula}"/>
+                            <p:column headerText="Identificación" filterBy="#{lstAdmins.idUsuario.cedula}">
+                                <p:outputLabel value="#{lstAdmins.idUsuario.cedula}"/>
                             </p:column>
 
-                            <p:column headerText="Nombre del Cliente" filterBy="#{lstClientes.idUsuario.nombrecompleto}">
-                                <p:outputLabel value="#{lstClientes.idUsuario.nombrecompleto}"/>
+                            <p:column headerText="Nombre del Cliente" filterBy="#{lstAdmins.idUsuario.nombrecompleto}">
+                                <p:outputLabel value="#{lstAdmins.idUsuario.nombrecompleto}"/>
                             </p:column>
 
                             <p:column headerText="Teléfono" >
-                                <p:outputLabel value="#{lstClientes.idUsuario.telefono}"/>
-
+                                <p:outputLabel value="#{lstAdmins.idUsuario.telefono}"/>
                             </p:column>
 
                             <p:column headerText="Tipo de Usuario" >
-                                <p:outputLabel value="#{lstClientes.tipoUser}"/>
-                            </p:column>
-                            
-                            <p:column headerText="Empresa" >
-                                <p:outputLabel value="#{lstClientes.idUsuario.fkEmpresa.nombreEmpresa}"/>
+                                <p:outputLabel value="#{lstAdmins.tipoUser}"/>
+
                             </p:column>
 
                             <p:column headerText="Estado" >
-                                <p:outputLabel value="#{lstClientes.estado}"/>
+                                <p:outputLabel value="#{lstAdmins.estado}"/>
 
                             </p:column>
 
                             <p:column headerText="Editar" width="8%"  >
-                                <p:commandLink actionListener="#{usuarioCredencialesControlador.leerCredenciales(lstClientes)}" 
-                                               oncomplete="PF('wDlgUsrRol').show();" update="dlgUsrRol">
+                                <p:commandLink actionListener="#{usuarioCredencialesControlador.leerCredenciales(lstAdmins)}" 
+                                               oncomplete="PF('wDlgAdminRol').show();" update="dlgAdminRol">
                                     <i class="pi pi-pencil"></i>
                                 </p:commandLink>
 
@@ -66,9 +63,8 @@
 
                 </h:form>
 
-
-                <p:dialog id="dlgUsrRol" widgetVar="wDlgUsrRol" >
-                    <h:form id="frmDlgUsrRol">
+                <p:dialog id="dlgAdminRol" widgetVar="wDlgAdminRol" >
+                    <h:form id="frmDlgAdminRol">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
 
@@ -77,20 +73,14 @@
                             <p:outputLabel value="Identificación"/>
                             <p:outputLabel value="#{usuarioCredencialesControlador.credenciales.idUsuario.cedula}"/>
 
-                            <p:outputLabel for="nombreUsr" value="Nombre del Cliente"/>
-                            <p:outputLabel id="nombreUsr" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}"/>
+                            <p:outputLabel for="nombreAdmin" value="Nombre del Cliente"/>
+                            <p:outputLabel id="nombreAdmin" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}"/>
 
                             <p:outputLabel for="telefono" value="Telefono"/>
                             <p:outputLabel id="telefono" value="#{usuarioCredencialesControlador.credenciales.idUsuario.telefono}"/>
 
                             <p:outputLabel for="mail" value="Correo"/>
                             <p:outputLabel id="mail" value="#{usuarioCredencialesControlador.credenciales.idUsuario.email}"/>
-
-                            <p:outputLabel for="tempresa" value="Tipo"/>
-                            <p:selectOneMenu id="tempresa" value="#{usuarioCredencialesControlador.usuario.fkEmpresa}" required="true" 
-                                             requiredMessage="Tipo es Obligatoria">
-                                <f:selectItems id="options" value="#{usuarioCredencialesControlador.lstEmpresas}" var="lstEmpresas" itemLabel="#{lstEmpresas.ruc} #{lstEmpresas.nombreEmpresa}" itemValue="#{lstEmpresas.idEmpresa}"/>
-                            </p:selectOneMenu>
 
                             <p:outputLabel value="Nombre Opcion"/>
                             <p:selectOneMenu id="console" value="#{usuarioCredencialesControlador.credenciales.tipoUser}" style="width:125px">
@@ -100,9 +90,9 @@
 
                             </p:selectOneMenu>
 
-                            <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgUsrRol').hide();" 
-                                             actionListener="#{usuarioCredencialesControlador.editarUsuario()}" 
-                                             update="frmUsrLst, frmDlgUsrRol"/>
+                            <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgAdminRol').hide();" 
+                                             actionListener="#{usuarioCredencialesControlador.editarInformacionAdmins()}" 
+                                             update="frmAdminsLst:tblAdmLst, frmDlgAdminRol"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 
                         </h:panelGrid>

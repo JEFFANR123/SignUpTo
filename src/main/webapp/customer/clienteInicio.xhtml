@@ -6,33 +6,72 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <h:body>
 
         <ui:composition template="./../WEB-INF/template/templateCustomer.xhtml">
 
             <ui:define name="content">
 
                 <h:form id="menudia">
-                    
-                        <h3>Menu del Dia</h3>
-                        <p:outputPanel id="test">
-                            <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
-                            <p:selectOneMenu id="sorMenudelDia" value="#{tarjetaConsumoControladorImpl.obtieneMenuId}" 
-                                               required="true" requiredMessage="Seleccione una opcion" >
-                                <f:selectItems value="#{tarjetaConsumoControladorImpl.listaFiltradaHoy}" 
-                                               var="c" itemLabel="#{c.nombreMenu}" itemValue="#{c.idMenu}" >
-                                    
-                                </f:selectItems>
-                            </p:selectOneMenu>
-                            
-                            <p:commandButton value="Guardar" actionListener="#{tarjetaConsumoControladorImpl.guardarConsumoCliente()}" 
-                                             update="menudia:mensaje" />
-                        </p:outputPanel>
+
+                    <h3>Menu del Dia</h3>
+                    <div>
+                        <p:growl id="mensaje" severity="info, error fatal" showSummary="false" showDetail="true" />
+                        <p:dataList  value="#{tarjetaConsumoControladorImpl.listaFiltradaHoy}" var="product"
+                                     rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+                                     paginatorTemplate="{CurrentPageReport}">
+
+                            <p:dataViewListItem>
+
+                                <h:panelGrid columns="1" style="width:40%" columnClasses="logo,detail">
+
+
+                                    <p:outputLabel value="#{product.nombreMenu}" style="font-weight: bold"/>
+
+
+                                    <p:dataList id="menuconsumido" value="#{product.lstMenuCarta}"  emptyMessage="Menú vacío" var="opt">
+                                        #{opt.carta.nombre}
+                                    </p:dataList>
+
+                                    <p:commandLink value="Comprar" update="" oncomplete="PF('wMenuSeleccionado').show();" title="View Detail">
+                                        <f:setPropertyActionListener value="#{product.idMenu}" target="#{tarjetaConsumoControladorImpl.obtieneMenuId}" />
+                                    </p:commandLink>
+
+                                </h:panelGrid>
+
+                            </p:dataViewListItem>
+
+                        </p:dataList>
+                    </div>
 
                 </h:form>
+
+                <p:dialog id="dlgMenuSeleccionado" widgetVar="wMenuSeleccionado" 
+                          width="30%" header="¿Seguro que desea proceder con la compra?" modal="true" resizable="false" draggable="false">
+                    <h:form id="frmMenuSeleccionado">
+
+                        <p:growl id="mensajeMod" severity="info, error, fatal" showSummary="false" showDetail="true" />
+
+                        <h:panelGrid id="panelMenuSeleccionado" columns="2" >
+                          
+
+                            <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wMenuSeleccionado').hide();" 
+                                             actionListener="#{tarjetaConsumoControladorImpl.guardarConsumoCliente()}" 
+                                             update="@form">
+                            </p:commandButton>
+                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
+                                             update="@form" oncomplete="PF('wMenuSeleccionado').hide();" >
+                                <p:ajax update="@form" resetValues="true" />
+                            </p:commandButton>
+
+                        </h:panelGrid>
+
+
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>
 
-    </body>
+    </h:body>
 </html>
