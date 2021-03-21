@@ -17,17 +17,17 @@
                             <h:panelGrid columns="2">
                                 <h:outputText value="Nombre Completo: "/>
                                 <h:outputText value="#{datosUser.idUsuario.nombrecompleto}"/>
-                                <h:outputText value="Cedula: "/>
+                                <h:outputText value="Cédula: "/>
                                 <h:outputText value="#{datosUser.idUsuario.cedula}"/>
-                                <h:outputText value="Telefono "/>
+                                <h:outputText value="Teléfono: "/>
                                 <h:outputText value="#{datosUser.idUsuario.telefono}"/>
                                 <h:outputText value="Correo: "/>
                                 <h:outputText value="#{datosUser.idUsuario.email}"/>
 
                                 <h:outputText value="Saldo disponible: "/>
-                                <h:outputText value="#{pagosControladorImpl.saldoUsuario}"/>
+                                <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>
                                 <p:column/>
-                                <p:commandButton value="Editar Informacion" oncomplete="PF('wdialogoUsuario').show();" 
+                                <p:commandButton value="Editar información" oncomplete="PF('wdialogoUsuario').show();" 
                                                  actionListener="#{usuarioCredencialesControlador.leerCredenciales(datosUser)}" update="dialogoUsuario"/>
                                 <p:column/>
                                 <p:commandButton value="Cambiar Contraseña" oncomplete="PF('wdialogoUsuarioPass').show();" 
@@ -52,7 +52,7 @@
                             <p:inputText id="nombreusuario" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}" required="true"/>
                             <p:outputLabel for="cedulausuario" value="Cédula: "/>
                             <h:outputText id="cedulausuario" value="#{usuarioCredencialesControlador.credenciales.idUsuario.cedula}"/>
-                            <p:outputLabel for="telefono" value="Telefono " />
+                            <p:outputLabel for="telefono" value="Teléfono: " />
                             <p:inputMask id="telefono" value="#{usuarioCredencialesControlador.credenciales.idUsuario.telefono}" 
                                          requiredMessage="Campo Requerido" required="true" mask="(99) 99999999"/>
                             <p:outputLabel for="mailusuario" value="Correo: "/>

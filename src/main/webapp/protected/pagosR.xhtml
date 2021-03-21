@@ -28,12 +28,16 @@
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      >
                             <p:growl id="mensajes" showDetail="true" />
-                            <p:column headerText="CI Usuario">
+                            <p:column headerText="CI Usuario" filterBy="#{pagosR.fkIdUsuario.cedula}">
                                 <h:outputText value="#{pagosR.fkIdUsuario.cedula}"/>
                             </p:column>
 
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{pagosR.fkIdUsuario.nombrecompleto}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Valor">
+                                <h:outputText value="#{pagosR.valorPago}"/>
                             </p:column>
 
                             <p:column headerText="Estado del Pago">
@@ -53,6 +57,7 @@
 
 
                 </h:form>
+                
             </ui:define>
 
         </ui:composition>

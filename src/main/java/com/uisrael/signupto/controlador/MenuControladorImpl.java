@@ -8,20 +8,20 @@ package com.uisrael.signupto.controlador;
 import com.uisrael.signupto.modelo.dao.CartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.MenuCartaFacadeLocal;
 import com.uisrael.signupto.modelo.dao.MenuFacadeLocal;
+import com.uisrael.signupto.modelo.dao.TarjetaConsumoMenuFacadeLocal;
 import com.uisrael.signupto.modelo.dao.TipoCartaFacadeLocal;
 import com.uisrael.signupto.modelo.entidades.Carta;
 import com.uisrael.signupto.modelo.entidades.Menu;
 import com.uisrael.signupto.modelo.entidades.MenuCarta;
 import com.uisrael.signupto.modelo.entidades.MenuCartaId;
+import com.uisrael.signupto.modelo.entidades.TarjetaConsumoMenu;
 import com.uisrael.signupto.modelo.entidades.TipoCarta;
 import com.uisrael.signupto.servicio.MenuServicio;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
@@ -53,6 +53,9 @@ public class MenuControladorImpl implements Serializable {
     @EJB
     private TipoCartaFacadeLocal tipoCartaFacadeLocal;
 
+    @EJB
+    private TarjetaConsumoMenuFacadeLocal tarjetaConsumoMenuFacadeLocal;
+
     @Inject
     private MenuServicio menuServicio;
 
@@ -79,6 +82,8 @@ public class MenuControladorImpl implements Serializable {
     private List<TipoCarta> listaTipo;
 
     private List<MenuCarta> lstMenuCartas;
+
+    private List<TarjetaConsumoMenu> lstTarjetaConsumoMenus;
 
     private int lstTipoId;
 
@@ -140,12 +145,8 @@ public class MenuControladorImpl implements Serializable {
         Date hoy = new Date();
         try {
             listaFiltrada = menuServicio.listaMenuDiario();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Listado disponibles."));
         } catch (Exception e) {
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Error al cargar los disponibles."));
-
         }
     }
 
@@ -262,21 +263,37 @@ public class MenuControladorImpl implements Serializable {
     public void eliminaMenu(int idMenu) {
 
         Menu tempMenuCarta = menuFacadeLocal.find(idMenu);
+        lstTarjetaConsumoMenus = tarjetaConsumoMenuFacadeLocal.buscarConsumoMenus(tempMenuCarta);
+
         try {
-            for (MenuCarta mc : tempMenuCarta.getLstMenuCarta()) {
-                menuCartaFacadeLocal.remove(mc);
+            if (lstTarjetaConsumoMenus.isEmpty()) {
+                tempMenuCarta.getLstMenuCarta().forEach((mc) -> {
+                    menuCartaFacadeLocal.remove(mc);
+                });
+                menuFacadeLocal.remove(tempMenuCarta);
+                listarOM();
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Eliminado Correctamente."));
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Existe consumos de cliente. No se permite eliminar"));
+                listarOM();
             }
-            menuFacadeLocal.remove(tempMenuCarta);
-            listarOM();
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Eliminado Correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ocurrio un error al eliminar."));
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrio un error al Eliminar"));
         }
     }
 
     //GETs and SETs
+    public List<TarjetaConsumoMenu> getLstTarjetaConsumoMenus() {
+        return lstTarjetaConsumoMenus;
+    }
+
+    public void setLstTarjetaConsumoMenus(List<TarjetaConsumoMenu> lstTarjetaConsumoMenus) {
+        this.lstTarjetaConsumoMenus = lstTarjetaConsumoMenus;
+    }
+
     public int getLstTipoId() {
         return lstTipoId;
     }

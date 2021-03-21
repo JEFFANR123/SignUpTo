@@ -21,7 +21,7 @@
 
                         <p:commandButton icon="pi pi-plus" 
                                          actionListener="#{usuarioCredencialesControlador.insertarEmpresa()}" 
-                                         update=""/>                          
+                                         update=":frmLstEmpresa, frmEmpresa, mensaje "/>                          
                     </h:panelGrid>
                 </h:form> 
                 <p:separator/>
@@ -41,7 +41,7 @@
                             </p:column>
                             <p:column headerText="Editar" width="8%"  >
                                 <p:commandLink actionListener="#{usuarioCredencialesControlador.leerEmpresa(lstEmpresas)}" 
-                                               oncomplete="PF('wDlgAdminRol').show();" update="">
+                                               oncomplete="PF('wdlgEmpresa').show();" update=":frmDlgEmpresa">
                                     <i class="pi pi-pencil"></i>
                                 </p:commandLink>
 
@@ -60,6 +60,30 @@
                         </p:dataTable>
                     </h:panelGrid>
                 </h:form>
+
+                <p:dialog id="dlgEmpresa" widgetVar="wdlgEmpresa" header="Modificar información." >
+                    <h:form id="frmDlgEmpresa">
+
+                        <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
+
+                        <h:panelGrid id="panelDialogo" columns="2" >
+
+                            <p:outputLabel value="Nombre: "/>
+                            <p:inputText value="#{usuarioCredencialesControlador.empresa.nombreEmpresa}"/>
+
+                            <p:outputLabel for="nombreUsr" value="RUC: "/>
+                            <p:inputText id="nombreUsr" value="#{usuarioCredencialesControlador.empresa.ruc}"/>
+
+                            <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wdlgEmpresa').hide();" 
+                                             actionListener="#{usuarioCredencialesControlador.editarEmpresa()}" 
+                                             update="@form, frmDlgEmpresa, :frmLstEmpresa"/>
+                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
+
+                        </h:panelGrid>
+
+
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

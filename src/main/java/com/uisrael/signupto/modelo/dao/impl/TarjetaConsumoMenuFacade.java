@@ -11,7 +11,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import com.uisrael.signupto.modelo.dao.TarjetaConsumoMenuFacadeLocal;
+import com.uisrael.signupto.modelo.entidades.Menu;
 import com.uisrael.signupto.modelo.entidades.ReportSemanalConsumo;
+import java.util.Date;
 
 /**
  *
@@ -55,8 +57,21 @@ public class TarjetaConsumoMenuFacade extends AbstractFacade<TarjetaConsumoMenu>
     public List<Object[]> consultaListConsumoSemanal() {
 
         return em.createNativeQuery("select TOP (5) FECHA_CONSUMO AS dia, SUM(VALOR_CONSUMO) AS sumatoriaVentas\n"
-                + "from T_TARJETACONSUMO_MENU GROUP BY FECHA_CONSUMO \n"
+                + "from T_TARJETACONSUMOS_MENUS GROUP BY FECHA_CONSUMO \n"
                 + "ORDER BY FECHA_CONSUMO DESC").getResultList();
+    }
+
+    @Override
+    public List<TarjetaConsumoMenu> consultaCodigosTCM(String ciUser, Date hoy) {
+        return em.createQuery("SELECT p FROM TarjetaConsumoMenu p WHERE p.tarjetaConsumo.fkIdUsuario.cedula =:ciUser AND p.fechaConsumo =:hoy", TarjetaConsumoMenu.class)
+                .setParameter("ciUser", ciUser).setParameter("hoy", hoy).getResultList();
+    }
+
+    @Override
+    public List<TarjetaConsumoMenu> buscarConsumoMenus(Menu idMenu) {
+
+        return em.createQuery("SELECT p FROM TarjetaConsumoMenu p WHERE p.menu =:idMenu", TarjetaConsumoMenu.class)
+                .setParameter("idMenu", idMenu).getResultList();
     }
 
 }

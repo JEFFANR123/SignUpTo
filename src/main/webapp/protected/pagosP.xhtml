@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -13,44 +14,45 @@
                 <h:form>
                     <h:commandLink>
                         <p:graphicImage name="excelicon.png" library="images" width="24"/>
-                        <p:dataExporter type="xls" target="dtPagosA" fileName="PagosAprobados" />
+                        <p:dataExporter type="xls" target="dtPagosP" fileName="PagosPendientes" />
                     </h:commandLink>
 
                     <h:commandLink>
                         <p:graphicImage name="pdficon.png" library="images" width="24"/>
-                        <p:dataExporter type="pdf" target="dtPagosA" fileName="PagosAprobados" />
+                        <p:dataExporter type="pdf" target="dtPagosP" fileName="PagosPendientes" />
                     </h:commandLink>
-                    <h:panelGrid id="pnlPagosA" >
+                    <h:panelGrid id="pnlPagos" >
 
-                        <p:dataTable id="dtPagosA" value="#{pagosControladorImpl.lstPagosA}" var="pagosA"
+                        <p:dataTable id="dtPagosP" value="#{pagosControladorImpl.lstPagosP}" var="pagosP"
                                      rows="5" paginator="true"
                                      rowsPerPageTemplate="5,10,15"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      >
                             <p:growl id="mensajes" showDetail="true" />
-                            <p:column headerText="CI Usuario" filterBy="#{pagosA.fkIdUsuario.cedula}">
-                                <h:outputText value="#{pagosA.fkIdUsuario.cedula}"/>
+                            <p:column headerText="CI Usuario" filterBy="#{pagosP.fkIdUsuario.cedula}">
+                                <h:outputText value="#{pagosP.fkIdUsuario.cedula}"/>
                             </p:column>
 
                             <p:column headerText="Nombre">
-                                <h:outputText value="#{pagosA.fkIdUsuario.nombrecompleto}"/>
+                                <h:outputText value="#{pagosP.fkIdUsuario.nombrecompleto}"/>
                             </p:column>
                             
                             <p:column headerText="Valor">
-                                <h:outputText value="#{pagosA.valorPago}"/>
+                                <h:outputText value="#{pagosP.valorPago}"/>
                             </p:column>
 
                             <p:column headerText="Estado del Pago">
-                                <h:outputText value="#{pagosA.estado}"/>
+                                <h:outputText value="#{pagosP.estado}"/>
                             </p:column>
 
-                          </p:dataTable>
+                        </p:dataTable>
 
 
                     </h:panelGrid>
 
 
                 </h:form>
+
             </ui:define>
 
         </ui:composition>

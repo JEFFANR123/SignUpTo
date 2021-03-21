@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,11 +31,11 @@ public class TarjetaConsumoMenu implements Serializable {
 
     @EmbeddedId TarjetaConsumoMenuId tarjetaConsumoMenuId;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "TARJETACONSUMO_ID", updatable = false, insertable = false)
     private TarjetaConsumo tarjetaConsumo;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "MENU_ID", updatable = false, insertable = false)
     private Menu menu;
 

@@ -11,24 +11,25 @@
 
             <ui:define name="content">
                 <h:form id="frmPagos" enctype="multipart/form-data">
-                    <p:growl id="mensaje" showDetail="true" />
+                    <p:growl id="mensaje" severity="info, error, fatal" showDetail="true"  />
                     <h:panelGrid columns="2">
 
-                        <p:outputLabel value="Valor del Pago"/>
+                        <p:outputLabel value="Valor: "/>
                         <p:inputNumber value="#{pagosControladorImpl.pagos.valorPago}" required="true"/>
 
-                        <p:outputLabel value="Comentario"/>
-                        <p:inputTextarea value="#{pagosControladorImpl.pagos.comentario}"/>
+                        <p:outputLabel value="Comentario: "/>
+                        <p:inputTextarea value="#{pagosControladorImpl.pagos.comentario}" required="true" requiredMessage="Campo mandatorio."/>
 
-                        <p:outputLabel value="Comprobate de Pago"/>
-                        <p:fileUpload value="#{pagosControladorImpl.file}" label="Seleccionar"  mode="simple" skinSimple="true"/>
+                        <p:outputLabel value="Comprobate: "/>
+                        <p:fileUpload value="#{pagosControladorImpl.file}" label="Seleccionar"  mode="simple" skinSimple="true" required="true"
+                                      invalidFileMessage="Tipo de archivo invalido." allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                      accept=".jpg,.jpeg,.png"/>
+
                         <br />
 
-                        <p:commandButton value="Subir Pago" ajax="false" action="#{pagosControladorImpl.insertarPagos()}" />
-
+                        <p:commandButton value="Subir Pago" ajax="false" action="#{pagosControladorImpl.insertarPagos()}" update="mensaje" />
 
                     </h:panelGrid>
-
 
                 </h:form>
             </ui:define>

@@ -36,6 +36,10 @@
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{pagosP.fkIdUsuario.nombrecompleto}"/>
                             </p:column>
+                            
+                            <p:column headerText="Valor">
+                                <h:outputText value="#{pagosP.valorPago}"/>
+                            </p:column>
 
                             <p:column headerText="Estado del Pago">
                                 <h:outputText value="#{pagosP.estado}"/>
@@ -43,7 +47,7 @@
 
                             <p:column headerText="Accion">
                                 <p:commandLink value="Ver" actionListener="#{pagosControladorImpl.leePago(pagosP)}"
-                                               oncomplete="PF('dlgwrPagos').show();" update="dlgPagos" />
+                                               oncomplete="PF('dlgwrPagos').show();" update=":frmDlg" />
                             </p:column>
 
 
@@ -63,11 +67,14 @@
 
                             <p:outputLabel value="Nombre"/>
                             <h:outputText value="#{pagosControladorImpl.pagos.fkIdUsuario.nombrecompleto}"/>
+                            
+                            <p:outputLabel value="Valor: "/>
+                            <p:outputLabel value="#{pagosControladorImpl.pagos.valorPago}"/>
 
                             <p:outputLabel value="Estado del Pago"/>
                             <p:selectOneMenu id="somPagos" value="#{pagosControladorImpl.pagos.estado}">
                                 <f:selectItem itemValue="P" itemLabel="Pendiente"/>
-                                <f:selectItem itemValue="A" itemLabel="Aprovado"/>
+                                <f:selectItem itemValue="A" itemLabel="Aprobado"/>
                                 <f:selectItem itemValue="R" itemLabel="Rechazado"/>
                             </p:selectOneMenu>
 

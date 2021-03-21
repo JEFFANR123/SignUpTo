@@ -13,6 +13,7 @@
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
         <title>Facelets Template</title>
         <f:event type="preRenderView" listener="#{controladorUserImpl.sesionActiva()}"/>
+        <f:event type="preRenderView" listener="#{credencialesControladorImpl.verificarSession('E')}"/>
     </h:head>
 
     <script languahe="Javascript" type="text/javascript">
@@ -46,7 +47,7 @@
 
                         <p:submenu label="Menú del Restaurante" icon="pi pi-bars">
                             <p:menuitem value="Menú del día." url="confMenuOptions.xhtml" icon="pi pi-list" />
-                            <p:menuitem value="Otros platos" url="otrosConsumibles.xhtml" icon="pi pi-list" />
+                            
                             <p:separator />
                             <p:menuitem value="Carta del Restaurante" url="confCarta.xhtml" icon="pi pi-list" />
                         </p:submenu>

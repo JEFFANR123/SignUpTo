@@ -103,10 +103,11 @@ public class PagosControladorImpl implements Serializable {
                 pagos.setFechaPago(hoy);
                 pagosFacadeLocal.create(pagos);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El pago fue registrado exitosamente"));
-                FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+                FacesMessage message = new FacesMessage("Completo: El ", file.getFileName() + " fue cargado correctamente.");
+                pagos = new Pagos();
             } else {
                 context.getExternalContext().redirect("./../index.xhtml");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error al ingresar el pago"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrio un error al ingresar el pago"));
             }
 
         } catch (Exception e) {

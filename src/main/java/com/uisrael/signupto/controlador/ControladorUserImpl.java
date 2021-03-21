@@ -25,7 +25,7 @@ public class ControladorUserImpl implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
             if (usrpass == null) {
-                context.getExternalContext().redirect("./../index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/signupto/index.xhtml");
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Sesion no activa! "));

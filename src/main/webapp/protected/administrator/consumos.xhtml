@@ -8,33 +8,31 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template/templateCustomer.xhtml">
+        <ui:composition template="./../../WEB-INF/template/templateAdmin.xhtml">
 
             <ui:define name="content">
-
 
                 <h:form>
                     <h:commandLink>
                         <p:graphicImage name="excelicon.png" library="images" width="24"/>
-                        <p:dataExporter type="xls" target="tbl" fileName="Reporte" />
+                        <p:dataExporter type="xls" target="tbl" fileName="ReporteConsumos" />
                     </h:commandLink>
 
                     <h:commandLink>
                         <p:graphicImage name="pdficon.png" library="images" width="24"/>
-                        <p:dataExporter type="pdf" target="tbl" fileName="ReportePagos" />
-                    </h:commandLink> 
-                    <p:dataTable id="tbl" var="plu" value="#{pagosControladorImpl.lstPagosUsuario}"
+                        <p:dataExporter type="pdf" target="tbl" fileName="ReporteConsumos" />
+                    </h:commandLink>
+                    <p:dataTable id="tbl" var="tc" value="#{tarjetaConsumoControladorImpl.lstConsumos}"
                                  rows="5" paginator="true"
-                                     rowsPerPageTemplate="5,10,15"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     >
-
+                                 rowsPerPageTemplate="5,10,15"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 >
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Fecha de Pago" />
+                                <h:outputText value="Fecha" />
                             </f:facet>
-                            <p:outputLabel value="#{plu.fechaPago}" >
+                            <p:outputLabel value="#{tc.menu.fecha}" >
                                 <f:convertDateTime type="date"  dateStyle="short" pattern="dd/MM/yyyy" />
                             </p:outputLabel>
                         </p:column>
@@ -43,35 +41,27 @@
                             <f:facet name="header">
                                 <h:outputText value="Cédula" />
                             </f:facet>
-                            <h:outputText value="#{plu.fkIdUsuario.cedula}" />
+                            <h:outputText value="#{tc.tarjetaConsumo.fkIdUsuario.cedula}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Consumo" />
+                            </f:facet>
+                            <h:outputText value="#{tc.menu.nombreMenu}" />
                         </p:column>
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Nombre del Cliente" />
+                                <h:outputText value="Valor" />
                             </f:facet>
-                            <h:outputText value="#{plu.fkIdUsuario.nombrecompleto}" />
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Valor del Pago" />
-                            </f:facet>
-                            <h:outputText value="#{plu.valorPago}" />
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Estado del Pago" />
-                            </f:facet>
-                            <h:outputText value="#{plu.estado}" />
+                            <h:outputText value="#{tc.valorConsumo}" />
                         </p:column>
 
 
                     </p:dataTable>
 
                 </h:form>
-
             </ui:define>
 
         </ui:composition>

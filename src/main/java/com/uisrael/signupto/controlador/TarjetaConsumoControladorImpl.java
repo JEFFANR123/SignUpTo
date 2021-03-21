@@ -71,6 +71,8 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
     private List<TarjetaConsumoMenu> tarjetaConsumoMenusList;
 
+    private List<TarjetaConsumoMenu> lstConsumos;
+
     private List<TarjetaConsumoMenu> lstCodigoConsumo;
 
     private List<Object[]> lstReportSemanalConsumos;
@@ -104,11 +106,13 @@ public class TarjetaConsumoControladorImpl implements Serializable {
         cargarReporte();
         FacesContext context = FacesContext.getCurrentInstance();
         usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
-        saldoDisponibleCliente = calculoSaldoDisponible();
-        listaFiltradaHoy = menuServicio.listaMenuDiario();
         temp = usrpass.getIdUsuario().getCedula();
         tarjetaConsumoMenusList = tarjetaConsumoMenuFacadeLocal.consultaTarjetaConsumoMenu(temp);
-
+        lstConsumos = tarjetaConsumoMenuFacadeLocal.findAll();
+        Date tempHoy = new Date();
+        lstCodigoConsumo = tarjetaConsumoMenuFacadeLocal.consultaCodigosTCM(temp, tempHoy);
+        saldoDisponibleCliente = calculoSaldoDisponible();
+        listaFiltradaHoy = menuServicio.listaMenuDiario();
     }
 
     public void cargarReporte() {
@@ -124,7 +128,7 @@ public class TarjetaConsumoControladorImpl implements Serializable {
         ChartData data = new ChartData();
 
         BarChartDataSet barDataSet = new BarChartDataSet();
-        barDataSet.setLabel("Packages");
+        barDataSet.setLabel("Ventas en dólares");
 
         List<Number> values = new ArrayList<>();
         List<String> labels = new ArrayList<>();
@@ -178,7 +182,7 @@ public class TarjetaConsumoControladorImpl implements Serializable {
 
         Title title = new Title();
         title.setDisplay(true);
-        title.setText("Packages");
+        title.setText("Ventas en dólares");
         //options.setTitle(title);
 
         Legend legend = new Legend();
@@ -257,21 +261,25 @@ public class TarjetaConsumoControladorImpl implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", " !Saldo insuficiente!"));
                 obtieneMenuId = 0;
             } else if (saldoDisponibleCliente >= valorMenuSeleccionado) {
-                tarjetaConsumo.setSaldo(valorSaldoNuevoCalculado);
-                tarjetaConsumoFacadeLocal.edit(tarjetaConsumo);
-                tarjetaConsumoMenu.setFechaConsumo(hoy);
-                tarjetaConsumoMenu.setValorConsumo(valorMenuSeleccionado);
-                tarjetaConsumoMenu.setTarjetaConsumo(tarjetaConsumo);
-                tarjetaConsumoMenu.setMenu(selecccionMenu);
-                tarjetaConsumoMenu.setCodigoConsumo(tempCodigo);
-                tarjetaConsumoMenu.setEstado(false);
-                TarjetaConsumoMenuId tarjetaConsumoMenuId = new TarjetaConsumoMenuId();
-                tarjetaConsumoMenuId.setMenuId(selecccionMenu.getIdMenu());
-                tarjetaConsumoMenuId.setTarjetaConsumoId(tarjetaConsumo.getIdTarjetaConsumo());
-                tarjetaConsumoMenu.setTarjetaConsumoMenuId(tarjetaConsumoMenuId);
-                tarjetaConsumoMenuFacadeLocal.create(tarjetaConsumoMenu);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se ha guardado correctamente!"));
-
+                try {
+                    tarjetaConsumo.setSaldo(valorSaldoNuevoCalculado);
+                    tarjetaConsumoFacadeLocal.edit(tarjetaConsumo);
+                    tarjetaConsumoMenu.setFechaConsumo(hoy);
+                    tarjetaConsumoMenu.setValorConsumo(valorMenuSeleccionado);
+                    tarjetaConsumoMenu.setTarjetaConsumo(tarjetaConsumo);
+                    tarjetaConsumoMenu.setMenu(selecccionMenu);
+                    tarjetaConsumoMenu.setCodigoConsumo(tempCodigo);
+                    tarjetaConsumoMenu.setEstado(false);
+                    TarjetaConsumoMenuId tarjetaConsumoMenuId = new TarjetaConsumoMenuId();
+                    tarjetaConsumoMenuId.setMenuId(selecccionMenu.getIdMenu());
+                    tarjetaConsumoMenuId.setTarjetaConsumoId(tarjetaConsumo.getIdTarjetaConsumo());
+                    tarjetaConsumoMenu.setTarjetaConsumoMenuId(tarjetaConsumoMenuId);
+                    tarjetaConsumoMenuFacadeLocal.create(tarjetaConsumoMenu);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se ha guardado correctamente!"));
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ya existe una compra del menú seleccionado."));
+                    obtieneMenuId = 0;
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", " Ocrrio un error en el controlador"));
                 obtieneMenuId = 0;
@@ -344,6 +352,14 @@ public class TarjetaConsumoControladorImpl implements Serializable {
     }
 
     //GETs & SETs
+    public List<TarjetaConsumoMenu> getLstConsumos() {
+        return lstConsumos;
+    }
+
+    public void setLstConsumos(List<TarjetaConsumoMenu> lstConsumos) {
+        this.lstConsumos = lstConsumos;
+    }
+
     public BarChartModel getBarModel() {
         return barModel;
     }

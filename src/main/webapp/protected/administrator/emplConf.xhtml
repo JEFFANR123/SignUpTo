@@ -39,7 +39,7 @@
                                 <p:outputLabel value="#{lstEmpleados.idUsuario.telefono}"/>
 
                             </p:column>
-                           
+
                             <p:column headerText="Empresa" >
                                 <p:outputLabel value="#{lstEmpleados.idUsuario.fkEmpresa.nombreEmpresa}"/>
                             </p:column>
@@ -58,26 +58,26 @@
                 </h:form>
 
 
-                <p:dialog id="dlgEmpRol" widgetVar="wdlgEmpRol" >
+                <p:dialog id="dlgEmpRol" widgetVar="wdlgEmpRol" header="Modificar información." >
                     <h:form id="frmDlgEmpRol">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
 
                         <h:panelGrid id="panelDialogo" columns="2" >
 
-                            <p:outputLabel value="Identificación"/>
+                            <p:outputLabel value="Identificación: "/>
                             <p:outputLabel value="#{usuarioCredencialesControlador.credenciales.idUsuario.cedula}"/>
 
-                            <p:outputLabel for="nombreUsr" value="Nombre del Cliente"/>
+                            <p:outputLabel for="nombreUsr" value="Nombre del Cliente: "/>
                             <p:outputLabel id="nombreUsr" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}"/>
 
-                            <p:outputLabel for="telefono" value="Telefono"/>
+                            <p:outputLabel for="telefono" value="Teléfono: "/>
                             <p:outputLabel id="telefono" value="#{usuarioCredencialesControlador.credenciales.idUsuario.telefono}"/>
 
-                            <p:outputLabel for="mail" value="Correo"/>
+                            <p:outputLabel for="mail" value="Correo: "/>
                             <p:outputLabel id="mail" value="#{usuarioCredencialesControlador.credenciales.idUsuario.email}"/>
 
-                            <p:outputLabel for="tempresa" value="Tipo"/>
+                            <p:outputLabel for="tempresa" value="Tipo: "/>
                             <p:selectOneMenu id="tempresa" value="#{usuarioCredencialesControlador.empresa.idEmpresa}" required="true" 
                                              requiredMessage="Tipo es Obligatoria">
                                 <f:selectItems id="options" value="#{usuarioCredencialesControlador.lstEmpresas}" var="lstEmpresas" itemLabel="#{lstEmpresas.nombreEmpresa} - #{lstEmpresas.ruc} " itemValue="#{lstEmpresas.idEmpresa}"/>
@@ -88,8 +88,11 @@
                                 <f:selectItem itemLabel="Administrador" itemValue="A" />
                                 <f:selectItem itemLabel="Empleado" itemValue="E" />
                                 <f:selectItem itemLabel="Cliente" itemValue="C" />
-
-
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Estado: "/>
+                            <p:selectOneMenu id="estado" value="#{usuarioCredencialesControlador.credenciales.estado}" style="width:125px">
+                                <f:selectItem itemLabel="Habilitar" itemValue="1" />
+                                <f:selectItem itemLabel="Deshabilitar" itemValue="0" />
                             </p:selectOneMenu>
 
                             <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wDlgUsrRol').hide();" 

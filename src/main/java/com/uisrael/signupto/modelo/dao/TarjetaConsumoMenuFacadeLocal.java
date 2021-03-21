@@ -5,8 +5,10 @@
  */
 package com.uisrael.signupto.modelo.dao;
 
+import com.uisrael.signupto.modelo.entidades.Menu;
 import com.uisrael.signupto.modelo.entidades.ReportSemanalConsumo;
 import com.uisrael.signupto.modelo.entidades.TarjetaConsumoMenu;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -35,7 +37,11 @@ public interface TarjetaConsumoMenuFacadeLocal {
     
     List<TarjetaConsumoMenu> consultaTarjetaConsumoMenu(String ciUser);
     
+    List<TarjetaConsumoMenu> consultaCodigosTCM(String ciUser, Date hoy);
+    
     List<TarjetaConsumoMenu> buscarCodidoConsumo(int codigo);
+    
+    List<TarjetaConsumoMenu> buscarConsumoMenus(Menu idMenu);
     
     List<Object[]> consultaListConsumoSemanal();
     

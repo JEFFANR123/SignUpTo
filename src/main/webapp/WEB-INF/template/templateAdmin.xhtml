@@ -13,6 +13,8 @@
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
         <title>Facelets Template</title>
         <f:event type="preRenderView" listener="#{controladorUserImpl.sesionActiva()}"/>
+        <f:event type="preRenderView" listener="#{credencialesControladorImpl.verificarSession('A')}"/>
+
     </h:head>
 
     <script languahe="Javascript" type="text/javascript">
@@ -50,13 +52,14 @@
                             <p:menuitem value="Clientes" url="usrsConfig.xhtml" icon="pi pi-user" />
                             <p:menuitem value="Empresas" url="confEmpresa.xhtml" icon="pi pi-user" />
                             <p:separator />
-                            <p:menuitem value="Dar de Baja" url="#" icon="pi pi-user-minus" />
+                            <p:menuitem value="Dar de Baja" oncomplete="PF('wDardeBaja').show();" icon="pi pi-user-minus" />
                         </p:submenu>
 
-                        <p:submenu label="Pagos" icon="pi pi-dollar">
-                            <p:menuitem value="Aprobados" url="pagosA.xhtml"  icon="pi pi-check"/>
-                            <p:submenu label="En revisión" icon="pi pi-search">
-                                <p:menuitem value="Por confirmar" url="pagosP.xhtml" />
+                        <p:submenu label="Registros" icon="pi pi-dollar">
+                            <p:menuitem value="Consumos" url="consumos.xhtml"  icon="pi pi-check"/>
+                            <p:submenu label="Pagos" icon="pi pi-search">
+                                <p:menuitem value="Aprobados" url="pagosA.xhtml" />
+                                <p:menuitem value="Pendientes" url="pagosP.xhtml" />
                                 <p:menuitem value="Rechazados" url="pagosR.xhtml" />
                             </p:submenu>
                         </p:submenu>
@@ -110,6 +113,29 @@
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
                                              update=":frmTmpAdmin:menuTmpAdmin" onclick="PF('wDlgCdgConsumo').hide();" >
                                 <p:ajax update=":frmTmpAdmin:menuTmpAdmin" resetValues="true" />
+                            </p:commandButton>
+
+                        </h:panelGrid>
+
+
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dlgDardeBaja" widgetVar="wDardeBaja" 
+                          width="30%" header="¿Seguro que desea proceder.?" modal="true" resizable="false" draggable="false">
+                    <h:form id="frmDardeBaja">
+
+                        <p:growl id="mensajeMod" severity="info, error, fatal" showSummary="false" showDetail="true" />
+
+                        <h:panelGrid id="panelDardeBaja" columns="2" >
+
+
+                            <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wDardeBaja').hide();" 
+                                             actionListener="#{usuarioCredencialesControlador.darDeBaja()}" 
+                                             update="@form">
+                            </p:commandButton>
+                            <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
+                                             update="@form" oncomplete="PF('wDardeBaja').hide();" >
+                                <p:ajax update="@form" resetValues="true" />
                             </p:commandButton>
 
                         </h:panelGrid>

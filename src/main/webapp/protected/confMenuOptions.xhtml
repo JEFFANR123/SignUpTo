@@ -12,10 +12,10 @@
             <ui:define name="content">
                 <br/>
                 <h:form id="frmlmenu">
-                    <p:growl id="mensaje" severity="info, fatal" showSummary="false" showDetail="true" />
+                    <p:growl id="mensaje" severity="info, error, fatal" showSummary="false" showDetail="true" />
                     <h:panelGrid columns="2" id="panelDM">
 
-                        <p:outputLabel value="Nombre Opcion"/>
+                        <p:outputLabel value="Nombre Opción: "/>
                         <p:selectOneMenu id="console" value="#{menuControladorImpl.menu.nombreMenu}" style="width:125px">
                             <f:selectItem itemLabel="Desayuno Opc-1" itemValue="Desayuno Opc1" />
                             <f:selectItem itemLabel="Desayuno Opc-2" itemValue="Desayuno Opc2" />
@@ -37,15 +37,15 @@
                                 Menu
                             </f:facet>
                             #{opt.carta.nombre}
-                            
+
                         </p:dataList>
-                        <p:outputLabel value="Fecha"/>
+                        <p:outputLabel value="Fecha: "/>
                         <p:datePicker value="#{menuControladorImpl.menu.fecha}" required="true" id="date" showIcon="true" style="width:auto" />
-                        <p:outputLabel value="Precio" />
+                        <p:outputLabel value="Precio: " />
                         <p:inputNumber value="#{menuControladorImpl.menu.precio}" required="true" requiredMessage="El precio es mandatorio."/>
                         <p:commandButton icon="ui-icon ui-icon-plus" value="Agregar"
                                          actionListener="#{menuControladorImpl.insertarMenu()}" update="panelDM, :frmLstMenuCarta:outputDatosMenuCarta, mensaje">
-                        <p:resetInput target="panelDM" />
+                            <p:resetInput target="panelDM" />
                         </p:commandButton>
 
 
@@ -55,23 +55,22 @@
 
                 </h:form>
 
-                
+
 
                 <h:form id="frmLstMenuCarta">
+
                     <p:outputPanel id="outputDatosMenuCarta">
                         <p:dataTable id="datosMenuCarta" value="#{menuControladorImpl.listaFiltrada}" var="listaMenu" >
-                            <p:growl id="mensaje" showDetail="true" />
-
                             <p:column headerText="Nombre" >
                                 <p:outputLabel value="#{listaMenu.nombreMenu}" />
                             </p:column>
-                            
+
                             <p:column headerText="Detalle" >
                                 <p:dataList value="#{listaMenu.lstMenuCarta}" var="varMenuCarta">
                                     #{varMenuCarta.carta.nombre}
-                       
+
                                 </p:dataList>
-                                
+
                             </p:column>
 
                             <p:column headerText="Precio" >
@@ -80,16 +79,12 @@
 
                             <p:column headerText="Fecha Disponible" >
                                 <h:outputText value="#{listaMenu.fecha}" >
-                                    <f:convertDateTime pattern="dd MMMMM"/>
+                                    <f:convertDateTime pattern="dd - MM"/>
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Editar" >
-                                <p:commandLink value="Editar" actionListener="#{menuControladorImpl.leerMenu(listaMenu)}" oncomplete="PF('wDialogoMenu').show();" />
-                            </p:column>
-
                             <p:column headerText="Eliminar" >
-                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminaMenu(listaMenu.idMenu)}" update=":frmLstMenuCarta , mensaje">
+                                <p:commandButton icon="ui-icon-trash" actionListener="#{menuControladorImpl.eliminaMenu(listaMenu.idMenu)}" update=":frmLstMenuCarta, :frmlmenu:mensaje">
                                     <p:confirm header="Confirmacion" message="Estas seguro de esta accion?" icon="pi pi-exclamation-triangle" />
                                 </p:commandButton>
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -100,16 +95,13 @@
 
                         </p:dataTable>
 
-                        
-                    </p:outputPanel>
 
-                        
-                  
+                    </p:outputPanel>
 
                     <p:separator/>
 
                 </h:form>
-                <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" header="Opciones disponibles" >
+                <p:dialog id="dlgOpcCartas" widgetVar="wvCartas" header="Opciones disponibles" modal="true" resizable="false" draggable="false" >
                     <h:form id="frmDlgCartas">
                         <h:panelGrid columns="2">
 
@@ -128,7 +120,7 @@
                                 <f:selectItems value="#{menuControladorImpl.listaOpcionesCartas}" var="theme" 
                                                itemLabel="#{theme.nombre}" itemValue="#{theme.idCarta}" />
                             </p:selectManyMenu>
-                           
+
                             <br/>
                         </h:panelGrid>
 

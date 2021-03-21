@@ -63,7 +63,7 @@
 
                 </h:form>
 
-                <p:dialog id="dlgAdminRol" widgetVar="wDlgAdminRol" >
+                <p:dialog id="dlgAdminRol" widgetVar="wDlgAdminRol" header="Modificar información." >
                     <h:form id="frmDlgAdminRol">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
@@ -73,21 +73,24 @@
                             <p:outputLabel value="Identificación"/>
                             <p:outputLabel value="#{usuarioCredencialesControlador.credenciales.idUsuario.cedula}"/>
 
-                            <p:outputLabel for="nombreAdmin" value="Nombre del Cliente"/>
+                            <p:outputLabel for="nombreAdmin" value="Nombre del Cliente: "/>
                             <p:outputLabel id="nombreAdmin" value="#{usuarioCredencialesControlador.credenciales.idUsuario.nombrecompleto}"/>
 
-                            <p:outputLabel for="telefono" value="Telefono"/>
+                            <p:outputLabel for="telefono" value="Teléfono: "/>
                             <p:outputLabel id="telefono" value="#{usuarioCredencialesControlador.credenciales.idUsuario.telefono}"/>
 
                             <p:outputLabel for="mail" value="Correo"/>
                             <p:outputLabel id="mail" value="#{usuarioCredencialesControlador.credenciales.idUsuario.email}"/>
 
-                            <p:outputLabel value="Nombre Opcion"/>
+                            <p:outputLabel value="Tipo:"/>
                             <p:selectOneMenu id="console" value="#{usuarioCredencialesControlador.credenciales.tipoUser}" style="width:125px">
                                 <f:selectItem itemLabel="Administrador" itemValue="A" />
                                 <f:selectItem itemLabel="Cliente" itemValue="C" />
-
-
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Estado: "/>
+                            <p:selectOneMenu id="estado" value="#{usuarioCredencialesControlador.credenciales.estado}" style="width:125px">
+                                <f:selectItem itemLabel="Habilitar" itemValue="1" />
+                                <f:selectItem itemLabel="Deshabilitar" itemValue="0" />
                             </p:selectOneMenu>
 
                             <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgAdminRol').hide();" 

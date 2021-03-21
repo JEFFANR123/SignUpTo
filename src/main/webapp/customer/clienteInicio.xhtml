@@ -13,13 +13,20 @@
             <ui:define name="content">
 
                 <h:form id="menudia">
+                    <h3>Códigos de consumo</h3>
+                    <p:dataList value="#{tarjetaConsumoControladorImpl.lstCodigoConsumo}" var="codigos" emptyMessage="No hay códigos para hoy.">
+                        <p:dataViewListItem>
+                            <p:outputLabel value="Código: #{codigos.codigoConsumo} - #{codigos.menu.nombreMenu} - Válido: #{codigos.fechaConsumo}"/>                    
+                        </p:dataViewListItem>
+                    </p:dataList>
 
-                    <h3>Menu del Dia</h3>
+
+                    <h3>Menú del día</h3>
                     <div>
-                        <p:growl id="mensaje" severity="info, error fatal" showSummary="false" showDetail="true" />
+                        <p:growl id="mensaje" severity="info, error, fatal" showSummary="false" showDetail="true" />
                         <p:dataList  value="#{tarjetaConsumoControladorImpl.listaFiltradaHoy}" var="product"
                                      rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
-                                     paginatorTemplate="{CurrentPageReport}">
+                                     paginatorTemplate="{CurrentPageReport}" emptyMessage="No hay nuevas publicaciones.">
 
                             <p:dataViewListItem>
 
@@ -53,7 +60,7 @@
                         <p:growl id="mensajeMod" severity="info, error, fatal" showSummary="false" showDetail="true" />
 
                         <h:panelGrid id="panelMenuSeleccionado" columns="2" >
-                          
+
 
                             <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wMenuSeleccionado').hide();" 
                                              actionListener="#{tarjetaConsumoControladorImpl.guardarConsumoCliente()}" 

@@ -28,7 +28,7 @@ public class MenuServicio {
 
     public List<Menu> listaMenuDiario() {
         Date hoy = new Date();
-        return menuFacadeLocal.listadoFiltrado(hoy, DiasFecha(hoy, 1));
+        return menuFacadeLocal.listadoFiltrado(hoy, DiasFecha(hoy, 5));
 
     }
 

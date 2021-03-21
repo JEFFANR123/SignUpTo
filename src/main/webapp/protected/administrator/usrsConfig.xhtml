@@ -85,19 +85,22 @@
                                                itemLabel="#{lstEmpresas.nombreEmpresa} - #{lstEmpresas.ruc} " itemValue="#{lstEmpresas.idEmpresa}"/>
                             </p:selectOneMenu>
                             
-                            <p:outputLabel value="Nombre Opcion"/>
+                            <p:outputLabel value="Nombre Opcion:"/>
                             <p:selectOneMenu id="console" value="#{usuarioCredencialesControlador.credenciales.tipoUser}" style="width:125px">
                                 <f:selectItem itemLabel="Administrador" itemValue="A" />
                                 <f:selectItem itemLabel="Empleado" itemValue="E" />
                                 <f:selectItem itemLabel="Cliente" itemValue="C" />
-
-
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Estado:"/>
+                            <p:selectOneMenu id="estado" value="#{usuarioCredencialesControlador.credenciales.estado}" style="width:125px">
+                                <f:selectItem itemLabel="Habilitar " itemValue="1" />
+                                <f:selectItem itemLabel="Deshabilitar " itemValue="0" />
                             </p:selectOneMenu>
 
 
                             <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgUsrRol').hide();" 
                                              actionListener="#{usuarioCredencialesControlador.editarUsuarioEmpresa()}" 
-                                             update="@form, frmDlgUsrRol"/>
+                                             update="@form, frmDlgUsrRol, mensajeMod"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 
                         </h:panelGrid>

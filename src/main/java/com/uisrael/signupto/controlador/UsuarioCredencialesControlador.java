@@ -214,6 +214,7 @@ public class UsuarioCredencialesControlador implements Serializable {
             lstEmpresas = empresaFacadeLocal.findAll();
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Lista actualizada"));
+            empresa = new Empresa();
         } catch (Exception e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ocurrio un error, consulte al Administrador"));
@@ -273,6 +274,30 @@ public class UsuarioCredencialesControlador implements Serializable {
         }
     }
 
+    public void darDeBaja() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Credenciales usrpass = (Credenciales) context.getExternalContext().getSessionMap().get("username");
+        Credenciales credencialesTemp;
+        credencialesTemp = credencialesFacadeLocal.consultaUsuarios(usrpass.getIdUsuario().getCedula()).stream().findFirst().orElse(null);
+        byte temp = 0;
+        try {
+            if (credencialesTemp != null) {
+                credenciales = credencialesTemp;
+                usuario = credenciales.getIdUsuario();
+                credenciales.setEstado(temp);
+                credencialesFacadeLocal.edit(credenciales);
+                FacesContext.getCurrentInstance()
+                        .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Saliendo..."));
+                FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/signupto/index.xhtml");
+                credenciales = new Credenciales();
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Ocurrio un error, contacte al administrador"));
+        }
+    }
+
     public void leerCredenciales(Credenciales leeCredenciales) {
 
         credenciales = leeCredenciales;
@@ -325,7 +350,6 @@ public class UsuarioCredencialesControlador implements Serializable {
     }
 
     // GETs and SETs
-
     public String getPassTemp() {
         return passTemp;
     }
@@ -333,7 +357,7 @@ public class UsuarioCredencialesControlador implements Serializable {
     public void setPassTemp(String passTemp) {
         this.passTemp = passTemp;
     }
-    
+
     public List<Credenciales> getListaEmpleados() {
         return listaEmpleados;
     }

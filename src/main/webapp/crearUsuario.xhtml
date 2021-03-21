@@ -17,12 +17,12 @@
                     <p:fieldset legend="Datos del nuevo Suscriptor">
                         <h:panelGrid columns="3" cellpadding="5" id="datosUser">
 
-                            <p:outputLabel for="nombre" value="Nombre Completo " />
+                            <p:outputLabel for="nombre" value="Nombre Completo: " />
                             <p:inputText id="nombre" value="#{usuarioCredencialesControlador.usuario.nombrecompleto}" 
                                          requiredMessage="Campo Requerido" required="true"/>
                             <p:message for="nombre"/>
 
-                            <p:outputLabel for="cedula" value="Cedula " />
+                            <p:outputLabel for="cedula" value="Cédula: " />
                             <p:inputText id="cedula" value="#{usuarioCredencialesControlador.usuario.cedula}" 
                                          requiredMessage="Campo Requerido" required="true"/>
                             <p:message for="cedula"/>
@@ -41,13 +41,13 @@
                                         requiredMessage="Campo Requerido"/>
                             <p:message for="pwd2"/>
 
-                            <p:outputLabel for="email" value="Email " />
+                            <p:outputLabel for="email" value="Email: " />
                             <p:inputText id="email" value="#{usuarioCredencialesControlador.usuario.email}" 
                                          requiredMessage="Campo Requerido" required="true" validatorMessage="El correo ingresado es incorrecto." >
                                 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /></p:inputText>
                             <p:message for="email"/>
 
-                            <p:outputLabel for="telefono" value="Telefono " />
+                            <p:outputLabel for="telefono" value="Teléfono: " />
                             <p:inputMask id="telefono" value="#{usuarioCredencialesControlador.usuario.telefono}" 
                                          requiredMessage="Campo Requerido" required="true" mask="(99) 99999999"/>
 

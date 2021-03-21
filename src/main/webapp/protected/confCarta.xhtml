@@ -33,9 +33,9 @@
                         <p:outputLabel for="precio" value="Precio"/>
                         <p:inputNumber id="precio" decimalSeparator="." value="#{cartaControladorImpl.carta.precio}" required="true"/>
 
-                        <p:commandButton icon="ui-icon-check" value="Agregar" oncomplete="PF('wdialogoCarta').hide();" 
+                        <p:commandButton icon="ui-icon-check" value="Agregar" 
                                          actionListener="#{cartaControladorImpl.insertarOpcionCarta()}" 
-                                         update="panelAgrOpcion, :frmCarta:panelCarta, :frmTipo:panelTipo, mensaje, dialogoTipo">
+                                         update="@form, frmAgrOpcion, :frmCarta:panelCarta, :frmTipo:panelTipo, mensaje, dialogoTipo">
 
                         </p:commandButton>
                         <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
@@ -102,7 +102,7 @@
                             <p:inputText id="tipo" value="#{tipoCartaControladorImpl.tipoCarta.nombreTipo}" required="true"/>
                             <p:commandButton icon="pi pi-plus" 
                                              actionListener="#{tipoCartaControladorImpl.insertarTipoCarta()}" 
-                                             update=":frmAgrOpcion:panelAgrOpcion, :frmLstTCarta ,:frmCarta,  mensajeTipo"/>                          
+                                             update=":frmLstTCarta, mensajeTipo, dialogoTipo, :frmAgrOpcion"/>                          
                         </h:panelGrid>
                     </h:form> 
                     <p:separator/>
