@@ -330,22 +330,21 @@ public class UsuarioCredencialesControlador implements Serializable {
         listaBusquedaUsuario.addAll(credencialesFacadeLocal.consultaUsuarios(usuario.getCedula()));
 
         try {
-            if (validaCedula(usuario.getCedula()) == false) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "La cédula ya existe."));
+            if (validaCedula(usuario.getCedula()) == false || usuario.getCedula().equals("2222222222")) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verificar el número de cédula."));
                 usuario = new Usuario();
             } else if (listaBusquedaUsuario.isEmpty()) {
                 usuarioFacadeLocal.create(usuario);
                 credenciales.setIdUsuario(usuario);
                 credenciales.setUserName(usuario.getCedula());
                 credencialesFacadeLocal.create(credenciales);
-
                 generaTarjetaConsumoInicial();
                 tarjetaConsumo = new TarjetaConsumo();
                 credenciales = new Credenciales();
                 usuario = new Usuario();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los Datos Ingresados"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Verifique los datos ingresados"));
                 usuario = new Usuario();
             }
         } catch (Exception e) {
