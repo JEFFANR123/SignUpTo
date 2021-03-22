@@ -154,11 +154,13 @@
                         <p:dataView value="#{usuarioCredencialesControlador.infomacionUsuarios}" var="datosUser">
                             <p:dataViewListItem>
                                 <p:outputPanel>
-                                    <h:panelGrid columns="2">
+                                    <h:panelGrid columns="1">
+                                        <h:outputText value="Nombre: "/>
+                                        <h:outputText value="#{datosUser.idUsuario.nombrecompleto}"/>
+                                        <br/>
                                         <h:outputText value="Id Usuario: "/>
                                         <h:outputText value="#{datosUser.idUsuario.cedula}"/>
-                                        <h:outputText value="Saldo disponible: "/>
-                                        <h:outputText value="#{tarjetaConsumoControladorImpl.saldoDisponibleCliente}"/>
+                                        
                                     </h:panelGrid>
                                 </p:outputPanel>
                             </p:dataViewListItem>

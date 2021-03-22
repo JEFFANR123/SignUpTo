@@ -11,7 +11,7 @@
         <ui:composition template="./../../WEB-INF/template/templateAdmin.xhtml">
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="frmPagosP">
                     <h:commandLink>
                         <p:graphicImage name="excelicon.png" library="images" width="24"/>
                         <p:dataExporter type="xls" target="dtPagosP" fileName="PagosPendientes" />
@@ -59,7 +59,7 @@
 
                 </h:form>
 
-                <p:dialog id="dlgPagos" widgetVar="dlgwrPagos" modal="true" resizable="false" draggable="false" closeOnEscape="true">
+                <p:dialog id="dlgPagos" widgetVar="dlgwrPagos" header="Editar información." modal="true" resizable="false" draggable="false">
                     <h:form id="frmDlg" >
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Cedula"/>
@@ -78,7 +78,7 @@
                                 <f:selectItem itemValue="R" itemLabel="Rechazado"/>
                             </p:selectOneMenu>
 
-                            <p:commandButton value="Guardar" action="#{pagosControladorImpl.modificarPago()}"/>
+                            <p:commandButton value="Guardar" action="#{pagosControladorImpl.modificarPago()}" update=":frmPagosP" oncomplete="PF('dlgwrPagos').hide();"/>
                             <p:commandButton value="Descargar comprobante" actionListener="#{pagosControladorImpl.descargarPago()}" ajax="false">
                                 <p:fileDownload value="#{pagosControladorImpl.downFile}"/>
                             </p:commandButton>

@@ -64,7 +64,7 @@
 
                             <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wMenuSeleccionado').hide();" 
                                              actionListener="#{tarjetaConsumoControladorImpl.guardarConsumoCliente()}" 
-                                             update="@form">
+                                             update="@form, :menudia">
                             </p:commandButton>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true"
                                              update="@form" oncomplete="PF('wMenuSeleccionado').hide();" >

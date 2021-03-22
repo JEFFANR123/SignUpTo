@@ -276,6 +276,9 @@ public class TarjetaConsumoControladorImpl implements Serializable {
                     tarjetaConsumoMenu.setTarjetaConsumoMenuId(tarjetaConsumoMenuId);
                     tarjetaConsumoMenuFacadeLocal.create(tarjetaConsumoMenu);
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", " Se ha guardado correctamente!"));
+                    Date tempHoy = new Date();
+                    lstCodigoConsumo = tarjetaConsumoMenuFacadeLocal.consultaCodigosTCM(temp, tempHoy);
+                    
                 } catch (Exception e) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", " Ya existe una compra del menú seleccionado."));
                     obtieneMenuId = 0;

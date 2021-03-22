@@ -117,7 +117,7 @@
                                     <h:outputText value="#{lstTipoCarta.nombreTipo}"/>
                                 </p:column>
                                 <p:column headerText="Eliminar" width="12%">
-                                    <p:commandLink actionListener="#{tipoCartaControladorImpl.eliminarTipoCarta(lstTipoCarta)}" update="frmLstTCarta, :frmTipo, :frmAgrOpcion:panelAgrOpcion" >
+                                    <p:commandLink actionListener="#{tipoCartaControladorImpl.eliminarTipoCarta(lstTipoCarta)}" update="frmLstTCarta, :frmCarta, :frmTipo, :frmAgrOpcion:panelAgrOpcion" >
                                         <i class="pi pi-trash"></i>
                                         <p:confirm header="Confirmacion" message="¿Está seguro de esta acción?" icon="pi pi-exclamation-triangle" />
                                     </p:commandLink>
@@ -134,7 +134,7 @@
 
                 <!-- Contiene el formulario del Editar una opcion de la carta ya publicada -->
 
-                <p:dialog id="dlgOptCarta" widgetVar="wDlgOptCarta" >
+                <p:dialog id="dlgOptCarta" widgetVar="wDlgOptCarta" header="Editar información." modal="true" resizable="false" draggable="false" >
                     <h:form id="frmDlgOptCarta">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />

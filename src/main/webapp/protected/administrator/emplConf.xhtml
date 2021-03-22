@@ -58,7 +58,7 @@
                 </h:form>
 
 
-                <p:dialog id="dlgEmpRol" widgetVar="wdlgEmpRol" header="Modificar información." >
+                <p:dialog id="dlgEmpRol" widgetVar="wdlgEmpRol" header="Editar información." modal="true" resizable="false" draggable="false" >
                     <h:form id="frmDlgEmpRol">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
@@ -95,7 +95,7 @@
                                 <f:selectItem itemLabel="Deshabilitar" itemValue="0" />
                             </p:selectOneMenu>
 
-                            <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wDlgUsrRol').hide();" 
+                            <p:commandButton icon="ui-icon-check" value="Aceptar" oncomplete="PF('wdlgEmpRol').hide();" 
                                              actionListener="#{usuarioCredencialesControlador.editarUsuarioEmpresa()}" 
                                              update=":frmEmpLst, frmDlgEmpRol"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />

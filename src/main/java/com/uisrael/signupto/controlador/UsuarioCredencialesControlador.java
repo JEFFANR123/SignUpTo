@@ -268,6 +268,9 @@ public class UsuarioCredencialesControlador implements Serializable {
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se guardo los cambios correctamente!"));
             usuario = new Usuario();
             credenciales = new Credenciales();
+            listaAdministradores = credencialesFacadeLocal.listaUsuarioCredencialeses("A");
+            listaEmpleados = credencialesFacadeLocal.listaUsuarioCredencialeses("E");
+            listaClientes = credencialesFacadeLocal.listaUsuarioCredencialeses("C");
         } catch (Exception e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Ocurrio un error, contacte al administrador"));
@@ -337,6 +340,8 @@ public class UsuarioCredencialesControlador implements Serializable {
                 credencialesFacadeLocal.create(credenciales);
 
                 generaTarjetaConsumoInicial();
+                tarjetaConsumo = new TarjetaConsumo();
+                credenciales = new Credenciales();
                 usuario = new Usuario();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El usuario se guardó exitosamente."));
             } else {

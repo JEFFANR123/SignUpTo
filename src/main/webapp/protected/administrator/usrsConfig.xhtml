@@ -59,7 +59,7 @@
                 </h:form>
 
 
-                <p:dialog id="dlgUsrRol" widgetVar="wDlgUsrRol" >
+                <p:dialog id="dlgUsrRol" widgetVar="wDlgUsrRol" header="Editar información." modal="true" resizable="false" draggable="false" >
                     <h:form id="frmDlgUsrRol">
 
                         <p:growl id="mensajeMod" severity="info, fatal" showSummary="false" showDetail="true" />
@@ -100,7 +100,7 @@
 
                             <p:commandButton icon="ui-icon-check" value="Modificar" oncomplete="PF('wDlgUsrRol').hide();" 
                                              actionListener="#{usuarioCredencialesControlador.editarUsuarioEmpresa()}" 
-                                             update="@form, frmDlgUsrRol, mensajeMod"/>
+                                             update="@form, frmDlgUsrRol,:frmUsrLst:tblClsLst, mensajeMod"/>
                             <p:commandButton icon="ui-icon ui-icon-close" value="Cancelar" immediate="true" />
 
                         </h:panelGrid>
